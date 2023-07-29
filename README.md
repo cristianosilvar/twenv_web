@@ -1,59 +1,32 @@
-This project was bootstrapped with
-[Create React App](https://github.com/facebook/create-react-app).
+<div>
+  <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/1a400c37-4ffa-4c82-8c4e-05a46f505ced" width="200"/>
+</div>
+<h1></h1>
+<h3>Tecnologias</h3>
+<div display="flex">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="30" height="30"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="30" height="30"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://raw.githubusercontent.com/chakra-ui/chakra-ui/main/media/logo-colored@2x.png?raw=true" height="30"
+</div>
+<h1>
+<h3>Mockup's</h3> 
+  <a href="https://www.figma.com/file/NBwpGNUfzUGqoo0coTH6sZ/Twenv?type=design&node-id=341%3A5&mode=design&t=CgjWwrmFabUg03TV-1"> 
+    Veja no Figma
+  </a>
+<div>
+  <h4>Home</h4>
+  <div display="flex">
+    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/62bf052d-ba7f-49e6-b251-c33dee94ed2a" width="48%"/>
+  </div>
+  
+  <h1>
+  <h4>Despesas</h4>
+  <div display="flex">
+    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/ce285729-b219-4727-bbff-4c6bf636b875" width="48%"/>
+    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/2b2cd533-0b06-4f8a-bbcc-46dee0fda238" width="48%"/>
+    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/4740d748-19ef-49d5-9ae4-aeb9a1730625" width="48%"/>
+  </div>
+</div>
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br /> Open
-[http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br /> You will also see any lint errors
-in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br /> See the section
-about
-[running tests](https://facebook.github.io/create-react-app/docs/running-tests)
-for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br /> It correctly bundles
-React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br /> Your app is
-ready to be deployed!
-
-See the section about
-[deployment](https://facebook.github.io/create-react-app/docs/deployment) for
-more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can
-`eject` at any time. This command will remove the single build dependency from
-your project.
-
-Instead, it will copy all the configuration files and the transitive
-dependencies (webpack, Babel, ESLint, etc) right into your project so you have
-full control over them. All of the commands except `eject` will still work, but
-they will point to the copied scripts so you can tweak them. At this point
-you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for
-small and middle deployments, and you shouldn’t feel obligated to use this
-feature. However we understand that this tool wouldn’t be useful if you couldn’t
-customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the
-[Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
