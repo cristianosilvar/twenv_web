@@ -1,4 +1,4 @@
-import { Box, HStack, Text, VStack } from "@chakra-ui/layout"
+import { Box, HStack, Text } from "@chakra-ui/layout"
 
 import iconDown from '../../assets/icon-down.svg'
 import iconUp from '../../assets/icon-up.svg'
@@ -52,5 +52,5 @@ export default function Card({is, value, date, description}: Props) {
                 </Text>
             </Box>
         )
-    } 
+    }
 }
