@@ -20,7 +20,7 @@ export const App = () => (
     <Header/>
     <Box width='80%' mx='auto' minH='60vh' 
       px='2rem' py='1rem'
-      border='1px solid #35383D' borderRadius='.75rem' 
+      border='1px solid #35383D' borderRadius='xl' 
       bgColor='#0B0F18'>
       <BrowserRouter>
         <Routes>
