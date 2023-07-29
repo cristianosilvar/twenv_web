@@ -21,7 +21,7 @@ export const App = () => (
     <Box width='80%' mx='auto' minH='60vh' 
       px='2rem' py='1rem'
       border='1px solid #35383D' borderRadius='xl' 
-      bgColor='#0B0F18'>
+      bgColor='#0B0F18' fontFamily="font-family: 'Lato', sans-serif;">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home/>} />

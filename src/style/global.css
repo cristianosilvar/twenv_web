@@ -1,3 +1,9 @@
-:root {
-    --primary: '#0B0F18'
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Poppins:wght@100;400;600;800&display=swap');
+
+html, body {
+    font-family: 'Lato', sans-serif;
+}
+
+.poppins {
+    font-family: 'Poppins', sans-serif
 }
