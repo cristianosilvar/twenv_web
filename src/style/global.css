@@ -7,3 +7,7 @@ html, body {
 .poppins {
     font-family: 'Poppins', sans-serif
 }
+
+.active {
+    opacity: .4;
+}
