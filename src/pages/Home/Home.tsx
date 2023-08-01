@@ -4,7 +4,7 @@ import Card from "../../components/Card/Card";
 
 export default function Home() {
     return (
-        <main>
+        <section>
             <Box display='flex' flexDirection='column' gap='2rem'>
                 <Stack>
                     <Heading as='h1' size='lg' opacity='.9'>Junho</Heading>
@@ -15,6 +15,6 @@ export default function Home() {
                     <Card is="totalEarnings" value={5800}/>
                 </Box>
             </Box>
-        </main>
+        </section>
     )
 }

@@ -4,8 +4,8 @@ import iconDown from '../../assets/icon-down.svg'
 import iconUp from '../../assets/icon-up.svg'
 
 interface Props {
-    is: string,
-    value: number,
+    is:  'newSpending' | 'newEarnings' | 'totalSpending' | 'totalEarnings' | 'spending' | 'earnings',
+    value?: number,
     date?: string,
     description?: string
 }
@@ -17,7 +17,8 @@ export default function Card({is, value, date, description}: Props) {
         return (
             <Box display='flex' width='275px' alignItems='center' gap='1.5rem'
             border='1px solid' height='150px' p='1rem' borderRadius='2xl'
-            {...is === 'totalSpending' ? 
+            {// Condição
+            ...is === 'totalSpending' ? 
             (icon = iconDown,
             alt = 'Icone de Despesas', {
                 backgroundColor:'#C5212110', 
@@ -38,18 +39,44 @@ export default function Card({is, value, date, description}: Props) {
         )
     } else {
         return (
-            <Box gap='2.5' w='300px' h='108px' bgColor='#ffffff05' 
+            <Box gap='2.5' minW='240px' width='23%' aspectRatio='2/1' bgColor='#ffffff05' 
             border='1px solid #ffffff15' borderRadius='xl' 
             display='flex' flexDirection='column' alignItems='center' justifyContent='center'
-            className="poppins">
-                <HStack fontSize='lg'>
-                    <Text fontWeight='bold'>{date}</Text>
-                    <Text fontWeight='light'>•</Text>
-                    <Text fontWeight="medium" opacity='.8'>R$ {value},00</Text>
-                </HStack>
-                <Text fontSize='lg' fontWeight='medium' opacity='.5'>
-                    Sem descrição.
-                </Text>
+            className="poppins transition_2s"
+            opacity={is.includes('new') ? ('.5'):('1')} _hover={{
+                cursor: 'pointer',
+                opacity: 1
+            }}>
+                {is.includes('new') ? (
+                <>
+                    {
+                        is === 'newEarnings' ? (
+                            <>
+                                <Text>
+                                    + Novo Ganho
+                                </Text>
+                            </>
+                        ) : (
+                            <>
+                                <Text>
+                                    + Nova Despesa
+                                </Text>
+                            </>
+                        )
+                    }
+                </>
+                ) : (
+                <>
+                    <HStack fontSize='lg'>
+                        <Text fontWeight='bold'>{date}</Text>
+                        <Text fontWeight='light'>•</Text>
+                        <Text fontWeight="medium" opacity='.8'>R$ {value},00</Text>
+                    </HStack>
+                    <Text fontSize='lg' fontWeight='medium' opacity='.5'>
+                        {description}
+                    </Text>
+                </>
+                )}
             </Box>
         )
     }

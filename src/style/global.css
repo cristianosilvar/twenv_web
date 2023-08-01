@@ -11,3 +11,7 @@ html, body {
 .active {
     opacity: .4;
 }
+
+.transition_2s {
+    transition: all linear .2s;
+}
