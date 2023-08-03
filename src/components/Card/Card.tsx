@@ -1,10 +1,10 @@
-import { Box, HStack, Text } from "@chakra-ui/layout"
+import { Box, HStack, Text, Heading } from "@chakra-ui/layout"
 
 import iconDown from '../../assets/icon-down.svg'
 import iconUp from '../../assets/icon-up.svg'
 
 interface Props {
-    is:  'newSpending' | 'newEarnings' | 'totalSpending' | 'totalEarnings' | 'spending' | 'earnings',
+    is:  'newSpending' | 'newEarning' | 'totalSpending' | 'totalEarnings' | 'spending' | 'earnings',
     value?: number,
     date?: string,
     description?: string
@@ -50,7 +50,7 @@ export default function Card({is, value, date, description}: Props) {
                 {is.includes('new') ? (
                 <>
                     {
-                        is === 'newEarnings' ? (
+                        is === 'newEarning' ? (
                             <>
                                 <Text>
                                     + Novo Ganho
@@ -72,9 +72,9 @@ export default function Card({is, value, date, description}: Props) {
                         <Text fontWeight='light'>•</Text>
                         <Text fontWeight="medium" opacity='.8'>R$ {value},00</Text>
                     </HStack>
-                    <Text fontSize='lg' fontWeight='medium' opacity='.5'>
+                    <Heading fontSize='lg' fontWeight='medium' opacity='.5' noOfLines={1}  minW='225px' width='20%' textAlign='center'>
                         {description}
-                    </Text>
+                    </Heading>
                 </>
                 )}
             </Box>
