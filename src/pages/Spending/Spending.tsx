@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, useDisclosure } from "@chakra-ui/react";
 import Card from "../../components/Card/Card";
 import { useState } from "react";
 
@@ -24,16 +24,15 @@ export default function Spending() {
                 </Box>
             </Flex>
             <Modal onClose={onClose} size={size} isOpen={isOpen}>
-                <ModalOverlay />
-                <ModalContent>
-                <ModalHeader>Modal Title</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                    <h6>ijijijijji</h6>
-                </ModalBody>
-                <ModalFooter>
-                    <Button onClick={onClose}>Close</Button>
-                </ModalFooter>
+                <ModalOverlay/>
+                <ModalContent backgroundColor='#181D29' border='1px solid #ffffff15' borderRadius='md' fontFamily="'Poppins', sans-serif">
+                    <ModalHeader fontSize='2xl' textAlign='center' fontWeight='bold' opacity='.85'>Nova Despesa</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={onClose}>Close</Button>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </section>
