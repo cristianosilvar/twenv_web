@@ -25,12 +25,6 @@ import ButtonSecondary from "../../components/Buttons/ButtonSecondary/ButtonSeco
 
 export default function Spending() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [size, setSize] = useState("xl");
-
-  const handleSizeClick = (newSize: string) => {
-    setSize(newSize);
-    onOpen();
-  };
 
   return (
     <section>
@@ -43,12 +37,9 @@ export default function Spending() {
             description="Sem descrição"
           />
         </Box>
-
-        <Box onClick={() => handleSizeClick("xl")}>
-          <Card is="newSpending" />
-        </Box>
+        <Card is="newSpending" onClick={() => onOpen()} />
       </Flex>
-      <Modal onClose={onClose} onEsc={onClose} size={size} isOpen={isOpen}>
+      <Modal onClose={onClose} onEsc={onClose} size={"xl"} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent
           backgroundColor="#181D29"
