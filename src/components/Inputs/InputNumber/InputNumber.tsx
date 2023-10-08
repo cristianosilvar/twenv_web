@@ -1,8 +1,10 @@
 import { Input, InputGroup, InputLeftAddon, VStack } from "@chakra-ui/react";
 import { Label } from "../Label";
 
-interface InputNumberLeftElementInterface {
-  leftElement: string;
+type LeftElementType = "R$" | "%";
+
+interface InputNumberInterface {
+  leftElement?: LeftElementType;
   placeholder?: string;
   label?: string;
   size?: string;
@@ -11,7 +13,7 @@ interface InputNumberLeftElementInterface {
   isRequired: boolean;
 }
 
-export const InputNumberLeftElement = ({
+const InputNumber = ({
   leftElement,
   placeholder,
   label,
@@ -19,12 +21,12 @@ export const InputNumberLeftElement = ({
   align,
   isReadOnly,
   isRequired,
-}: InputNumberLeftElementInterface) => {
+}: InputNumberInterface) => {
   return (
     <VStack align={align} w={"full"}>
       {label && <Label label={label} isRequired={isRequired} />}
       <InputGroup size={size}>
-        <InputLeftAddon children={leftElement} />
+        {leftElement && <InputLeftAddon children={leftElement} />}
         <Input
           type="number"
           placeholder={placeholder}
@@ -35,3 +37,5 @@ export const InputNumberLeftElement = ({
     </VStack>
   );
 };
+
+export default InputNumber;

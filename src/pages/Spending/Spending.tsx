@@ -17,9 +17,11 @@ import {
 import { useState } from "react";
 
 import Card from "../../components/Card/Card";
-import { InputText } from "../../components/Inputs/InputText/InputText";
-import { InputTextarea } from "../../components/Inputs/InputTextarea/InputTextarea";
-import { InputNumberLeftElement } from "../../components/Inputs/InputNumberLeftElement/InputNumberLeftElement";
+import InputTextarea from "../../components/Inputs/InputTextarea/InputTextarea";
+import InputNumber from "../../components/Inputs/InputNumber/InputNumber";
+import InputDate from "../../components/Inputs/InputDate/InputDate";
+import ButtonPrimary from "../../components/Buttons/ButtonPrimary/ButtonPrimary";
+import ButtonSecondary from "../../components/Buttons/ButtonSecondary/ButtonSecondary";
 
 export default function Spending() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,7 +48,7 @@ export default function Spending() {
           <Card is="newSpending" />
         </Box>
       </Flex>
-      <Modal onClose={onClose} size={size} isOpen={isOpen}>
+      <Modal onClose={onClose} onEsc={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent
           backgroundColor="#181D29"
@@ -62,7 +64,6 @@ export default function Spending() {
           >
             Nova Despesa
           </ModalHeader>
-          <ModalCloseButton />
           <ModalBody></ModalBody>
           <ModalFooter>
             <InputGroup>
@@ -80,7 +81,7 @@ export default function Spending() {
                   />
                 </GridItem>
                 <GridItem colSpan={5}>
-                  <InputNumberLeftElement
+                  <InputNumber
                     leftElement={"R$"}
                     placeholder={"0,00"}
                     label={"Valor"}
@@ -90,17 +91,25 @@ export default function Spending() {
                   />
                 </GridItem>
                 <GridItem colSpan={7}>
-                  <InputText
+                  <InputDate
                     placeholder={"Teste"}
                     label={"Data"}
                     size="lg"
                     isReadOnly={false}
                     isRequired
-                  ></InputText>
+                  ></InputDate>
+                </GridItem>
+                <GridItem colSpan={12} mt={[4, 6, 8]}>
+                  <ButtonPrimary size={"lg"} w={"full"} text="Adicionar" />
+                  <ButtonSecondary
+                    size={"lg"}
+                    w={"full"}
+                    mt={2}
+                    text="Cancelar"
+                  />
                 </GridItem>
               </SimpleGrid>
             </InputGroup>
-            {/* <Button onClick={onClose}>Close</Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -1,41 +1,35 @@
-import { Textarea, VStack } from "@chakra-ui/react";
+import { Input, VStack } from "@chakra-ui/react";
 import { Label } from "../Label";
 
-type ResizeType = "vertical" | "horizontal" | "none";
-
-interface InputTextareaInterface {
+interface InputDateInterface {
   placeholder?: string;
   label?: string;
   size?: string;
   align?: string;
-  resize?: ResizeType;
   isReadOnly: boolean;
   isRequired: boolean;
 }
 
-const InputTextarea = ({
+const InputDate = ({
   placeholder,
   label,
   size,
   align,
-  resize,
   isReadOnly,
   isRequired,
-  ...rest
-}: InputTextareaInterface) => {
+}: InputDateInterface) => {
   return (
-    <VStack align={align} w="full">
+    <VStack align={align} w={"full"}>
       {label && <Label label={label} isRequired={isRequired} />}
-      <Textarea
+      <Input
+        type="date"
         placeholder={placeholder}
         size={size}
-        resize={resize}
         isReadOnly={isReadOnly}
         isRequired={isRequired}
-        {...rest}
-      />
+      ></Input>
     </VStack>
   );
 };
 
-export default InputTextarea;
+export default InputDate;
