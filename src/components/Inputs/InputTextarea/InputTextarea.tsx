@@ -1,38 +1,41 @@
-import { Textarea, VStack } from "@chakra-ui/react";
+import { Textarea, TextareaProps, VStack } from "@chakra-ui/react";
+import { Controller } from "react-hook-form";
 import { Label } from "../Label";
 
-type ResizeType = "vertical" | "horizontal" | "none";
-
-interface InputTextareaInterface {
+interface InputTextareaInterface extends TextareaProps {
+  name: string;
+  control: any;
   placeholder?: string;
   label?: string;
-  size?: string;
   align?: string;
-  resize?: ResizeType;
-  isReadOnly: boolean;
-  isRequired: boolean;
+  isRequired?: boolean;
 }
 
 const InputTextarea = ({
+  name,
   placeholder,
   label,
-  size,
   align,
-  resize,
   isReadOnly,
   isRequired,
+  control,
   ...rest
 }: InputTextareaInterface) => {
   return (
     <VStack align={align} w="full">
       {label && <Label label={label} isRequired={isRequired} />}
-      <Textarea
-        placeholder={placeholder}
-        size={size}
-        resize={resize}
-        isReadOnly={isReadOnly}
-        isRequired={isRequired}
-        {...rest}
+      <Controller
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <Textarea
+            placeholder={placeholder}
+            isReadOnly={isReadOnly}
+            isRequired={isRequired}
+            {...field}
+            {...rest}
+          />
+        )}
       />
     </VStack>
   );

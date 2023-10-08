@@ -1,33 +1,42 @@
+import { useState } from "react";
 import {
   Box,
-  Button,
   Flex,
   SimpleGrid,
   GridItem,
   InputGroup,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
 import Card from "../../components/Card/Card";
-import InputTextarea from "../../components/Inputs/InputTextarea/InputTextarea";
-import InputNumber from "../../components/Inputs/InputNumber/InputNumber";
 import InputDate from "../../components/Inputs/InputDate/InputDate";
+import InputNumber from "../../components/Inputs/InputNumber/InputNumber";
+import InputTextarea from "../../components/Inputs/InputTextarea/InputTextarea";
 import ButtonPrimary from "../../components/Buttons/ButtonPrimary/ButtonPrimary";
 import ButtonSecondary from "../../components/Buttons/ButtonSecondary/ButtonSecondary";
 
 export default function Spending() {
+  const defaultValues = {
+    descricao: "Isso",
+  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const methods = useForm({ defaultValues });
+  const { control, handleSubmit } = methods;
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
-    <section>
+    <>
       <Flex gap="4" wrap="wrap">
         <Box display="flex" gap="4" flexWrap="wrap">
           <Card
@@ -55,55 +64,65 @@ export default function Spending() {
           >
             Nova Despesa
           </ModalHeader>
-          <ModalBody></ModalBody>
-          <ModalFooter>
-            <InputGroup>
-              <SimpleGrid columns={12} spacing={6}>
-                <GridItem colSpan={12}>
-                  <InputTextarea
-                    placeholder={
-                      "Qual o nome, descrição e/ou informação dessa despesa?"
-                    }
-                    label={"Descrição"}
-                    size="lg"
-                    resize="none"
-                    isReadOnly={false}
-                    isRequired
-                  />
-                </GridItem>
-                <GridItem colSpan={5}>
-                  <InputNumber
-                    leftElement={"R$"}
-                    placeholder={"0,00"}
-                    label={"Valor"}
-                    size="lg"
-                    isReadOnly={false}
-                    isRequired
-                  />
-                </GridItem>
-                <GridItem colSpan={7}>
-                  <InputDate
-                    placeholder={"Teste"}
-                    label={"Data"}
-                    size="lg"
-                    isReadOnly={false}
-                    isRequired
-                  ></InputDate>
-                </GridItem>
-                <GridItem colSpan={12} mt={[4, 6, 8]}>
-                  <ButtonPrimary size={"lg"} w={"full"} text="Adicionar" />
-                  <ButtonSecondary
-                    size={"lg"}
-                    w={"full"}
-                    mt={2}
-                    text="Cancelar"
-                  />
-                </GridItem>
-              </SimpleGrid>
-            </InputGroup>
-          </ModalFooter>
+          <ModalBody>
+            <FormProvider {...methods}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <InputGroup>
+                  <SimpleGrid columns={12} spacing={6}>
+                    <GridItem colSpan={12}>
+                      <InputTextarea
+                        placeholder={
+                          "Qual o nome, descrição e/ou informação dessa despesa?"
+                        }
+                        label={"Descrição"}
+                        size="lg"
+                        resize="none"
+                        control={control}
+                        name={"description"}
+                      />
+                    </GridItem>
+                    <GridItem colSpan={5}>
+                      <InputNumber
+                        leftElement={"R$"}
+                        placeholder={"0,00"}
+                        label={"Valor"}
+                        size="lg"
+                        isRequired
+                        name={"value"}
+                        control={control}
+                      />
+                    </GridItem>
+                    <GridItem colSpan={7}>
+                      <InputDate
+                        placeholder={"Teste"}
+                        label={"Data"}
+                        size="lg"
+                        control={control}
+                        name={"date"}
+                        isRequired
+                      ></InputDate>
+                    </GridItem>
+                    <GridItem colSpan={12} mt={[4, 6, 8]}>
+                      <ButtonPrimary
+                        type="submit"
+                        w={"full"}
+                        size={"lg"}
+                        text="Adicionar"
+                      />
+                      <ButtonSecondary
+                        size={"lg"}
+                        w={"full"}
+                        mt={2}
+                        text="Cancelar"
+                      />
+                    </GridItem>
+                  </SimpleGrid>
+                </InputGroup>
+              </form>
+            </FormProvider>
+          </ModalBody>
         </ModalContent>
       </Modal>
-    </section>
+    </>
   );
 }

@@ -1,33 +1,29 @@
-import { Input, VStack } from "@chakra-ui/react";
+import { Input, InputProps, VStack } from "@chakra-ui/react";
 import { Label } from "../Label";
+import { Control, Controller } from "react-hook-form";
 
-interface InputDateInterface {
-  placeholder?: string;
+interface InputDateInterface extends InputProps {
+  name: string;
+  control: Control<any>;
   label?: string;
-  size?: string;
-  align?: string;
-  isReadOnly: boolean;
-  isRequired: boolean;
+  isRequired?: boolean;
 }
 
 const InputDate = ({
-  placeholder,
   label,
-  size,
-  align,
-  isReadOnly,
+  control,
+  name,
   isRequired,
+  ...rest
 }: InputDateInterface) => {
   return (
-    <VStack align={align} w={"full"}>
+    <VStack align={"center"} w={"full"}>
       {label && <Label label={label} isRequired={isRequired} />}
-      <Input
-        type="date"
-        placeholder={placeholder}
-        size={size}
-        isReadOnly={isReadOnly}
-        isRequired={isRequired}
-      ></Input>
+      <Controller
+        control={control}
+        render={({ field }) => <Input type="date" {...field} {...rest}></Input>}
+        name={name}
+      />
     </VStack>
   );
 };

@@ -1,21 +1,17 @@
-import { Button } from "@chakra-ui/react";
+import { Button, ButtonProps } from "@chakra-ui/react";
 
-export interface ButtonInterface {
-  size?: string;
-  w?: number | string;
+export interface ButtonInterface extends ButtonProps {
   text?: string;
-  mt?: number;
 }
 
-const ButtonPrimary = ({ size, w, text }: ButtonInterface) => {
+const ButtonPrimary = ({ text, ...rest }: ButtonInterface) => {
   return (
     <Button
       fontWeight="semibold"
-      size={size}
-      w={w}
       bgColor={"#5200FF"}
       _hover={{ border: "1px solid #ffffff65" }}
       _active={{ border: "1px solid #ffffff" }}
+      {...rest}
     >
       {text}
     </Button>

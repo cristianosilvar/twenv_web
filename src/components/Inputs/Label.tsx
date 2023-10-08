@@ -2,7 +2,7 @@ import { Flex, Text } from "@chakra-ui/react";
 
 interface LabelInterface {
   label: string;
-  isRequired: boolean;
+  isRequired?: boolean;
 }
 
 export const Label = ({ label, isRequired }: LabelInterface) => {
