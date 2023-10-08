@@ -1,10 +1,11 @@
 import { Box, Heading, Stack } from "@chakra-ui/react";
 
 import Card from "../../components/Card/Card";
+import Main from "../../components/Main/Main";
 
 export default function Home() {
   return (
-    <section>
+    <Main>
       <Box display="flex" flexDirection="column" gap="2rem">
         <Stack>
           <Heading as="h1" size="lg" opacity=".9">
@@ -19,6 +20,6 @@ export default function Home() {
           <Card is="totalEarnings" value={5800} />
         </Box>
       </Box>
-    </section>
+    </Main>
   );
 }

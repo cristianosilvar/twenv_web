@@ -15,6 +15,7 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 
 import Card from "../../components/Card/Card";
+import Main from "../../components/Main/Main";
 import InputDate from "../../components/Inputs/InputDate/InputDate";
 import InputNumber from "../../components/Inputs/InputNumber/InputNumber";
 import InputTextarea from "../../components/Inputs/InputTextarea/InputTextarea";
@@ -36,7 +37,7 @@ export default function Spending() {
   };
 
   return (
-    <>
+    <Main>
       <Flex gap="4" wrap="wrap">
         <Box display="flex" gap="4" flexWrap="wrap">
           <Card
@@ -123,6 +124,6 @@ export default function Spending() {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </Main>
   );
 }
