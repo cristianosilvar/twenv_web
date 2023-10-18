@@ -1,34 +1,41 @@
-import { Input, VStack } from "@chakra-ui/react";
+import { Input, InputProps, VStack } from "@chakra-ui/react";
 import { Label } from "../Label";
+import { Control, Controller } from "react-hook-form";
 
-interface InputTextInterface {
+interface InputTextInterface extends InputProps {
+  control: Control<any>;
+  name: string;
   placeholder?: string;
   label?: string;
-  size?: string;
-  align?: string;
-  isReadOnly: boolean;
-  isRequired: boolean;
+  isRequired?: boolean;
 }
 
 export const InputText = ({
+  control,
+  name,
   placeholder,
   label,
-  size,
-  align,
   isReadOnly,
   isRequired,
   ...rest
 }: InputTextInterface) => {
   return (
-    <VStack align={align ? align : "start"} w="full">
+    <VStack align={"start"} w="full">
       {label && <Label label={label} isRequired={isRequired} />}
-      <Input
-        placeholder={placeholder}
-        isReadOnly={isReadOnly}
-        size={size}
-        isRequired={isRequired}
-        {...rest}
-      ></Input>
+      <Controller
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <Input
+            bgColor={"#fefefe15"}
+            placeholder={placeholder}
+            isReadOnly={isReadOnly}
+            isRequired={isRequired}
+            {...field}
+            {...rest}
+          />
+        )}
+      />
     </VStack>
   );
 };
