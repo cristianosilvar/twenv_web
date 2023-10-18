@@ -21,7 +21,9 @@ const InputDate = ({
       {label && <Label label={label} isRequired={isRequired} />}
       <Controller
         control={control}
-        render={({ field }) => <Input type="date" {...field} {...rest}></Input>}
+        render={({ field }) => (
+          <Input type="date" bgColor={"#fefefe15"} {...field} {...rest}></Input>
+        )}
         name={name}
       />
     </VStack>

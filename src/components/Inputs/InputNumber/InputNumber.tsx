@@ -38,7 +38,13 @@ const InputNumber = ({
           control={control}
           name={name}
           render={({ field }) => (
-            <Input type="number" isRequired={isRequired} {...field} {...rest} />
+            <Input
+              type="number"
+              isRequired={isRequired}
+              bgColor={"#fefefe15"}
+              {...field}
+              {...rest}
+            />
           )}
         />
       </InputGroup>

@@ -1,35 +1,34 @@
-import { Textarea, TextareaProps, VStack } from "@chakra-ui/react";
-import { Controller } from "react-hook-form";
+import { Input, InputProps, VStack } from "@chakra-ui/react";
 import { Label } from "../Label";
+import { Control, Controller } from "react-hook-form";
 
-interface InputTextareaInterface extends TextareaProps {
+interface InputPasswordInterface extends InputProps {
+  control: Control<any>;
   name: string;
-  control: any;
   placeholder?: string;
   label?: string;
-  align?: string;
   isRequired?: boolean;
 }
 
-const InputTextarea = ({
+export const InputPassword = ({
+  control,
   name,
   placeholder,
   label,
-  align,
   isReadOnly,
   isRequired,
-  control,
   ...rest
-}: InputTextareaInterface) => {
+}: InputPasswordInterface) => {
   return (
-    <VStack align={align} w="full">
+    <VStack align={"start"} w="full">
       {label && <Label label={label} isRequired={isRequired} />}
       <Controller
         control={control}
         name={name}
         render={({ field }) => (
-          <Textarea
+          <Input
             bgColor={"#fefefe15"}
+            type="password"
             placeholder={placeholder}
             isReadOnly={isReadOnly}
             isRequired={isRequired}
@@ -41,5 +40,3 @@ const InputTextarea = ({
     </VStack>
   );
 };
-
-export default InputTextarea;
