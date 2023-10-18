@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
 import {
   Box,
   Flex,
@@ -22,34 +23,62 @@ import InputTextarea from "../../components/Inputs/InputTextarea/InputTextarea";
 import ButtonPrimary from "../../components/Buttons/ButtonPrimary/ButtonPrimary";
 import ButtonSecondary from "../../components/Buttons/ButtonSecondary/ButtonSecondary";
 
+type TData = {
+  id: string;
+  value: number;
+  description: string;
+  date: Date;
+};
+
 export default function Spending() {
   const defaultValues = {
     descricao: "Isso",
   };
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose: closeModal } = useDisclosure();
 
   const methods = useForm({ defaultValues });
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, reset } = methods;
+  const [spendings, setSpendings] = useState([] as TData[]);
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    setSpendings((prev) => [...prev, data]);
+    closeModal();
   };
+
+  const formatDateDayAndMounth = (date: Date) => {
+    const dataLocal = new Date(date + "T00:00:00");
+    return format(dataLocal, "dd/MM");
+  };
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [closeModal]);
 
   return (
     <Main>
       <Flex gap="4" wrap="wrap">
         <Box display="flex" gap="4" flexWrap="wrap">
-          <Card
-            is="spending"
-            value={900}
-            date="31/07"
-            description="Sem descrição"
-          />
+          {spendings?.map((spending, index) => (
+            <Card
+              is="spending"
+              value={spending.value}
+              date={formatDateDayAndMounth(spending.date)}
+              description={
+                spending.description ? spending.description : "Sem descrição"
+              }
+              key={index}
+            />
+          ))}
+          <Card is="newSpending" onClick={() => onOpen()} />
         </Box>
-        <Card is="newSpending" onClick={() => onOpen()} />
       </Flex>
-      <Modal onClose={onClose} onEsc={onClose} size={"xl"} isOpen={isOpen}>
+      <Modal
+        onClose={closeModal}
+        onEsc={closeModal}
+        size={"xl"}
+        isOpen={isOpen}
+      >
         <ModalOverlay />
         <ModalContent
           backgroundColor="#181D29"
