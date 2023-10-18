@@ -35,15 +35,15 @@ export default function Spending() {
     descricao: "Isso",
   };
 
-  const { isOpen, onOpen, onClose: closeModal } = useDisclosure();
-
   const methods = useForm({ defaultValues });
   const { control, handleSubmit, reset } = methods;
+
+  const { isOpen, onOpen, onClose: closeModal } = useDisclosure();
   const [spendings, setSpendings] = useState([] as TData[]);
 
   const onSubmit = (data: any) => {
     setSpendings((prev) => [...prev, data]);
-    closeModal();
+    onCloseModal();
   };
 
   const formatDateDayAndMounth = (date: Date) => {
@@ -51,9 +51,10 @@ export default function Spending() {
     return format(dataLocal, "dd/MM");
   };
 
-  useEffect(() => {
+  const onCloseModal = () => {
     reset(defaultValues);
-  }, [closeModal]);
+    closeModal();
+  };
 
   return (
     <Main>
@@ -74,8 +75,8 @@ export default function Spending() {
         </Box>
       </Flex>
       <Modal
-        onClose={closeModal}
-        onEsc={closeModal}
+        onClose={onCloseModal}
+        onEsc={onCloseModal}
         size={"xl"}
         isOpen={isOpen}
       >
