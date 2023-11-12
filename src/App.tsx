@@ -9,7 +9,6 @@ import Home from './pages/Home/Home'
 import RegisterUser from './pages/Register'
 import Spending from './pages/Spending/Spending'
 import Earnings from './pages/Earnings/Earnings'
-import Navbar from './components/Navbar'
 
 export const App = () => (
   <ChakraProvider theme={theme}>
