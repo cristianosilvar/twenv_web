@@ -4,9 +4,6 @@ import { NavLink, useNavigate } from 'react-router-dom'
 const Navbar = () => {
   const navigate = useNavigate()
 
-  const navigateTo = (path: string) => {
-    navigate(path)
-  }
   return (
     <Flex
       bgColor="#513BD915"
@@ -20,19 +17,19 @@ const Navbar = () => {
         },
       }}
     >
-      <Box fontWeight="600" onClick={() => navigateTo('/')}>
+      <Box fontWeight="600" onClick={() => navigate('/')}>
         <Box h="6px" w="full" bgColor="#513BD9"></Box>
         <Box px="8" py="3">
           Início
         </Box>
       </Box>
-      <Box opacity={0.5} onClick={() => navigateTo('/spendings')}>
+      <Box opacity={0.5} onClick={() => navigate('/spendings')}>
         <Box h="6px" w="full" bgColor="#513BD9" opacity={0}></Box>
         <Box px="8" py="3">
           Despesas
         </Box>
       </Box>
-      <Box opacity={0.5} onClick={() => navigateTo('/earnings')}>
+      <Box opacity={0.5} onClick={() => navigate('/earnings')}>
         <Box h="6px" w="full" bgColor="#513BD9" opacity={0}></Box>
         <Box px="8" py="3">
           Ganhos
