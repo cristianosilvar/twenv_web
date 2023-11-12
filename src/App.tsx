@@ -1,10 +1,9 @@
-import "./style/global.css";
-
-import { ChakraProvider, theme } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import theme from "./theme";
+
 import Header from "./components/Header/Header";
-import Main from "./components/Main/Main";
 
 import Home from "./pages/Home/Home";
 import RegisterUser from "./pages/Register";
@@ -13,6 +12,7 @@ import Earnings from "./pages/Earnings/Earnings";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
+    <ColorModeScript />
     <BrowserRouter>
       <Header />
       <Routes>
