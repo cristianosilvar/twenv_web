@@ -1,5 +1,6 @@
-import { Box, Button, Divider, Flex } from '@chakra-ui/react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Box, Flex, HStack, Icon, Text } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
+import { IconArrowDown, IconArrowUp, IconDashboard } from '../../icons'
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -19,21 +20,24 @@ const Navbar = () => {
     >
       <Box fontWeight="600" onClick={() => navigate('/')}>
         <Box h="6px" w="full" bgColor="#513BD9"></Box>
-        <Box px="8" py="3">
-          Início
-        </Box>
+        <HStack px="6" py="3" gap="10px">
+          <Icon as={IconDashboard} boxSize="20px" />
+          <Text>Início</Text>
+        </HStack>
       </Box>
       <Box opacity={0.5} onClick={() => navigate('/spendings')}>
         <Box h="6px" w="full" bgColor="#513BD9" opacity={0}></Box>
-        <Box px="8" py="3">
-          Despesas
-        </Box>
+        <HStack px="6" py="3" gap="10px">
+          <Icon as={IconArrowDown} boxSize="20px" />
+          <Text>Despesas</Text>
+        </HStack>
       </Box>
       <Box opacity={0.5} onClick={() => navigate('/earnings')}>
         <Box h="6px" w="full" bgColor="#513BD9" opacity={0}></Box>
-        <Box px="8" py="3">
-          Ganhos
-        </Box>
+        <HStack px="6" py="3" gap="10px">
+          <Icon as={IconArrowUp} boxSize="20px" />
+          <Text>Ganhos</Text>
+        </HStack>
       </Box>
     </Flex>
   )
