@@ -1,14 +1,20 @@
 import { Link } from 'react-router-dom'
 import { Logo } from '../../icons/index'
 
-import { Center } from '@chakra-ui/react'
+import { Box, Center } from '@chakra-ui/react'
+import Navbar from '../Navbar'
 
 export default function Header() {
   return (
-    <Center w="80%" mx="auto">
-      <Link to="/">
-        <Logo boxSize={'120px'} />
-      </Link>
-    </Center>
+    <>
+      <Box w="80%" mx="auto">
+        <Center>
+          <Link to="/">
+            <Logo boxSize={'120px'} />
+          </Link>
+        </Center>
+        <Navbar />
+      </Box>
+    </>
   )
 }
