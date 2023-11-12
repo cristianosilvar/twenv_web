@@ -1,5 +1,6 @@
 import { Box, Flex, HStack, Icon, Text } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
+
 import { IconArrowDown, IconArrowUp, IconDashboard } from '../../icons'
 
 const Navbar = () => {
@@ -7,10 +8,10 @@ const Navbar = () => {
 
   return (
     <Flex
+      width="-webkit-fit-content"
       bgColor="#513BD915"
       borderRadius="md"
       fontWeight="500"
-      width="-webkit-fit-content"
       overflow="hidden"
       sx={{
         '& > div': {
