@@ -1,4 +1,5 @@
 import { Box, Heading, Text } from '@chakra-ui/react'
+import CardDashboard from '../../components/Card/CardDashboard'
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
       <Text fontWeight="600" color="#fefefe50">
         26 de Junho, 2023
       </Text>
+      <CardDashboard />
     </Box>
   )
 }

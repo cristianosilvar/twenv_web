@@ -55,3 +55,17 @@ export const IconArrowUp = createIcon({
     </g>
   ),
 })
+
+export const IconArrowDownRed = createIcon({
+  displayName: 'iconArrowDown',
+  viewBox: '0 0 30 30',
+  path: (
+    <g
+      style={{
+        fill: '#C52121',
+      }}
+    >
+      <path d="M15 22.7391L7.26086 15L9.24999 13.0109L13.5781 17.339L13.5781 6.07812H16.4219V17.339L20.75 13.0109L22.7391 15L15 22.7391Z" />
+    </g>
+  ),
+})
