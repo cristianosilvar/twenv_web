@@ -1,0 +1,7 @@
+{
+  "plugins": ["import"],
+  "rules": {
+    "import/no-unused-modules": [2, { "missingExports": true, "unusedExports": true }],
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }]
+  } 
+} 

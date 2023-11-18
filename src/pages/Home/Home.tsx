@@ -1,25 +1,20 @@
-import { Box, Heading, Stack } from "@chakra-ui/react";
-
-import Card from "../../components/Card/Card";
-import Main from "../../components/Main/Main";
+import { Box, HStack, Heading, Stack, Text } from '@chakra-ui/react'
+import CardDashboard from '../../components/Card/CardDashboard'
 
 export default function Home() {
   return (
-    <Main>
-      <Box display="flex" flexDirection="column" gap="2rem">
-        <Stack>
-          <Heading as="h1" size="lg" opacity=".9">
-            Junho
-          </Heading>
-          <Heading as="h6" size="md" opacity=".5" fontWeight="light">
-            06
-          </Heading>
-        </Stack>
-        <Box display="flex" flexWrap="wrap" gap="8">
-          <Card is="totalSpending" value={2200} />
-          <Card is="totalEarnings" value={5800} />
-        </Box>
-      </Box>
-    </Main>
-  );
+    <Box w="80%" marginInline="auto" mt="30px">
+      <Heading as="h2">Dashboard</Heading>
+      <Text fontWeight="600" color="#fefefe50">
+        26 de Junho, 2023
+      </Text>
+      <Stack
+        gap={{ base: '0', md: '15px' }}
+        direction={{ base: 'column', md: 'row' }}
+      >
+        <CardDashboard mt="30px" type="spendings" />
+        <CardDashboard mt="30px" type="earnings" />
+      </Stack>
+    </Box>
+  )
 }
