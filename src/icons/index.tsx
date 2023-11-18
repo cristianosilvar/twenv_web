@@ -1,7 +1,7 @@
 import { createIcon } from '@chakra-ui/react'
 
 export const Logo = createIcon({
-  displayName: 'logoPadrao',
+  displayName: 'logoDefault',
   viewBox: '0 0 164 38',
   path: (
     <g
@@ -43,7 +43,7 @@ export const IconArrowDown = createIcon({
 })
 
 export const IconArrowUp = createIcon({
-  displayName: 'iconArrowDown',
+  displayName: 'iconArrowUp',
   viewBox: '0 0 20 20',
   path: (
     <g
@@ -57,7 +57,7 @@ export const IconArrowUp = createIcon({
 })
 
 export const IconArrowDownRed = createIcon({
-  displayName: 'iconArrowDown',
+  displayName: 'iconArrowDownRed',
   viewBox: '0 0 30 30',
   path: (
     <g
@@ -66,6 +66,20 @@ export const IconArrowDownRed = createIcon({
       }}
     >
       <path d="M15 22.7391L7.26086 15L9.24999 13.0109L13.5781 17.339L13.5781 6.07812H16.4219V17.339L20.75 13.0109L22.7391 15L15 22.7391Z" />
+    </g>
+  ),
+})
+
+export const IconArrowUpGreen = createIcon({
+  displayName: 'iconArrowDownGreen',
+  viewBox: '0 0 30 30',
+  path: (
+    <g
+      style={{
+        fill: '#008325',
+      }}
+    >
+      <path d="M15 7.26088L22.7391 15L20.75 16.9891L16.4219 12.661L16.4219 23.9219L13.5781 23.9219L13.5781 12.661L9.25001 16.9891L7.26089 15L15 7.26088Z" />
     </g>
   ),
 })
