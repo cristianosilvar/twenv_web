@@ -56,8 +56,8 @@ export default function Spending() {
     closeModal()
   }
 
-  return (
-    <Main>
+  return <></>
+  /* <Main>
       <Flex gap="4" wrap="wrap">
         <Box display="flex" gap="4" flexWrap="wrap">
           {spendings?.map((spending, index) => (
@@ -146,6 +146,5 @@ export default function Spending() {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </Main>
-  )
+    </Main> */
 }

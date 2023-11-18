@@ -1,11 +1,12 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme } from '@chakra-ui/react'
 
 const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "#000407",
-        color: "#fefefe",
+        bg: '#000407',
+        color: '#fefefe',
+        mb: '30vh',
       },
     },
   },
@@ -13,5 +14,5 @@ const theme = extendTheme({
     heading: "'Poppins', sans-serif",
     body: "'Poppins', sans-serif",
   },
-});
-export default theme;
+})
+export default theme
