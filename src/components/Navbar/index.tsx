@@ -19,8 +19,8 @@ const Navbar = () => {
       }}
     >
       <NavItem path="/" name="Inicío" icon={IconDashboard} />
-      <NavItem path="/spendings" name="Inicío" icon={IconArrowDown} />
-      <NavItem path="/earnings" name="Inicío" icon={IconArrowUp} />
+      <NavItem path="/spendings" name="Despesas" icon={IconArrowDown} />
+      <NavItem path="/earnings" name="Ganhos" icon={IconArrowUp} />
     </Flex>
   )
 }

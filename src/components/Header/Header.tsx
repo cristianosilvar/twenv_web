@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { Logo } from '../../icons/index'
-
 import { Box, Center, Flex } from '@chakra-ui/react'
+import { Logo } from 'icons/index'
+
 import Navbar from '../Navbar'
 
 export default function Header() {
@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <>
-      <Box w="80%" marginInline="auto">
+      <Box w="80%" marginInline="auto" zIndex={10}>
         <Center>
           <Link to="/">
             <Logo boxSize={'120px'} onClick={() => navigate('/')} />
