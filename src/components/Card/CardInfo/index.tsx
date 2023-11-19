@@ -20,6 +20,7 @@ import ModalDefault from 'components/Modal'
 
 import formatReal from 'utils/fomatReal'
 import formatDate from 'utils/formatDate'
+
 import InfoInterface from 'interfaces/info'
 
 interface ICardInfo extends StackProps {
