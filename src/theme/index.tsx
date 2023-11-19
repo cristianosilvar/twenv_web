@@ -26,6 +26,9 @@ const theme = extendTheme({
           color: '#513BD9',
           bgColor: '#000000CC',
           border: '1px solid #fefefe10',
+          _hover: {
+            borderColor: '#fefefe30',
+          },
         },
       },
     },
