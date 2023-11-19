@@ -30,11 +30,11 @@ export const InputText = ({
               isRequired={isRequired}
               bgColor={'#fefefe15'}
               borderColor="#fefefe25"
-              _focus={{
-                borderColor: '#513BD9',
-              }}
               _hover={{
                 borderColor: '#fefefe35',
+              }}
+              _focusVisible={{
+                borderColor: '#513BD9',
               }}
               {...field}
               {...rest}

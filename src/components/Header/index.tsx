@@ -15,6 +15,8 @@ import {
 import { IconArrowDownMenu, Logo } from 'icons/index'
 
 import Navbar from '../Navbar'
+import ModalRegister from 'components/Modal/ModalRegister'
+import ModalSignIn from 'components/Modal/ModalSignIn'
 
 const MenuItems = ({ authenticatedUser }: { authenticatedUser: boolean }) => {
   return authenticatedUser ? (
@@ -40,24 +42,28 @@ const MenuItems = ({ authenticatedUser }: { authenticatedUser: boolean }) => {
     </>
   ) : (
     <>
-      <MenuItem
-        bgColor="#000"
-        px={4}
-        _hover={{
-          bgColor: '#fefefe10',
-        }}
-      >
-        Criar uma conta
-      </MenuItem>
-      <MenuItem
-        bgColor="#000"
-        px={4}
-        _hover={{
-          bgColor: '#fefefe10',
-        }}
-      >
-        Entre na sua conta
-      </MenuItem>
+      <ModalRegister title="Criando sua conta">
+        <MenuItem
+          bgColor="#000"
+          px={4}
+          _hover={{
+            bgColor: '#fefefe10',
+          }}
+        >
+          Criar uma conta
+        </MenuItem>
+      </ModalRegister>
+      <ModalSignIn title="Entrando na sua conta">
+        <MenuItem
+          bgColor="#000"
+          px={4}
+          _hover={{
+            bgColor: '#fefefe10',
+          }}
+        >
+          Entre na sua conta
+        </MenuItem>
+      </ModalSignIn>
     </>
   )
 }

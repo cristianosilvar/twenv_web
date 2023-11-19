@@ -94,16 +94,18 @@ const CardInfo = ({ data, onClick, ...props }: ICardInfo) => {
                       borderColor="#fefefe15"
                       minW="min-content"
                     >
-                      <MenuItem
-                        bgColor="#000"
-                        px={8}
-                        py={2}
-                        _hover={{
-                          bgColor: '#fefefe10',
-                        }}
-                      >
-                        <ModalDefault title="Alterar">Editar</ModalDefault>
-                      </MenuItem>
+                      <ModalDefault title="Alterar">
+                        <MenuItem
+                          bgColor="#000"
+                          px={8}
+                          py={2}
+                          _hover={{
+                            bgColor: '#fefefe10',
+                          }}
+                        >
+                          Editar
+                        </MenuItem>
+                      </ModalDefault>
                       <MenuItem
                         bgColor="#000"
                         px={8}

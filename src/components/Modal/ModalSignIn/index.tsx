@@ -26,7 +26,7 @@ interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   buttonHeight?: any
 }
 
-const ModalRegister = ({
+const ModalSignIn = ({
   children,
   title,
   buttonWidth = 'full',
@@ -55,13 +55,6 @@ const ModalRegister = ({
               <SimpleGrid columns={12} spacing={6}>
                 <GridItem colSpan={12}>
                   <InputText
-                    name={'username'}
-                    placeholder="Nome de usuário"
-                    label="Nome de usuário"
-                  />
-                </GridItem>
-                <GridItem colSpan={12}>
-                  <InputText
                     name={'email'}
                     placeholder="email@example.com"
                     label="E-mail"
@@ -79,7 +72,7 @@ const ModalRegister = ({
           </ModalBody>
           <ModalFooter>
             <VStack w="full">
-              <Button variant="primary">Criar sua conta</Button>
+              <Button variant="primary">Entre na sua conta</Button>
               <Button variant="secondary" onClick={onClose}>
                 Voltar
               </Button>
@@ -91,4 +84,4 @@ const ModalRegister = ({
   )
 }
 
-export default ModalRegister
+export default ModalSignIn
