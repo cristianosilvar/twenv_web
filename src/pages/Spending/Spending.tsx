@@ -1,8 +1,17 @@
-import { Box, SimpleGrid, useDisclosure, Heading, Text } from '@chakra-ui/react'
+import {
+  Box,
+  SimpleGrid,
+  useDisclosure,
+  Heading,
+  Text,
+  GridItem,
+  Button,
+} from '@chakra-ui/react'
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
 
+import { IconNew } from 'icons'
 import CardInfo from 'components/Card/CardInfo'
 
 import formatDate from 'utils/formatDate'
@@ -57,6 +66,11 @@ export default function Spending() {
       </Text>
       <SimpleGrid columns={12} mt="30px" spacing="4">
         <CardInfo data={spendingEx} />
+        <GridItem colSpan={{ base: 12, sm: 1 }}>
+          <Button variant="new" boxSize={'full'}>
+            <IconNew boxSize={'25px'} />
+          </Button>
+        </GridItem>
       </SimpleGrid>
     </Box>
   )

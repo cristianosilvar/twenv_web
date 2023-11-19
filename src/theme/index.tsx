@@ -14,6 +14,22 @@ const theme = extendTheme({
     heading: "'Poppins', sans-serif",
     body: "'Poppins', sans-serif",
   },
+  components: {
+    Button: {
+      baseStyle: {
+        fontWeight: 'semibold',
+        borderRadius: 'md',
+      },
+      variants: {
+        new: {
+          py: 30,
+          color: '#513BD9',
+          bgColor: '#000000CC',
+          border: '1px solid #fefefe10',
+        },
+      },
+    },
+  },
   /* components: {
     Button: {
       baseStyle: {

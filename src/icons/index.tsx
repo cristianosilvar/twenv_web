@@ -97,3 +97,17 @@ export const IconOptions = createIcon({
     </g>
   ),
 })
+
+export const IconNew = createIcon({
+  displayName: 'iconNew',
+  viewBox: '0 0 31 31',
+  path: (
+    <g
+      style={{
+        fill: 'currentColor',
+      }}
+    >
+      <path d="M14.7134 16.7095H7.21344V14.2095H14.7134V6.70947H17.2134V14.2095H24.7134V16.7095H17.2134V24.2095H14.7134V16.7095Z" />
+    </g>
+  ),
+})
