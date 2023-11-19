@@ -1,15 +1,19 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, TextProps } from '@chakra-ui/react'
 
-interface LabelInterface {
-  label: string;
-  isRequired?: boolean;
+interface LabelInterface extends TextProps {
+  label: string
+  isRequired?: boolean
 }
 
-export const Label = ({ label, isRequired }: LabelInterface) => {
+export const Label = ({ label, isRequired, ...props }: LabelInterface) => {
   return (
-    <Flex fontSize="lg" fontWeight="semibold" gap={1}>
-      <Text>{label}</Text>
-      <Text color={"purple.500"}>{isRequired && "*"}</Text>
+    <Flex fontSize="md" fontWeight="medium" gap={1}>
+      <Text {...props}>{label}</Text>
+      {isRequired && (
+        <Text {...props} color={'purple.500'}>
+          *
+        </Text>
+      )}
     </Flex>
-  );
-};
+  )
+}

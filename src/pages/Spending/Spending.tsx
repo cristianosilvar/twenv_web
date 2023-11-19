@@ -1,27 +1,21 @@
-import { useState } from 'react'
-import { format } from 'date-fns'
 import {
   Box,
-  Flex,
   SimpleGrid,
-  GridItem,
-  InputGroup,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   useDisclosure,
+  Heading,
+  Text,
+  GridItem,
+  Button,
 } from '@chakra-ui/react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { format } from 'date-fns'
+import { useForm } from 'react-hook-form'
+import { IconNew } from 'icons'
 
-import Card from '../../components/Card/CardDashboard'
-import Main from '../../components/Main/Main'
-import InputDate from '../../components/Inputs/InputDate/InputDate'
-import InputNumber from '../../components/Inputs/InputNumber/InputNumber'
-import InputTextarea from '../../components/Inputs/InputTextarea/InputTextarea'
-import ButtonPrimary from '../../components/Buttons/ButtonPrimary/ButtonPrimary'
-import ButtonSecondary from '../../components/Buttons/ButtonSecondary/ButtonSecondary'
+import ModalDefault from 'components/Modal'
+import CardInfo from 'components/Card/CardInfo'
+
+import formatDate from 'utils/formatDate'
 
 type TData = {
   id: string
@@ -56,8 +50,42 @@ export default function Spending() {
     closeModal()
   }
 
-  return <></>
+  //
+
+  const currentDate = new Date()
+
+  const spendingEx = {
+    date: new Date(),
+    value: 12,
+  }
+
+  return (
+    <Box w="80%" marginInline="auto" mt={{ base: 0, sm: '30px' }}>
+      <Heading as="h2">Despesas</Heading>
+      <Text fontWeight="600" color="#fefefe50">
+        {formatDate(currentDate)}
+      </Text>
+      <SimpleGrid columns={12} mt="30px" spacing="4">
+        <CardInfo data={spendingEx} />
+        <GridItem colSpan={{ base: 12, sm: 1 }}>
+          <ModalDefault title="Nova despesa">
+            <Button variant="new" boxSize={'full'}>
+              <IconNew boxSize={'25px'} />
+            </Button>
+          </ModalDefault>
+        </GridItem>
+      </SimpleGrid>
+    </Box>
+  )
   /* <Main>
+    
+    //
+    <GridItem colSpan={{ base: 12, sm: 1 }}>
+          <Button w="full" height="full" bgColor="#000000CC" color="fefefe">
+            +
+          </Button>
+        </GridItem>
+        //
       <Flex gap="4" wrap="wrap">
         <Box display="flex" gap="4" flexWrap="wrap">
           {spendings?.map((spending, index) => (

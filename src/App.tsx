@@ -1,6 +1,5 @@
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
 import theme from './theme'
 
 import Header from './components/Header/Header'
