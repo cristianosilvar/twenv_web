@@ -10,8 +10,9 @@ import {
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
-
 import { IconNew } from 'icons'
+
+import ModalDefault from 'components/Modal'
 import CardInfo from 'components/Card/CardInfo'
 
 import formatDate from 'utils/formatDate'
@@ -67,9 +68,11 @@ export default function Spending() {
       <SimpleGrid columns={12} mt="30px" spacing="4">
         <CardInfo data={spendingEx} />
         <GridItem colSpan={{ base: 12, sm: 1 }}>
-          <Button variant="new" boxSize={'full'}>
-            <IconNew boxSize={'25px'} />
-          </Button>
+          <ModalDefault title="Nova despesa">
+            <Button variant="new" boxSize={'full'}>
+              <IconNew boxSize={'25px'} />
+            </Button>
+          </ModalDefault>
         </GridItem>
       </SimpleGrid>
     </Box>

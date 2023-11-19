@@ -1,28 +1,28 @@
-import React, { useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { Box, Container, VStack } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { Box, Container, VStack } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 
-import { InputText } from "../../components/Inputs/InputText/InputText";
-import ButtonPrimary from "../../components/Buttons/ButtonPrimary/ButtonPrimary";
-import { InputPassword } from "../../components/Inputs/InputPassword";
+import { InputText } from '../../components/Inputs/InputText/InputText'
+import ButtonPrimary from '../../components/Buttons/ButtonPrimary/ButtonPrimary'
+import { InputPassword } from '../../components/Inputs/InputPassword'
 // import useAuthentication from "../../hooks/useAuthentication";
 
 interface IData {
-  user: string;
-  email: string;
-  password: string;
+  user: string
+  email: string
+  password: string
 }
 
 const RegisterUser = () => {
   // const { createUser, error: authError, loading } = useAuthentication();
 
-  const methods = useForm();
-  const { control, handleSubmit } = methods;
+  const methods = useForm()
+  const { control, handleSubmit } = methods
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const onSubmit = handleSubmit(async (data: any) => {});
+  const onSubmit = handleSubmit(async (data: any) => {})
 
   // useEffect(() => {
   //   if (authError) {
@@ -30,8 +30,9 @@ const RegisterUser = () => {
   //   }
   // }, [authError]);
 
-  return (
-    <Container>
+  return <></>
+  {
+    /* <Container>
       <Box
         marginInline={"auto"}
         w={"full"}
@@ -61,8 +62,8 @@ const RegisterUser = () => {
           </form>
         </FormProvider>
       </Box>
-    </Container>
-  );
-};
+    </Container> */
+  }
+}
 
-export default RegisterUser;
+export default RegisterUser

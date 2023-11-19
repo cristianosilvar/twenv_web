@@ -6,8 +6,10 @@ import {
   GridItem,
   Button,
 } from '@chakra-ui/react'
-import CardInfo from 'components/Card/CardInfo'
 import { IconNew } from 'icons'
+
+import CardInfo from 'components/Card/CardInfo'
+import ModalDefault from 'components/Modal'
 
 import formatDate from 'utils/formatDate'
 
@@ -29,9 +31,11 @@ export default function Earnings() {
       <SimpleGrid columns={12} mt="30px" spacing="4">
         <CardInfo data={earningEx} />
         <GridItem colSpan={{ base: 12, sm: 1 }}>
-          <Button variant="new" boxSize={'full'}>
-            <IconNew boxSize={'25px'} />
-          </Button>
+          <ModalDefault title="Novo ganho">
+            <Button variant="new" boxSize={'full'}>
+              <IconNew boxSize={'25px'} />
+            </Button>
+          </ModalDefault>
         </GridItem>
       </SimpleGrid>
     </Box>
