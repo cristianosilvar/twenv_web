@@ -52,7 +52,7 @@ const ModalDefault = ({
         onClose={onClose}
         closeOnOverlayClick={false}
       >
-        <ModalOverlay />
+        <ModalOverlay bgColor="#00040750" backdropFilter="blur(5px)" />
         <ModalContent bgColor="#000407" border="1px solid #fefefe15">
           <ModalHeader textAlign="center">{title}</ModalHeader>
           <ModalBody pb={6}>
