@@ -15,9 +15,15 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { InputPassword } from 'components/Inputs/InputPassword'
 import { InputText } from 'components/Inputs/InputText/InputText'
+
+import services from 'services'
+
+import { UserInterface } from 'interfaces/user'
+import { ResponseInterface } from 'interfaces/response'
 
 interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode
@@ -35,6 +41,34 @@ const ModalRegister = ({
 }: IModalRegister) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const methods = useForm()
+
+  const { handleSubmit } = methods
+
+  const navigate = useNavigate()
+
+  const handleRegister = handleSubmit(async data => {
+    const response = await services.post<
+      void,
+      ResponseInterface<UserInterface>
+    >('user', data)
+
+    if (response) {
+      if (response.sucess && response.data) {
+        localStorage.setItem('user-id', response.data.id)
+        localStorage.setItem('username', response.data.username)
+        localStorage.setItem('email', response.data.email)
+
+        onClose()
+        navigate('/')
+
+        window.location.reload()
+      }
+
+      if (!response.sucess) {
+        console.error(response.message)
+      }
+    }
+  })
 
   return (
     <>
@@ -79,7 +113,9 @@ const ModalRegister = ({
           </ModalBody>
           <ModalFooter>
             <VStack w="full">
-              <Button variant="primary">Criar sua conta</Button>
+              <Button variant="primary" onClick={() => handleRegister()}>
+                Criar sua conta
+              </Button>
               <Button variant="secondary" onClick={onClose}>
                 Voltar
               </Button>
