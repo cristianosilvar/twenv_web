@@ -19,6 +19,18 @@ import ModalRegister from 'components/Modal/ModalRegister'
 import ModalSignIn from 'components/Modal/ModalSignIn'
 
 const MenuItems = ({ authenticatedUser }: { authenticatedUser: boolean }) => {
+  const navigate = useNavigate()
+
+  const logOut = () => {
+    localStorage.removeItem('user-id')
+    localStorage.removeItem('username')
+    localStorage.removeItem('email')
+
+    navigate('/')
+
+    window.location.reload()
+  }
+
   return authenticatedUser ? (
     <>
       <MenuItem
@@ -27,6 +39,7 @@ const MenuItems = ({ authenticatedUser }: { authenticatedUser: boolean }) => {
         _hover={{
           bgColor: '#fefefe10',
         }}
+        onClick={() => logOut()}
       >
         Sair da conta
       </MenuItem>
@@ -71,7 +84,13 @@ const MenuItems = ({ authenticatedUser }: { authenticatedUser: boolean }) => {
 const Header = () => {
   const navigate = useNavigate()
 
-  const authenticatedUser = false
+  const user = {
+    id: localStorage.getItem('user-id'),
+    name: localStorage.getItem('username'),
+    email: localStorage.getItem('email'),
+  }
+
+  const authenticatedUser = user.id ? true : false
 
   return (
     <>
@@ -100,7 +119,7 @@ const Header = () => {
                   </Circle>
                 )}
                 <Text color="#fefefe80">
-                  {authenticatedUser ? 'username' : 'Sem usuário'}
+                  {authenticatedUser ? user?.name : 'Sem usuário'}
                 </Text>
                 <IconArrowDownMenu boxSize="20px" color="#fefefe50" />
               </HStack>
