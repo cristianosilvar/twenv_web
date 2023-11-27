@@ -14,10 +14,15 @@ import {
   VStack,
   useDisclosure,
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router'
 import { FormProvider, useForm } from 'react-hook-form'
+
+import services from 'services'
 
 import { InputPassword } from 'components/Inputs/InputPassword'
 import { InputText } from 'components/Inputs/InputText/InputText'
+
+import { ResponseInterface } from 'interfaces/response'
 
 interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode
@@ -34,7 +39,33 @@ const ModalSignIn = ({
   ...props
 }: IModalRegister) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const navigate = useNavigate()
   const methods = useForm()
+
+  const { handleSubmit } = methods
+
+  const handleSignIn = handleSubmit(async data => {
+    const response = await services.post<
+      void,
+      ResponseInterface<{ token: string }>
+    >('user/signin', data)
+
+    if (response) {
+      if (response.sucess && response.data) {
+        localStorage.setItem('token', response.data.token)
+
+        onClose()
+        navigate('/')
+
+        window.location.reload()
+      }
+
+      if (!response.sucess) {
+        console.error(response.message)
+      }
+    }
+  })
 
   return (
     <>
@@ -72,7 +103,9 @@ const ModalSignIn = ({
           </ModalBody>
           <ModalFooter>
             <VStack w="full">
-              <Button variant="primary">Entre na sua conta</Button>
+              <Button variant="primary" onClick={() => handleSignIn()}>
+                Entre na sua conta
+              </Button>
               <Button variant="secondary" onClick={onClose}>
                 Voltar
               </Button>

@@ -18,16 +18,15 @@ import Navbar from '../Navbar'
 import ModalRegister from 'components/Modal/ModalRegister'
 import ModalSignIn from 'components/Modal/ModalSignIn'
 
+import getDataUser from 'utils/getDataUser'
+
 const MenuItems = ({ authenticatedUser }: { authenticatedUser: boolean }) => {
   const navigate = useNavigate()
 
   const logOut = () => {
-    localStorage.removeItem('user-id')
-    localStorage.removeItem('username')
-    localStorage.removeItem('email')
+    localStorage.removeItem('token')
 
     navigate('/')
-
     window.location.reload()
   }
 
@@ -83,14 +82,9 @@ const MenuItems = ({ authenticatedUser }: { authenticatedUser: boolean }) => {
 
 const Header = () => {
   const navigate = useNavigate()
+  const user = getDataUser()
 
-  const user = {
-    id: localStorage.getItem('user-id'),
-    name: localStorage.getItem('username'),
-    email: localStorage.getItem('email'),
-  }
-
-  const authenticatedUser = user.id ? true : false
+  const authenticatedUser = user ? true : false
 
   return (
     <>
