@@ -1,6 +1,6 @@
 import { Box, Heading, Stack, Text } from '@chakra-ui/react'
-import CardDashboard from 'components/Card/CardDashboard'
 
+import CardDashboard from 'components/Card/CardDashboard'
 import formatDate from 'utils/formatDate'
 
 export default function Home() {

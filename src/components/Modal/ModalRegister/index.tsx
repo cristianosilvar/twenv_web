@@ -49,14 +49,12 @@ const ModalRegister = ({
   const handleRegister = handleSubmit(async data => {
     const response = await services.post<
       void,
-      ResponseInterface<UserInterface>
-    >('user', data)
+      ResponseInterface<{ token: string }>
+    >('user/signup', data)
 
     if (response) {
       if (response.sucess && response.data) {
-        localStorage.setItem('user-id', response.data.id)
-        localStorage.setItem('username', response.data.username)
-        localStorage.setItem('email', response.data.email)
+        localStorage.setItem('token', response.data.token)
 
         onClose()
         navigate('/')
