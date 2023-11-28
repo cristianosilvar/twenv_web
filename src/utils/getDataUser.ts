@@ -6,7 +6,7 @@ const getDataUser = () => {
 
   try {
     const user: UserInterface = jwtDecode(token)
-    return { sub: user.sub, name: user.username, email: user.email }
+    return user
   } catch (err: any) {
     console.error('Erro ao decodificar o token:', err.message)
   }

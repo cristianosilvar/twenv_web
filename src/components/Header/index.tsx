@@ -14,23 +14,25 @@ import {
 } from '@chakra-ui/react'
 import { IconArrowDownMenu, Logo } from 'icons/index'
 
+import { useAuth } from 'context/authContext'
+import getDataUser from 'utils/getDataUser'
+
 import Navbar from '../Navbar'
 import ModalRegister from 'components/Modal/ModalRegister'
 import ModalSignIn from 'components/Modal/ModalSignIn'
 
-import getDataUser from 'utils/getDataUser'
-
-const MenuItems = ({ authenticatedUser }: { authenticatedUser: boolean }) => {
+const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const navigate = useNavigate()
+  const { signout } = useAuth()
 
   const logOut = () => {
-    localStorage.removeItem('token')
+    signout()
 
     navigate('/')
     window.location.reload()
   }
 
-  return authenticatedUser ? (
+  return isAuthenticated ? (
     <>
       <MenuItem
         bgColor="#000"
@@ -84,7 +86,7 @@ const Header = () => {
   const navigate = useNavigate()
   const user = getDataUser()
 
-  const authenticatedUser = user ? true : false
+  const { isAuthenticated } = useAuth()
 
   return (
     <>
@@ -107,19 +109,19 @@ const Header = () => {
           <Menu>
             <MenuButton>
               <HStack>
-                {authenticatedUser && (
+                {isAuthenticated && (
                   <Circle size="35px">
                     <Avatar w={'full'} h={'full'} borderRadius={'full'} />
                   </Circle>
                 )}
                 <Text color="#fefefe80">
-                  {authenticatedUser ? user?.name : 'Sem usuário'}
+                  {isAuthenticated ? user?.username : 'Sem usuário'}
                 </Text>
                 <IconArrowDownMenu boxSize="20px" color="#fefefe50" />
               </HStack>
             </MenuButton>
             <MenuList bgColor="#000" borderColor="#fefefe15" minW="min-content">
-              <MenuItems authenticatedUser={authenticatedUser} />
+              <MenuItems isAuthenticated={isAuthenticated} />
             </MenuList>
           </Menu>
         </Flex>

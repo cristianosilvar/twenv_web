@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import services from 'services'
+import { useAuth } from 'context/authContext'
 
 import { InputPassword } from 'components/Inputs/InputPassword'
 import { InputText } from 'components/Inputs/InputText/InputText'
@@ -39,9 +40,10 @@ const ModalSignIn = ({
   ...props
 }: IModalRegister) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
   const navigate = useNavigate()
   const methods = useForm()
+
+  const { signin } = useAuth()
 
   const { handleSubmit } = methods
 
@@ -53,7 +55,7 @@ const ModalSignIn = ({
 
     if (response) {
       if (response.sucess && response.data) {
-        localStorage.setItem('token', response.data.token)
+        signin(response.data.token)
 
         onClose()
         navigate('/')

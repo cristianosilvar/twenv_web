@@ -17,12 +17,12 @@ import {
 import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
+import services from 'services'
+import { useAuth } from 'context/authContext'
+
 import { InputPassword } from 'components/Inputs/InputPassword'
 import { InputText } from 'components/Inputs/InputText/InputText'
 
-import services from 'services'
-
-import { UserInterface } from 'interfaces/user'
 import { ResponseInterface } from 'interfaces/response'
 
 interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
@@ -41,10 +41,11 @@ const ModalRegister = ({
 }: IModalRegister) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const methods = useForm()
+  const navigate = useNavigate()
+
+  const { signin } = useAuth()
 
   const { handleSubmit } = methods
-
-  const navigate = useNavigate()
 
   const handleRegister = handleSubmit(async data => {
     const response = await services.post<
@@ -54,7 +55,7 @@ const ModalRegister = ({
 
     if (response) {
       if (response.sucess && response.data) {
-        localStorage.setItem('token', response.data.token)
+        signin(response.data.token)
 
         onClose()
         navigate('/')
