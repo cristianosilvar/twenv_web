@@ -125,3 +125,17 @@ export const IconCalendar = createIcon({
     </g>
   ),
 })
+
+export const IconArrowDownMenu = createIcon({
+  displayName: 'iconArrowDownMenu',
+  viewBox: '0 0 30 30',
+  path: (
+    <g
+      style={{
+        fill: 'currentColor',
+      }}
+    >
+      <path d="M15 19.489L7.26086 11.7499L9.24999 9.76074L15 15.5107L20.75 9.76074L22.7391 11.7499L15 19.489Z" />{' '}
+    </g>
+  ),
+})

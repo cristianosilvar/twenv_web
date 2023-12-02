@@ -14,28 +14,60 @@ import {
   VStack,
   useDisclosure,
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import InputDate from 'components/Inputs/InputDate/InputDate'
-import InputNumber from 'components/Inputs/InputNumber/InputNumber'
-import InputTextarea from 'components/Inputs/InputTextarea/InputTextarea'
+import services from 'services'
+import { useAuth } from 'context/authContext'
 
-interface IModalDefault extends Omit<ModalProps, 'isOpen' | 'onClose'> {
+import { InputPassword } from 'components/Inputs/InputPassword'
+import { InputText } from 'components/Inputs/InputText/InputText'
+
+import { ResponseInterface } from 'interfaces/response'
+
+interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode
   title?: string
   buttonWidth?: any
   buttonHeight?: any
 }
 
-const ModalDefault = ({
+const ModalSignIn = ({
   children,
   title,
   buttonWidth = 'full',
   buttonHeight = 'full',
   ...props
-}: IModalDefault) => {
+}: IModalRegister) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const navigate = useNavigate()
   const methods = useForm()
+
+  const { signin } = useAuth()
+
+  const { handleSubmit } = methods
+
+  const handleSignIn = handleSubmit(async data => {
+    const response = await services.post<
+      void,
+      ResponseInterface<{ token: string }>
+    >('user/signin', data)
+
+    if (response) {
+      if (response.sucess && response.data) {
+        signin(response.data.token)
+
+        onClose()
+        navigate('/')
+
+        window.location.reload()
+      }
+
+      if (!response.sucess) {
+        console.error(response.message)
+      }
+    }
+  })
 
   return (
     <>
@@ -55,31 +87,29 @@ const ModalDefault = ({
             <FormProvider {...methods}>
               <SimpleGrid columns={12} spacing={6}>
                 <GridItem colSpan={12}>
-                  <InputTextarea
-                    name={'desc'}
-                    placeholder="Qual o nome, descrição e/ou informação 
-                dessa despesa?"
+                  <InputText
+                    name={'email'}
+                    placeholder="email@example.com"
+                    label="E-mail"
                   />
                 </GridItem>
-                <GridItem colSpan={6}>
-                  <InputNumber
-                    name={'value'}
-                    label="Valor"
-                    leftElement="R$"
-                    isRequired
+                <GridItem colSpan={12}>
+                  <InputPassword
+                    name={'password'}
+                    label="Senha"
+                    placeholder="Mínimo de 6 caracteres"
                   />
-                </GridItem>
-                <GridItem colSpan={6}>
-                  <InputDate name="date" label="Data" isRequired />
                 </GridItem>
               </SimpleGrid>
             </FormProvider>
           </ModalBody>
           <ModalFooter>
             <VStack w="full">
-              <Button variant="primary">Adicionar</Button>
+              <Button variant="primary" onClick={() => handleSignIn()}>
+                Entre na sua conta
+              </Button>
               <Button variant="secondary" onClick={onClose}>
-                Cancelar
+                Voltar
               </Button>
             </VStack>
           </ModalFooter>
@@ -89,4 +119,4 @@ const ModalDefault = ({
   )
 }
 
-export default ModalDefault
+export default ModalSignIn

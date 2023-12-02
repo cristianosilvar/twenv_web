@@ -1,13 +1,13 @@
 import { Box, Heading, Stack, Text } from '@chakra-ui/react'
-import CardDashboard from 'components/Card/CardDashboard'
 
+import CardDashboard from 'components/Card/CardDashboard'
 import formatDate from 'utils/formatDate'
 
 export default function Home() {
   const currentDate = new Date()
 
   return (
-    <Box w="80%" marginInline="auto" mt={{ base: 0, sm: '30px' }}>
+    <Box w="80%" marginInline="auto" mt={'30px'}>
       <Heading as="h2">Dashboard</Heading>
       <Text fontWeight="600" color="#fefefe50">
         {formatDate(currentDate)}

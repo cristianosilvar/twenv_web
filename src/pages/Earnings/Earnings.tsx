@@ -23,8 +23,8 @@ export default function Earnings() {
   }
 
   return (
-    <Box w="80%" marginInline="auto" mt={{ base: 0, sm: '30px' }}>
-      <Heading as="h2">Despesas</Heading>
+    <Box w="80%" marginInline="auto" mt={'30px'}>
+      <Heading as="h2">Ganhos</Heading>
       <Text fontWeight="600" color="#fefefe50">
         {formatDate(currentDate)}
       </Text>

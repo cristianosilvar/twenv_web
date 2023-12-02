@@ -16,15 +16,19 @@ import {
 } from '@chakra-ui/react'
 import { IconOptions } from 'icons'
 
-import InfoInterface from 'interfaces/info'
+import ModalDefault from 'components/Modal'
+
 import formatReal from 'utils/fomatReal'
 import formatDate from 'utils/formatDate'
 
+import InfoInterface from 'interfaces/info'
+
 interface ICardInfo extends StackProps {
   data: InfoInterface
+  onClick?: () => void
 }
 
-const CardInfo = ({ data, ...props }: ICardInfo) => {
+const CardInfo = ({ data, onClick, ...props }: ICardInfo) => {
   const [isHover, setIsHover] = useState(false)
 
   return (
@@ -90,6 +94,18 @@ const CardInfo = ({ data, ...props }: ICardInfo) => {
                       borderColor="#fefefe15"
                       minW="min-content"
                     >
+                      <ModalDefault title="Alterar">
+                        <MenuItem
+                          bgColor="#000"
+                          px={8}
+                          py={2}
+                          _hover={{
+                            bgColor: '#fefefe10',
+                          }}
+                        >
+                          Editar
+                        </MenuItem>
+                      </ModalDefault>
                       <MenuItem
                         bgColor="#000"
                         px={8}
@@ -97,16 +113,7 @@ const CardInfo = ({ data, ...props }: ICardInfo) => {
                         _hover={{
                           bgColor: '#fefefe10',
                         }}
-                      >
-                        Editar
-                      </MenuItem>
-                      <MenuItem
-                        bgColor="#000"
-                        px={8}
-                        py={2}
-                        _hover={{
-                          bgColor: '#fefefe10',
-                        }}
+                        onClick={() => onClick}
                       >
                         Excluir
                       </MenuItem>
