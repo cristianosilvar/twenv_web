@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useCallback } from 'react'
 import {
   Box,
   Button,
@@ -19,6 +19,9 @@ import { FormProvider, useForm } from 'react-hook-form'
 import InputDate from 'components/Inputs/InputDate/InputDate'
 import InputNumber from 'components/Inputs/InputNumber/InputNumber'
 import InputTextarea from 'components/Inputs/InputTextarea/InputTextarea'
+import services from 'services'
+import { InfoInterface } from 'interfaces/info'
+import { ResponseInterface } from 'interfaces/response'
 
 interface IModalDefault extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode
@@ -35,7 +38,40 @@ const ModalDefault = ({
   ...props
 }: IModalDefault) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const methods = useForm()
+  const methods = useForm({
+    defaultValues: {
+      description: '',
+      value: 0,
+      date: new Date(),
+    },
+  })
+
+  const { handleSubmit, reset } = methods
+
+  const onCloseModal = useCallback(() => {
+    reset()
+    onClose()
+  }, [onClose, reset])
+
+  const onSubmit = handleSubmit(async data => {
+    console.log({ ...data, value: Number(data.value) })
+
+    const response = await services.post<
+      void,
+      ResponseInterface<InfoInterface>
+    >('spending', {
+      ...data,
+      value: Number(data.value),
+      date: new Date(data.date),
+    })
+
+    if (response) {
+      if (response.sucess) {
+        console.log(response.data)
+        onCloseModal()
+      }
+    }
+  })
 
   return (
     <>
@@ -56,14 +92,14 @@ const ModalDefault = ({
               <SimpleGrid columns={12} spacing={6}>
                 <GridItem colSpan={12}>
                   <InputTextarea
-                    name={'desc'}
+                    name="description"
                     placeholder="Qual o nome, descrição e/ou informação 
                 dessa despesa?"
                   />
                 </GridItem>
                 <GridItem colSpan={6}>
                   <InputNumber
-                    name={'value'}
+                    name="value"
                     label="Valor"
                     leftElement="R$"
                     isRequired
@@ -77,7 +113,9 @@ const ModalDefault = ({
           </ModalBody>
           <ModalFooter>
             <VStack w="full">
-              <Button variant="primary">Adicionar</Button>
+              <Button variant="primary" onClick={() => onSubmit()}>
+                Adicionar
+              </Button>
               <Button variant="secondary" onClick={onClose}>
                 Cancelar
               </Button>

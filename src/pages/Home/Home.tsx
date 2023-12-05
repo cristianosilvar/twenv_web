@@ -10,7 +10,7 @@ export default function Home() {
     <Box w="80%" marginInline="auto" mt={'30px'}>
       <Heading as="h2">Dashboard</Heading>
       <Text fontWeight="600" color="#fefefe50">
-        {formatDate(currentDate)}
+        {formatDate(currentDate, 'monthName')}
       </Text>
       <Stack
         gap={{ base: '0', md: '15px' }}

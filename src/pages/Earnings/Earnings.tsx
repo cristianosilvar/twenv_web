@@ -26,7 +26,7 @@ export default function Earnings() {
     <Box w="80%" marginInline="auto" mt={'30px'}>
       <Heading as="h2">Ganhos</Heading>
       <Text fontWeight="600" color="#fefefe50">
-        {formatDate(currentDate)}
+        {formatDate(currentDate, 'monthName')}
       </Text>
       <SimpleGrid columns={12} mt="30px" spacing="4">
         <CardInfo data={earningEx} />
