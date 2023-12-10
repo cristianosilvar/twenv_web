@@ -8,13 +8,20 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React from 'react'
-import { IconArrowDownRed, IconArrowUpGreen } from '../../../icons'
+import { IconArrowDownRed, IconArrowUpGreen } from 'icons'
+
+import formatReal from 'utils/fomatReal'
 
 interface ICardDashboard extends FlexProps {
   type?: 'spendings' | 'earnings'
+  value: number
 }
 
-const CardDashboard = ({ type = 'spendings', ...props }: ICardDashboard) => {
+const CardDashboard = ({
+  type = 'spendings',
+  value = 0,
+  ...props
+}: ICardDashboard) => {
   return (
     <Flex
       p={2}
@@ -41,7 +48,7 @@ const CardDashboard = ({ type = 'spendings', ...props }: ICardDashboard) => {
           </Text>
         </HStack>
         <Flex gap={2} fontSize="3xl" fontWeight="extrabold">
-          <Text opacity={0.5}>R$</Text> 1.278,00
+          <Text opacity={0.5}>R$</Text> {formatReal(value)}
         </Flex>
       </VStack>
     </Flex>
