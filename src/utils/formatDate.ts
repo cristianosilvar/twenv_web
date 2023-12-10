@@ -1,4 +1,4 @@
-type typeFormats = 'default' | 'dayAndMonth' | 'monthName'
+type typeFormats = 'default' | 'dayAndMonth' | 'monthName' | 'dateInput'
 
 const monthNames: string[] = [
   'janeiro',
@@ -38,6 +38,9 @@ const formatDate = (date: Date, type: typeFormats = 'default'): string => {
       break
     case 'dayAndMonth':
       formatDate = `${formatedDay}/${formatedMonth}`
+      break
+    case 'dateInput':
+      formatDate = `${year}-${month + 1}-${day}`
       break
     default:
       break
