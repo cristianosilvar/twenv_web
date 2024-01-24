@@ -25,10 +25,10 @@ import { InfoInterface } from 'interfaces/info'
 
 interface ICardInfo extends StackProps {
   data: InfoInterface
-  onClick?: () => void
+  callbackDelete?: (id: string | undefined) => void
 }
 
-const CardInfo = ({ data, onClick, ...props }: ICardInfo) => {
+const CardInfo = ({ data, callbackDelete, ...props }: ICardInfo) => {
   const [isHover, setIsHover] = useState(false)
 
   return (
@@ -113,7 +113,9 @@ const CardInfo = ({ data, onClick, ...props }: ICardInfo) => {
                         _hover={{
                           bgColor: '#fefefe10',
                         }}
-                        onClick={() => onClick}
+                        onClick={() =>
+                          callbackDelete && callbackDelete(data.id)
+                        }
                       >
                         Excluir
                       </MenuItem>

@@ -33,22 +33,25 @@ export default function Earnings() {
   const { handleSubmit, reset } = methods
   const [earnings, setEarnings] = useState<InfoInterface[]>()
 
-  const onSubmit = handleSubmit(async data => {
-    const response = await services.post<
-      void,
-      ResponseInterface<InfoInterface>
-    >('earning', {
-      ...data,
-      value: Number(data.value),
-      date: new Date(data.date),
-    })
+  const onSubmit = () => {
+    handleSubmit(async data => {
+      const response = await services.post<
+        void,
+        ResponseInterface<InfoInterface>
+      >('earning', {
+        ...data,
+        value: Number(data.value),
+        date: new Date(data.date),
+      })
 
-    if (response) {
-      if (response.sucess) {
-        reset()
+      if (response) {
+        if (response.sucess) {
+          reset()
+          getEarnings()
+        }
       }
-    }
-  })
+    })
+  }
 
   const getEarnings = useCallback(async () => {
     const response = await services.get<

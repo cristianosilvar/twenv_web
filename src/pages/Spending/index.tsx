@@ -45,6 +45,7 @@ export default function Spending() {
 
     if (response) {
       if (response.sucess) {
+        getSpendings()
         reset()
       }
     }
@@ -63,6 +64,23 @@ export default function Spending() {
     }
   }, [])
 
+  const deleteSpending = useCallback(
+    async (id: string | undefined) => {
+      if (!id) return
+
+      const response = await services.delete<void, ResponseInterface>(
+        `spending/${id}`
+      )
+
+      if (response) {
+        if (response.sucess) {
+          getSpendings()
+        }
+      }
+    },
+    [getSpendings]
+  )
+
   useEffect(() => {
     getSpendings()
   }, [getSpendings])
@@ -75,7 +93,11 @@ export default function Spending() {
       </Text>
       <SimpleGrid columns={12} mt="30px" spacing="4">
         {spendings?.map(spending => (
-          <CardInfo data={spending} key={spending.id} />
+          <CardInfo
+            data={spending}
+            callbackDelete={deleteSpending}
+            key={spending.id}
+          />
         ))}
         <GridItem colSpan={{ base: 12, sm: 1 }}>
           <FormProvider {...methods}>
