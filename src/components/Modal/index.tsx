@@ -24,8 +24,8 @@ interface IModalDefault extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   title?: string
   buttonWidth?: any
   buttonHeight?: any
-  onSubmit?: () => void
-  onClose?: () => void
+  callback?: (onClose?: () => void) => void
+  callbackCancel?: (onClose?: () => void) => void
 }
 
 const ModalDefault = ({
@@ -33,7 +33,8 @@ const ModalDefault = ({
   title,
   buttonWidth = 'full',
   buttonHeight = 'full',
-  onSubmit,
+  callback,
+  callbackCancel,
   ...props
 }: IModalDefault) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -46,7 +47,7 @@ const ModalDefault = ({
       <Modal
         {...props}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => (callbackCancel ? callbackCancel(onClose) : onClose)}
         closeOnOverlayClick={false}
       >
         <ModalOverlay bgColor="#00040750" backdropFilter="blur(5px)" />
@@ -76,10 +77,18 @@ const ModalDefault = ({
           </ModalBody>
           <ModalFooter>
             <VStack w="full">
-              <Button variant="primary" onClick={() => onSubmit && onSubmit()}>
+              <Button
+                variant="primary"
+                onClick={() => callback && callback(onClose)}
+              >
                 Adicionar
               </Button>
-              <Button variant="secondary" onClick={onClose}>
+              <Button
+                variant="secondary"
+                onClick={() =>
+                  callbackCancel ? callbackCancel(onClose) : onClose
+                }
+              >
                 Cancelar
               </Button>
             </VStack>

@@ -33,7 +33,7 @@ export default function Spending() {
   const { handleSubmit, reset } = methods
   const [spendings, setSpendings] = useState<InfoInterface[]>()
 
-  const onSubmit = handleSubmit(async data => {
+  const submit = handleSubmit(async data => {
     const response = await services.post<
       void,
       ResponseInterface<InfoInterface>
@@ -50,6 +50,14 @@ export default function Spending() {
       }
     }
   })
+
+  const onSubmit = (onClose?: () => void) => {
+    submit()
+
+    if (onClose) {
+      onClose()
+    }
+  }
 
   const getSpendings = useCallback(async () => {
     const response = await services.get<
@@ -101,7 +109,7 @@ export default function Spending() {
         ))}
         <GridItem colSpan={{ base: 12, sm: 1 }}>
           <FormProvider {...methods}>
-            <ModalDefault title="Nova despesa" onSubmit={onSubmit}>
+            <ModalDefault title="Nova despesa" callback={onSubmit}>
               <Button variant="new" boxSize={'full'}>
                 <IconNew boxSize={'25px'} />
               </Button>

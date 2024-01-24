@@ -33,24 +33,30 @@ export default function Earnings() {
   const { handleSubmit, reset } = methods
   const [earnings, setEarnings] = useState<InfoInterface[]>()
 
-  const onSubmit = () => {
-    handleSubmit(async data => {
-      const response = await services.post<
-        void,
-        ResponseInterface<InfoInterface>
-      >('earning', {
-        ...data,
-        value: Number(data.value),
-        date: new Date(data.date),
-      })
-
-      if (response) {
-        if (response.sucess) {
-          reset()
-          getEarnings()
-        }
-      }
+  const submit = handleSubmit(async data => {
+    const response = await services.post<
+      void,
+      ResponseInterface<InfoInterface>
+    >('earning', {
+      ...data,
+      value: Number(data.value),
+      date: new Date(data.date),
     })
+
+    if (response) {
+      if (response.sucess) {
+        reset()
+        getEarnings()
+      }
+    }
+  })
+
+  const onSubmit = (onClose?: () => void) => {
+    submit()
+
+    if (onClose) {
+      onClose()
+    }
   }
 
   const getEarnings = useCallback(async () => {
@@ -65,6 +71,8 @@ export default function Earnings() {
       }
     }
   }, [])
+
+  //add callbackCancel com onClose
 
   useEffect(() => {
     getEarnings()
@@ -82,7 +90,7 @@ export default function Earnings() {
         ))}
         <GridItem colSpan={{ base: 12, sm: 1 }}>
           <FormProvider {...methods}>
-            <ModalDefault title="Novo ganho" onSubmit={onSubmit}>
+            <ModalDefault title="Novo ganho" callback={onSubmit}>
               <Button variant="new" boxSize={'full'}>
                 <IconNew boxSize={'25px'} />
               </Button>
