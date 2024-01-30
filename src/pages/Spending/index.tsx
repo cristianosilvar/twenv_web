@@ -89,6 +89,10 @@ export default function Spending() {
     [getSpendings]
   )
 
+  const handleCancel = useCallback((onClose?: () => void) => {
+    onClose && onClose()
+  }, [])
+
   useEffect(() => {
     getSpendings()
   }, [getSpendings])
@@ -109,7 +113,11 @@ export default function Spending() {
         ))}
         <GridItem colSpan={{ base: 12, sm: 1 }}>
           <FormProvider {...methods}>
-            <ModalDefault title="Nova despesa" callback={onSubmit}>
+            <ModalDefault
+              title="Nova despesa"
+              callback={onSubmit}
+              callbackCancel={handleCancel}
+            >
               <Button variant="new" boxSize={'full'}>
                 <IconNew boxSize={'25px'} />
               </Button>

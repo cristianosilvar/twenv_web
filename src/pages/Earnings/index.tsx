@@ -72,7 +72,26 @@ export default function Earnings() {
     }
   }, [])
 
-  //add callbackCancel com onClose
+  const deleteSpending = useCallback(
+    async (id: string | undefined) => {
+      if (!id) return
+
+      const response = await services.delete<void, ResponseInterface>(
+        `earning/${id}`
+      )
+
+      if (response) {
+        if (response.sucess) {
+          getEarnings()
+        }
+      }
+    },
+    [getEarnings]
+  )
+
+  const handleCancel = useCallback((onClose?: () => void) => {
+    onClose && onClose()
+  }, [])
 
   useEffect(() => {
     getEarnings()
@@ -86,11 +105,19 @@ export default function Earnings() {
       </Text>
       <SimpleGrid columns={12} mt="30px" spacing="4">
         {earnings?.map(earning => (
-          <CardInfo data={earning} key={earning.id} />
+          <CardInfo
+            data={earning}
+            callbackDelete={deleteSpending}
+            key={earning.id}
+          />
         ))}
         <GridItem colSpan={{ base: 12, sm: 1 }}>
           <FormProvider {...methods}>
-            <ModalDefault title="Novo ganho" callback={onSubmit}>
+            <ModalDefault
+              title="Novo ganho"
+              callback={onSubmit}
+              callbackCancel={handleCancel}
+            >
               <Button variant="new" boxSize={'full'}>
                 <IconNew boxSize={'25px'} />
               </Button>
