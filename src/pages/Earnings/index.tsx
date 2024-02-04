@@ -89,6 +89,25 @@ export default function Earnings() {
     [getEarnings]
   )
 
+  const handleUpdate = useCallback(
+    async (onClose: () => void, data: any, id: string) => {
+      const response = await services.put<void, ResponseInterface>('earning', {
+        ...data,
+        date: new Date(data.date),
+        value: Number(data.value),
+        id,
+      })
+
+      if (response) {
+        if (response.sucess) {
+          getEarnings()
+          onClose()
+        }
+      }
+    },
+    [getEarnings]
+  )
+
   const handleCancel = useCallback((onClose?: () => void) => {
     onClose && onClose()
   }, [])
@@ -106,9 +125,10 @@ export default function Earnings() {
       <SimpleGrid columns={12} mt="30px" spacing="4">
         {earnings?.map(earning => (
           <CardInfo
-            data={earning}
-            callbackDelete={deleteSpending}
             key={earning.id}
+            data={earning}
+            callback={handleUpdate}
+            callbackDelete={deleteSpending}
           />
         ))}
         <GridItem colSpan={{ base: 12, sm: 1 }}>

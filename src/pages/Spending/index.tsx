@@ -89,6 +89,25 @@ export default function Spending() {
     [getSpendings]
   )
 
+  const handleUpdate = useCallback(
+    async (onClose: () => void, data: any, id: string) => {
+      const response = await services.put<void, ResponseInterface>('spending', {
+        ...data,
+        date: new Date(data.date),
+        value: Number(data.value),
+        id,
+      })
+
+      if (response) {
+        if (response.sucess) {
+          getSpendings()
+          onClose()
+        }
+      }
+    },
+    [getSpendings]
+  )
+
   const handleCancel = useCallback((onClose?: () => void) => {
     onClose && onClose()
   }, [])
@@ -106,9 +125,10 @@ export default function Spending() {
       <SimpleGrid columns={12} mt="30px" spacing="4">
         {spendings?.map(spending => (
           <CardInfo
-            data={spending}
-            callbackDelete={deleteSpending}
             key={spending.id}
+            data={spending}
+            callback={handleUpdate}
+            callbackDelete={deleteSpending}
           />
         ))}
         <GridItem colSpan={{ base: 12, sm: 1 }}>

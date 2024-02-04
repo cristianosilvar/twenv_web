@@ -24,8 +24,8 @@ interface IModalDefault extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   title?: string
   buttonWidth?: any
   buttonHeight?: any
-  callback?: (onClose?: () => void) => void
-  callbackCancel?: (onClose?: () => void) => void
+  callback?: (onClose: () => void) => void
+  callbackCancel?: (onClose: () => void) => void
 }
 
 const ModalDefault = ({
