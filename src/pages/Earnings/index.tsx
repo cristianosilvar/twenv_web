@@ -66,7 +66,7 @@ export default function Earnings() {
     >('earnings')
 
     if (response) {
-      if (response.sucess && response.data) {
+      if (response.sucess) {
         setEarnings(response.data)
       }
     }

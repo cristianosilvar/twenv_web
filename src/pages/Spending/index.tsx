@@ -66,7 +66,7 @@ export default function Spending() {
     >('spendings')
 
     if (response) {
-      if (response.sucess && response.data) {
+      if (response.sucess) {
         setSpendings(response.data)
       }
     }
