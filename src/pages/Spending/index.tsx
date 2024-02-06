@@ -9,6 +9,8 @@ import {
 import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { IconNew } from 'icons'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import ModalDefault from 'components/Modal'
 import CardInfo from 'components/Card/CardInfo'
@@ -19,10 +21,19 @@ import formatDate from 'utils/formatDate'
 import { ResponseInterface } from 'interfaces/response'
 import { InfoInterface } from 'interfaces/info'
 
+const schemaSpending = z.object({
+  description: z.string(),
+  date: z.string(),
+  value: z.number().min(1),
+})
+
+type spendingT = z.infer<typeof schemaSpending>
+
 export default function Spending() {
   const currentDate = new Date()
 
-  const methods = useForm({
+  const methods = useForm<spendingT>({
+    resolver: zodResolver(schemaSpending),
     defaultValues: {
       description: '',
       value: 0,
@@ -34,6 +45,7 @@ export default function Spending() {
   const [spendings, setSpendings] = useState<InfoInterface[]>()
 
   const submit = handleSubmit(async data => {
+    console.log('spending')
     const response = await services.post<
       void,
       ResponseInterface<InfoInterface>
