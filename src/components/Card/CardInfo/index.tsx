@@ -152,7 +152,7 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
           </HStack>
         </VStack>
         <Text fontSize="md" opacity={0.5} fontWeight="normal" textAlign="left">
-          {data.description || 'Sem descrição'}
+          {data?.description || 'Sem descrição'}
         </Text>
       </VStack>
     </HStack>
