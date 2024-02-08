@@ -13,6 +13,7 @@ import {
   GridItem,
   Spacer,
   StackProps,
+  useToast,
 } from '@chakra-ui/react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { IconOptions } from 'icons'
@@ -31,21 +32,40 @@ interface ICardInfo extends StackProps {
 }
 
 const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
-  const [isHover, setIsHover] = useState(false)
-
+  const toast = useToast()
   const methods = useForm({
     defaultValues: { ...data, date: formatDate(data.date, 'dateInput') },
   })
 
-  const { getValues } = methods
+  const { handleSubmit } = methods
+
+  const [isHover, setIsHover] = useState(false)
 
   const callbackUpdate = useCallback(
     (onClose: () => void) => {
-      const formData = getValues()
+      handleSubmit(
+        formData => {
+          callback(onClose, formData, data?.id || '')
+        },
+        ({ value }) => {
+          const toastId = 'errMessage'
+          const errMessage = value?.message
+          const toastIsActive = toast.isActive(toastId)
 
-      callback(onClose, formData, data?.id || '')
+          if (!toastIsActive) {
+            toast({
+              id: toastId,
+              description: errMessage,
+              status: 'error',
+              duration: 5000,
+              position: 'top-right',
+              isClosable: false,
+            })
+          }
+        }
+      )()
     },
-    [callback, data, getValues]
+    [callback, data, handleSubmit, toast]
   )
 
   const callbackCancel = (onClose: () => void) => {

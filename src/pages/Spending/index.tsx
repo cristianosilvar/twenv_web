@@ -11,7 +11,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconNew } from 'icons'
-import { z } from 'zod'
 
 import ModalDefault from 'components/Modal'
 import CardInfo from 'components/Card/CardInfo'
@@ -19,16 +18,9 @@ import CardInfo from 'components/Card/CardInfo'
 import services from 'services'
 import formatDate from 'utils/formatDate'
 
+import { schemaSpending, spendingT } from 'schemas/schemaInfo'
 import { ResponseInterface } from 'interfaces/response'
 import { InfoInterface } from 'interfaces/info'
-
-const schemaSpending = z.object({
-  description: z.string(),
-  date: z.string(),
-  value: z.coerce.number().min(0.01, 'O valor deve ser igual ou superior a 1'),
-})
-
-type spendingT = z.infer<typeof schemaSpending>
 
 export default function Spending() {
   const currentDate = new Date()
@@ -46,49 +38,42 @@ export default function Spending() {
   const { handleSubmit, reset } = methods
   const [spendings, setSpendings] = useState<InfoInterface[]>()
 
-  const submit = handleSubmit(
-    async data => {
-      console.log('spending')
-      const response = await services.post<
-        void,
-        ResponseInterface<InfoInterface>
-      >('spending', {
-        ...data,
-        value: Number(data.value),
-        date: new Date(data.date),
-      })
+  const onSubmit = async (onClose: () => void) => {
+    handleSubmit(
+      async data => {
+        const response = await services.post<
+          void,
+          ResponseInterface<InfoInterface>
+        >('spending', {
+          ...data,
+          date: new Date(data.date),
+        })
 
-      if (response) {
-        if (response.sucess) {
-          getSpendings()
-          reset()
+        if (response) {
+          if (response.sucess) {
+            getSpendings()
+            reset()
+            onClose()
+          }
+        }
+      },
+      ({ value }) => {
+        const toastId = 'errMessage'
+        const errMessage = value?.message
+        const toastIsActive = toast.isActive(toastId)
+
+        if (!toastIsActive) {
+          toast({
+            id: toastId,
+            description: errMessage,
+            status: 'error',
+            duration: 5000,
+            position: 'top-right',
+            isClosable: false,
+          })
         }
       }
-    },
-    data => {
-      const id = 'errMessage'
-      const errMessage = data.value?.message
-      const toastIsActive = toast.isActive(id)
-
-      if (!toastIsActive) {
-        toast({
-          id,
-          description: errMessage,
-          status: 'error',
-          duration: 5000,
-          position: 'top-right',
-          isClosable: false,
-        })
-      }
-    }
-  )
-
-  const onSubmit = (onClose?: () => void) => {
-    submit()
-
-    // if (onClose) {
-    //   onClose()
-    // }
+    )()
   }
 
   const getSpendings = useCallback(async () => {
@@ -126,7 +111,6 @@ export default function Spending() {
       const response = await services.put<void, ResponseInterface>('spending', {
         ...data,
         date: new Date(data.date),
-        value: Number(data.value),
         id,
       })
 
@@ -140,8 +124,8 @@ export default function Spending() {
     [getSpendings]
   )
 
-  const handleCancel = useCallback((onClose?: () => void) => {
-    onClose && onClose()
+  const handleCancel = useCallback((onClose: () => void) => {
+    onClose()
   }, [])
 
   useEffect(() => {

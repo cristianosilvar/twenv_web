@@ -5,9 +5,11 @@ import {
   SimpleGrid,
   GridItem,
   Button,
+  useToast,
 } from '@chakra-ui/react'
 import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { IconNew } from 'icons'
 
 import CardInfo from 'components/Card/CardInfo'
@@ -16,13 +18,16 @@ import ModalDefault from 'components/Modal'
 import services from 'services'
 import formatDate from 'utils/formatDate'
 
-import { InfoInterface } from 'interfaces/info'
+import { schemaSpending } from 'schemas/schemaInfo'
 import { ResponseInterface } from 'interfaces/response'
+import { InfoInterface } from 'interfaces/info'
 
 export default function Earnings() {
   const currentDate = new Date()
+  const toast = useToast()
 
   const methods = useForm({
+    resolver: zodResolver(schemaSpending),
     defaultValues: {
       description: '',
       value: 0,
@@ -33,30 +38,42 @@ export default function Earnings() {
   const { handleSubmit, reset } = methods
   const [earnings, setEarnings] = useState<InfoInterface[]>()
 
-  const submit = handleSubmit(async data => {
-    const response = await services.post<
-      void,
-      ResponseInterface<InfoInterface>
-    >('earning', {
-      ...data,
-      value: Number(data.value),
-      date: new Date(data.date),
-    })
+  const onSubmit = async (onClose: () => void) => {
+    handleSubmit(
+      async data => {
+        const response = await services.post<
+          void,
+          ResponseInterface<InfoInterface>
+        >('earning', {
+          ...data,
+          date: new Date(data.date),
+        })
 
-    if (response) {
-      if (response.sucess) {
-        reset()
-        getEarnings()
+        if (response) {
+          if (response.sucess) {
+            getEarnings()
+            reset()
+            onClose()
+          }
+        }
+      },
+      ({ value }) => {
+        const toastId = 'errMessage'
+        const errMessage = value?.message
+        const toastIsActive = toast.isActive(toastId)
+
+        if (!toastIsActive) {
+          toast({
+            id: toastId,
+            description: errMessage,
+            status: 'error',
+            duration: 5000,
+            position: 'top-right',
+            isClosable: false,
+          })
+        }
       }
-    }
-  })
-
-  const onSubmit = (onClose?: () => void) => {
-    submit()
-
-    if (onClose) {
-      onClose()
-    }
+    )()
   }
 
   const getEarnings = useCallback(async () => {
