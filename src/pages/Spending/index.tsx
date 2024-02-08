@@ -5,9 +5,11 @@ import {
   Text,
   GridItem,
   Button,
+  useToast,
 } from '@chakra-ui/react'
 import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { IconNew } from 'icons'
 
 import ModalDefault from 'components/Modal'
@@ -16,13 +18,16 @@ import CardInfo from 'components/Card/CardInfo'
 import services from 'services'
 import formatDate from 'utils/formatDate'
 
+import { schemaSpending, spendingT } from 'schemas/schemaInfo'
 import { ResponseInterface } from 'interfaces/response'
 import { InfoInterface } from 'interfaces/info'
 
 export default function Spending() {
   const currentDate = new Date()
+  const toast = useToast()
 
-  const methods = useForm({
+  const methods = useForm<spendingT>({
+    resolver: zodResolver(schemaSpending),
     defaultValues: {
       description: '',
       value: 0,
@@ -33,22 +38,43 @@ export default function Spending() {
   const { handleSubmit, reset } = methods
   const [spendings, setSpendings] = useState<InfoInterface[]>()
 
-  const onSubmit = handleSubmit(async data => {
-    const response = await services.post<
-      void,
-      ResponseInterface<InfoInterface>
-    >('spending', {
-      ...data,
-      value: Number(data.value),
-      date: new Date(data.date),
-    })
+  const onSubmit = async (onClose: () => void) => {
+    handleSubmit(
+      async data => {
+        const response = await services.post<
+          void,
+          ResponseInterface<InfoInterface>
+        >('spending', {
+          ...data,
+          date: new Date(data.date),
+        })
 
-    if (response) {
-      if (response.sucess) {
-        reset()
+        if (response) {
+          if (response.sucess) {
+            getSpendings()
+            reset()
+            onClose()
+          }
+        }
+      },
+      ({ value }) => {
+        const toastId = 'errMessage'
+        const errMessage = value?.message
+        const toastIsActive = toast.isActive(toastId)
+
+        if (!toastIsActive) {
+          toast({
+            id: toastId,
+            description: errMessage,
+            status: 'error',
+            duration: 5000,
+            position: 'top-right',
+            isClosable: false,
+          })
+        }
       }
-    }
-  })
+    )()
+  }
 
   const getSpendings = useCallback(async () => {
     const response = await services.get<
@@ -57,10 +83,49 @@ export default function Spending() {
     >('spendings')
 
     if (response) {
-      if (response.sucess && response.data) {
+      if (response.sucess) {
         setSpendings(response.data)
       }
     }
+  }, [])
+
+  const deleteSpending = useCallback(
+    async (id: string | undefined) => {
+      if (!id) return
+
+      const response = await services.delete<void, ResponseInterface>(
+        `spending/${id}`
+      )
+
+      if (response) {
+        if (response.sucess) {
+          getSpendings()
+        }
+      }
+    },
+    [getSpendings]
+  )
+
+  const handleUpdate = useCallback(
+    async (onClose: () => void, data: any, id: string) => {
+      const response = await services.put<void, ResponseInterface>('spending', {
+        ...data,
+        date: new Date(data.date),
+        id,
+      })
+
+      if (response) {
+        if (response.sucess) {
+          getSpendings()
+          onClose()
+        }
+      }
+    },
+    [getSpendings]
+  )
+
+  const handleCancel = useCallback((onClose: () => void) => {
+    onClose()
   }, [])
 
   useEffect(() => {
@@ -75,11 +140,20 @@ export default function Spending() {
       </Text>
       <SimpleGrid columns={12} mt="30px" spacing="4">
         {spendings?.map(spending => (
-          <CardInfo data={spending} key={spending.id} />
+          <CardInfo
+            key={spending.id}
+            data={spending}
+            callback={handleUpdate}
+            callbackDelete={deleteSpending}
+          />
         ))}
         <GridItem colSpan={{ base: 12, sm: 1 }}>
           <FormProvider {...methods}>
-            <ModalDefault title="Nova despesa" onSubmit={onSubmit}>
+            <ModalDefault
+              title="Nova despesa"
+              callback={onSubmit}
+              callbackCancel={handleCancel}
+            >
               <Button variant="new" boxSize={'full'}>
                 <IconNew boxSize={'25px'} />
               </Button>

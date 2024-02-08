@@ -40,7 +40,7 @@ const formatDate = (date: Date, type: typeFormats = 'default'): string => {
       formatDate = `${formatedDay}/${formatedMonth}`
       break
     case 'dateInput':
-      formatDate = `${year}-${month + 1}-${day}`
+      formatDate = `${year}-${formatedMonth}-${formatedDay}`
       break
     default:
       break

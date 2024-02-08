@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   Box,
   Heading,
@@ -13,7 +13,9 @@ import {
   GridItem,
   Spacer,
   StackProps,
+  useToast,
 } from '@chakra-ui/react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { IconOptions } from 'icons'
 
 import ModalDefault from 'components/Modal'
@@ -25,11 +27,50 @@ import { InfoInterface } from 'interfaces/info'
 
 interface ICardInfo extends StackProps {
   data: InfoInterface
-  onClick?: () => void
+  callback: (onClose: () => void, data: any, id: string) => void
+  callbackDelete: (id: string | undefined) => void
 }
 
-const CardInfo = ({ data, onClick, ...props }: ICardInfo) => {
+const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
+  const toast = useToast()
+  const methods = useForm({
+    defaultValues: { ...data, date: formatDate(data.date, 'dateInput') },
+  })
+
+  const { handleSubmit } = methods
+
   const [isHover, setIsHover] = useState(false)
+
+  const callbackUpdate = useCallback(
+    (onClose: () => void) => {
+      handleSubmit(
+        formData => {
+          callback(onClose, formData, data?.id || '')
+        },
+        ({ value }) => {
+          const toastId = 'errMessage'
+          const errMessage = value?.message
+          const toastIsActive = toast.isActive(toastId)
+
+          if (!toastIsActive) {
+            toast({
+              id: toastId,
+              description: errMessage,
+              status: 'error',
+              duration: 5000,
+              position: 'top-right',
+              isClosable: false,
+            })
+          }
+        }
+      )()
+    },
+    [callback, data, handleSubmit, toast]
+  )
+
+  const callbackCancel = (onClose: () => void) => {
+    onClose()
+  }
 
   return (
     <HStack
@@ -94,18 +135,24 @@ const CardInfo = ({ data, onClick, ...props }: ICardInfo) => {
                       borderColor="#fefefe15"
                       minW="min-content"
                     >
-                      <ModalDefault title="Alterar">
-                        <MenuItem
-                          bgColor="#000"
-                          px={8}
-                          py={2}
-                          _hover={{
-                            bgColor: '#fefefe10',
-                          }}
+                      <FormProvider {...methods}>
+                        <ModalDefault
+                          title="Alterar"
+                          callback={callbackUpdate}
+                          callbackCancel={callbackCancel}
                         >
-                          Editar
-                        </MenuItem>
-                      </ModalDefault>
+                          <MenuItem
+                            bgColor="#000"
+                            px={8}
+                            py={2}
+                            _hover={{
+                              bgColor: '#fefefe10',
+                            }}
+                          >
+                            Editar
+                          </MenuItem>
+                        </ModalDefault>
+                      </FormProvider>
                       <MenuItem
                         bgColor="#000"
                         px={8}
@@ -113,7 +160,7 @@ const CardInfo = ({ data, onClick, ...props }: ICardInfo) => {
                         _hover={{
                           bgColor: '#fefefe10',
                         }}
-                        onClick={() => onClick}
+                        onClick={() => callbackDelete(data.id)}
                       >
                         Excluir
                       </MenuItem>
@@ -125,7 +172,7 @@ const CardInfo = ({ data, onClick, ...props }: ICardInfo) => {
           </HStack>
         </VStack>
         <Text fontSize="md" opacity={0.5} fontWeight="normal" textAlign="left">
-          {data.description || 'Sem descrição'}
+          {data?.description || 'Sem descrição'}
         </Text>
       </VStack>
     </HStack>
