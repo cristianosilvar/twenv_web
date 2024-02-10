@@ -13,6 +13,7 @@ import {
   SimpleGrid,
   VStack,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -39,6 +40,8 @@ const ModalRegister = ({
   buttonHeight = 'full',
   ...props
 }: IModalRegister) => {
+  const toast = useToast()
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const methods = useForm()
   const navigate = useNavigate()
@@ -54,17 +57,28 @@ const ModalRegister = ({
     >('user/signup', data)
 
     if (response) {
-      if (response.sucess && response.data) {
-        signin(response.data.token)
+      if (response?.message) {
+        const id = 'warningToast'
+
+        if (!toast.isActive(id)) {
+          toast({
+            id,
+            title: 'Tente novamente',
+            description: response.message,
+            status: 'warning',
+            duration: 5000,
+            position: 'top-right',
+            isClosable: false,
+          })
+        }
+      }
+      if (response?.sucess && response?.data) {
+        signin(response.data?.token)
 
         onClose()
         navigate('/')
 
         window.location.reload()
-      }
-
-      if (!response.sucess) {
-        console.error(response.message)
       }
     }
   })
