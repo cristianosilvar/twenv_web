@@ -1,7 +1,14 @@
 import axios from 'axios'
+
 const services = axios.create({
-  baseURL: 'http://localhost:4000/v1/api',
+  baseURL: process.env.REACT_APP_API_URL,
 })
+
+const responseDataErr = {
+  sucess: false,
+  data: null,
+  message: 'Houve algum erro. Tente novamente mais tarde.',
+}
 
 services.interceptors.response.use(
   response => {
@@ -15,29 +22,21 @@ services.interceptors.response.use(
       if (error.response?.status === 400 && !originalRequest.retry) {
         originalRequest.retry = true
 
-        return {
-          data: {
-            sucess: false,
-          },
-        }
+        return responseDataErr
       }
 
       // Erro no lado do servidor
       if (error.response?.status === 500 && !originalRequest.retry) {
         originalRequest.retry = true
 
-        return services(originalRequest)
+        return responseDataErr
       }
 
       return null
     } catch (err) {
       console.log('err')
 
-      return {
-        data: {
-          sucess: false,
-        },
-      }
+      return responseDataErr
     }
   }
 )
