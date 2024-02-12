@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { InternalAxiosRequestConfig } from 'axios'
 
 const services = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -38,6 +38,17 @@ services.interceptors.response.use(
 
       return responseDataErr
     }
+  }
+)
+
+services.interceptors.request.use(
+  (requestConfig: InternalAxiosRequestConfig) => {
+    const token = localStorage.getItem('token')
+    const config = requestConfig
+
+    config.headers['authenticated-token'] = token
+
+    return config
   }
 )
 

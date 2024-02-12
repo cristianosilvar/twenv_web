@@ -58,14 +58,14 @@ const ModalSignIn = ({
 
     if (response) {
       if (response?.message) {
-        const id = 'warningToast'
+        const id = 'errToast'
 
         if (!toast.isActive(id)) {
           toast({
             id,
             title: 'Tente novamente',
             description: response.message,
-            status: 'warning',
+            status: 'error',
             duration: 5000,
             position: 'top-right',
             isClosable: false,

@@ -56,7 +56,7 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
             toast({
               id: toastId,
               description: errMessage,
-              status: 'error',
+              status: 'warning',
               duration: 5000,
               position: 'top-right',
               isClosable: false,

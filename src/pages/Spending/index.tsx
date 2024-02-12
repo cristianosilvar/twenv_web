@@ -18,7 +18,11 @@ import CardInfo from 'components/Card/CardInfo'
 import services from 'services'
 import formatDate from 'utils/formatDate'
 
-import { schemaSpending, spendingT } from 'schemas/schemaInfo'
+import {
+  schemaSpending,
+  defaultValuesSpending,
+  spendingT,
+} from 'schemas/schemaSpending'
 import { ResponseInterface } from 'interfaces/response'
 import { InfoInterface } from 'interfaces/info'
 
@@ -28,11 +32,7 @@ export default function Spending() {
 
   const methods = useForm<spendingT>({
     resolver: zodResolver(schemaSpending),
-    defaultValues: {
-      description: '',
-      value: 0,
-      date: formatDate(new Date(), 'dateInput'),
-    },
+    defaultValues: defaultValuesSpending,
   })
 
   const { handleSubmit, reset } = methods
@@ -50,6 +50,22 @@ export default function Spending() {
         })
 
         if (response) {
+          if (response.message) {
+            const toastId = 'errorMessage'
+            const toastIsActive = toast.isActive(toastId)
+
+            if (!toastIsActive) {
+              toast({
+                id: toastId,
+                description: response.message,
+                status: 'error',
+                duration: 5000,
+                position: 'top-right',
+                isClosable: false,
+              })
+            }
+          }
+
           if (response.sucess) {
             getSpendings()
             reset()
@@ -58,7 +74,7 @@ export default function Spending() {
         }
       },
       ({ value }) => {
-        const toastId = 'errMessage'
+        const toastId = 'warningMessage'
         const errMessage = value?.message
         const toastIsActive = toast.isActive(toastId)
 
@@ -66,7 +82,7 @@ export default function Spending() {
           toast({
             id: toastId,
             description: errMessage,
-            status: 'error',
+            status: 'warning',
             duration: 5000,
             position: 'top-right',
             isClosable: false,
@@ -83,11 +99,26 @@ export default function Spending() {
     >('spendings')
 
     if (response) {
+      if (response.message) {
+        const toastId = 'errorMessage'
+        const toastIsActive = toast.isActive(toastId)
+
+        if (!toastIsActive) {
+          toast({
+            id: toastId,
+            description: response.message,
+            status: 'error',
+            duration: 5000,
+            position: 'top-right',
+            isClosable: false,
+          })
+        }
+      }
       if (response.sucess) {
         setSpendings(response.data)
       }
     }
-  }, [])
+  }, [toast])
 
   const deleteSpending = useCallback(
     async (id: string | undefined) => {
@@ -98,12 +129,24 @@ export default function Spending() {
       )
 
       if (response) {
+        if (response.message) {
+          const toastId = 'errMessage'
+
+          toast({
+            id: toastId,
+            description: response.message,
+            status: 'error',
+            duration: 5000,
+            position: 'top-right',
+            isClosable: false,
+          })
+        }
         if (response.sucess) {
           getSpendings()
         }
       }
     },
-    [getSpendings]
+    [getSpendings, toast]
   )
 
   const handleUpdate = useCallback(
