@@ -25,6 +25,8 @@ import { InputPassword } from 'components/Inputs/InputPassword'
 import { InputText } from 'components/Inputs/InputText/InputText'
 
 import { ResponseInterface } from 'interfaces/response'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { schemaSignIn } from 'schemas/schemaSignIn'
 
 interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode
@@ -44,44 +46,65 @@ const ModalSignIn = ({
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const navigate = useNavigate()
-  const methods = useForm()
+  const methods = useForm({
+    resolver: zodResolver(schemaSignIn),
+  })
 
   const { signin } = useAuth()
 
   const { handleSubmit } = methods
 
-  const handleSignIn = handleSubmit(async data => {
-    const response = await services.post<
-      void,
-      ResponseInterface<{ token: string }>
-    >('user/signin', data)
+  const handleSignIn = handleSubmit(
+    async data => {
+      const response = await services.post<
+        void,
+        ResponseInterface<{ token: string }>
+      >('user/signin', data)
 
-    if (response) {
-      if (response?.message) {
-        const id = 'errToast'
+      if (response) {
+        if (response?.message) {
+          const id = 'errToast'
 
-        if (!toast.isActive(id)) {
-          toast({
-            id,
-            title: 'Tente novamente',
-            description: response.message,
-            status: 'error',
-            duration: 5000,
-            position: 'top-right',
-            isClosable: false,
-          })
+          if (!toast.isActive(id)) {
+            toast({
+              id,
+              title: 'Tente novamente',
+              description: response.message,
+              status: 'error',
+              duration: 5000,
+              position: 'top-right',
+              isClosable: false,
+            })
+          }
+        }
+        if (response?.sucess && response?.data) {
+          signin(response.data?.token)
+
+          onClose()
+          navigate('/')
+
+          window.location.reload()
         }
       }
-      if (response?.sucess && response?.data) {
-        signin(response.data?.token)
+    },
+    ({ value }) => {
+      console.log(value)
+      const toastId = 'errMessage'
+      const errMessage = value?.message as string
+      const toastIsActive = toast.isActive(toastId)
 
-        onClose()
-        navigate('/')
-
-        window.location.reload()
+      if (!toastIsActive) {
+        toast({
+          id: toastId,
+          description: errMessage,
+          status: 'warning',
+          duration: 5000,
+          position: 'top-right',
+          isClosable: false,
+        })
       }
     }
-  })
+  )
 
   return (
     <>
