@@ -14,16 +14,32 @@ import {
 } from '@chakra-ui/react'
 import { IconArrowDownMenu, Logo } from 'icons/index'
 
-import { useAuth } from 'context/authContext'
+import services from 'services'
 import getDataUser from 'utils/getDataUser'
+import { useAuth } from 'context/authContext'
 
 import Navbar from '../Navbar'
 import ModalRegister from 'components/Modal/ModalRegister'
 import ModalSignIn from 'components/Modal/ModalSignIn'
+import { ResponseInterface } from 'interfaces/response'
 
 const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const navigate = useNavigate()
   const { signout } = useAuth()
+
+  const deleteAccount = async () => {
+    if (!isAuthenticated) return
+
+    const response = await services.delete<void, ResponseInterface>(
+      'user/delete'
+    )
+
+    if (response) {
+      if (response.sucess) {
+        window.location.reload()
+      }
+    }
+  }
 
   const logOut = () => {
     signout()
@@ -50,6 +66,7 @@ const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
         _hover={{
           bgColor: '#fefefe10',
         }}
+        onClick={deleteAccount}
       >
         Excluir
       </MenuItem>
