@@ -60,6 +60,7 @@ const ModalDefault = ({
                   name="description"
                   placeholder="Qual o nome, descrição e/ou informação 
                 dessa despesa?"
+                  // maxLength={50}
                 />
               </GridItem>
               <GridItem colSpan={6}>

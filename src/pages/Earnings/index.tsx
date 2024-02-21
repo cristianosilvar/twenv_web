@@ -18,7 +18,11 @@ import ModalDefault from 'components/Modal'
 import services from 'services'
 import formatDate from 'utils/formatDate'
 
-import { schemaSpending } from 'schemas/schemaInfo'
+import {
+  schemaEarning,
+  defaultValuesEarning,
+  earningT,
+} from 'schemas/schemaEarning'
 import { ResponseInterface } from 'interfaces/response'
 import { InfoInterface } from 'interfaces/info'
 
@@ -26,13 +30,9 @@ export default function Earnings() {
   const currentDate = new Date()
   const toast = useToast()
 
-  const methods = useForm({
-    resolver: zodResolver(schemaSpending),
-    defaultValues: {
-      description: '',
-      value: 0,
-      date: formatDate(new Date(), 'dateInput'),
-    },
+  const methods = useForm<earningT>({
+    resolver: zodResolver(schemaEarning),
+    defaultValues: defaultValuesEarning,
   })
 
   const { handleSubmit, reset } = methods
@@ -66,7 +66,7 @@ export default function Earnings() {
           toast({
             id: toastId,
             description: errMessage,
-            status: 'error',
+            status: 'warning',
             duration: 5000,
             position: 'top-right',
             isClosable: false,
@@ -83,11 +83,23 @@ export default function Earnings() {
     >('earnings')
 
     if (response) {
+      if (response.message) {
+        const toastId = 'errToast'
+
+        toast({
+          id: toastId,
+          description: response.message,
+          status: 'error',
+          duration: 5000,
+          position: 'top-right',
+          isClosable: false,
+        })
+      }
       if (response.sucess) {
         setEarnings(response.data)
       }
     }
-  }, [])
+  }, [toast])
 
   const deleteSpending = useCallback(
     async (id: string | undefined) => {

@@ -13,8 +13,10 @@ import {
   SimpleGrid,
   VStack,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom'
 
 import services from 'services'
@@ -24,6 +26,7 @@ import { InputPassword } from 'components/Inputs/InputPassword'
 import { InputText } from 'components/Inputs/InputText/InputText'
 
 import { ResponseInterface } from 'interfaces/response'
+import { defaultValuesUser, schemaUser, userT } from 'schemas/schemaUser'
 
 interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode
@@ -39,12 +42,16 @@ const ModalRegister = ({
   buttonHeight = 'full',
   ...props
 }: IModalRegister) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const methods = useForm()
+  const toast = useToast()
   const navigate = useNavigate()
 
-  const { signin } = useAuth()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const methods = useForm<userT>({
+    resolver: zodResolver(schemaUser),
+    defaultValues: defaultValuesUser,
+  })
 
+  const { signin } = useAuth()
   const { handleSubmit } = methods
 
   const handleRegister = handleSubmit(async data => {
@@ -54,17 +61,28 @@ const ModalRegister = ({
     >('user/signup', data)
 
     if (response) {
-      if (response.sucess && response.data) {
-        signin(response.data.token)
+      if (response?.message) {
+        const id = 'errToast'
+
+        if (!toast.isActive(id)) {
+          toast({
+            id,
+            title: 'Tente novamente',
+            description: response.message,
+            status: 'error',
+            duration: 5000,
+            position: 'top-right',
+            isClosable: false,
+          })
+        }
+      }
+      if (response?.sucess && response?.data) {
+        signin(response.data?.token)
 
         onClose()
         navigate('/')
 
         window.location.reload()
-      }
-
-      if (!response.sucess) {
-        console.error(response.message)
       }
     }
   })
