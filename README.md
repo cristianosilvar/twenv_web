@@ -16,16 +16,19 @@
   <a href="https://www.figma.com/file/NBwpGNUfzUGqoo0coTH6sZ/Twenv?type=design&node-id=341%3A5&mode=design&t=CgjWwrmFabUg03TV-1"> 
     Veja no Figma
   </a>
-  <h4>Home</h4>
+  <h3>Home</h3>
+  <h4 width="20%">A tela inicial permite acessar facilmente os valores totais das informações financeiras.</h4>
   <div display="flex">
-    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/62bf052d-ba7f-49e6-b251-c33dee94ed2a" width="48%"/>
+    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/92c5ccaa-7f2f-4550-970f-acef004c923c" width="90%"/>
   </div>
   <h1></h1>
   <h4>Despesas</h4>
   <div display="flex">
-    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/ce285729-b219-4727-bbff-4c6bf636b875" width="48%"/>
-    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/2b2cd533-0b06-4f8a-bbcc-46dee0fda238" width="48%"/>
-    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/4740d748-19ef-49d5-9ae4-aeb9a1730625" width="48%"/>
+  <h4 width="20%">Em despesas é possível ver cada despesa já adicionada pelo usuário.</h4>
+    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/81347f78-f6e5-4384-9f51-1e4064378115" width="90%"/>
+  <h4 width="20%">Ao adicionar ou alterar uma despesa são exibidos os seguintes modais nessa mesma ordem:</h4>
+    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/5eaf16be-8edf-4242-b858-82a62496692e" width="90%"/>
+    <img src="https://github.com/cristianosilvar/twenv_web/assets/94191704/9b0aa680-700b-4dbc-82a4-de4bdedef04f" width="90%"/>
   </div>
 </div>
 
