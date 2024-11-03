@@ -10,21 +10,21 @@ import {
 import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IconNew } from 'icons'
+import { IconNew } from '@/icons'
 
-import ModalDefault from 'components/Modal'
-import CardInfo from 'components/Card/CardInfo'
+import ModalDefault from '@/components/Modal'
+import CardInfo from '@/components/Card/CardInfo'
 
-import services from 'services'
-import formatDate from 'utils/formatDate'
+import services from '@/services'
+import formatDate from '@/utils/formatDate'
 
 import {
   schemaSpending,
   defaultValuesSpending,
   spendingT,
-} from 'schemas/schemaSpending'
-import { ResponseInterface } from 'interfaces/response'
-import { InfoInterface } from 'interfaces/info'
+} from '@/schemas/schemaSpending'
+import { ResponseInterface } from '@/interfaces/response'
+import { InfoInterface } from '@/interfaces/info'
 
 export default function Spending() {
   const currentDate = new Date()

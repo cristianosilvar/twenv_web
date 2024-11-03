@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import formatDate from 'utils/formatDate'
+import formatDate from '@/utils/formatDate'
 
 export const defaultValuesSpending = {
   description: '',

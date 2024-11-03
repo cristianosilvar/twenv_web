@@ -12,16 +12,16 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react'
-import { IconArrowDownMenu, Logo } from 'icons/index'
+import { IconArrowDownMenu, Logo } from '@/icons/index'
 
-import services from 'services'
-import getDataUser from 'utils/getDataUser'
-import { useAuth } from 'context/authContext'
+import services from '@/services'
+import getDataUser from '@/utils/getDataUser'
+import { useAuth } from '@/context/authContext'
 
 import Navbar from '../Navbar'
-import ModalRegister from 'components/Modal/ModalRegister'
-import ModalSignIn from 'components/Modal/ModalSignIn'
-import { ResponseInterface } from 'interfaces/response'
+import ModalRegister from '@/components/Modal/ModalRegister'
+import ModalSignIn from '@/components/Modal/ModalSignIn'
+import { ResponseInterface } from '@/interfaces/response'
 
 const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const navigate = useNavigate()

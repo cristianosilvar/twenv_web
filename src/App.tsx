@@ -2,7 +2,7 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import theme from './theme'
-import { AuthProvider } from 'context/authContext'
+import { AuthProvider } from '@/context/authContext'
 
 import Header from './components/Header'
 

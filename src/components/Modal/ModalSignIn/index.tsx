@@ -18,15 +18,15 @@ import {
 import { useNavigate } from 'react-router'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import services from 'services'
-import { useAuth } from 'context/authContext'
+import services from '@/services'
+import { useAuth } from '@/context/authContext'
 
-import { InputPassword } from 'components/Inputs/InputPassword'
-import { InputText } from 'components/Inputs/InputText/InputText'
+import { InputPassword } from '@/components/Inputs/InputPassword'
+import { InputText } from '@/components/Inputs/InputText/InputText'
 
-import { ResponseInterface } from 'interfaces/response'
+import { ResponseInterface } from '@/interfaces/response'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { schemaSignIn } from 'schemas/schemaSignIn'
+import { schemaSignIn } from '@/schemas/schemaSignIn'
 
 interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode

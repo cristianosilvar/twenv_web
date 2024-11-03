@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react'
 import { Label } from '../Label'
 import { Controller } from 'react-hook-form'
-import { IconCalendar } from 'icons'
+import { IconCalendar } from '@/icons'
 
 interface InputDateInterface extends InputProps {
   name: string

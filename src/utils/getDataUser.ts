@@ -1,5 +1,5 @@
 import { jwtDecode } from 'jwt-decode'
-import { UserInterface } from 'interfaces/user'
+import { UserInterface } from '@/interfaces/user'
 
 const getDataUser = () => {
   const token = localStorage.getItem('token') || ''

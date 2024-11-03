@@ -16,14 +16,14 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { IconOptions } from 'icons'
+import { IconOptions } from '@/icons'
 
-import ModalDefault from 'components/Modal'
+import ModalDefault from '@/components/Modal'
 
-import formatReal from 'utils/fomatReal'
-import formatDate from 'utils/formatDate'
+import formatReal from '@/utils/fomatReal'
+import formatDate from '@/utils/formatDate'
 
-import { InfoInterface } from 'interfaces/info'
+import { InfoInterface } from '@/interfaces/info'
 
 interface ICardInfo extends StackProps {
   data: InfoInterface

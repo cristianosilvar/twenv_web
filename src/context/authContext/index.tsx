@@ -5,9 +5,9 @@ import {
   ReactNode,
   useEffect,
 } from 'react'
-import getDataUser from 'utils/getDataUser'
+import getDataUser from '@/utils/getDataUser'
 
-import { UserInterface } from 'interfaces/user'
+import { UserInterface } from '@/interfaces/user'
 
 interface AuthContextProps {
   isAuthenticated: boolean

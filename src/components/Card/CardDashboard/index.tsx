@@ -8,9 +8,9 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React from 'react'
-import { IconArrowDownRed, IconArrowUpGreen } from 'icons'
+import { IconArrowDownRed, IconArrowUpGreen } from '@/icons'
 
-import formatReal from 'utils/fomatReal'
+import formatReal from '@/utils/fomatReal'
 
 interface ICardDashboard extends FlexProps {
   type?: 'spendings' | 'earnings'

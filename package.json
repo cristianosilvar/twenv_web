@@ -11,7 +11,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^28.1.8",
-    "@types/node": "^12.20.55",
+    "@types/node": "^18.0.0",
     "@types/react": "^18.2.17",
     "@types/react-dom": "^18.2.7",
     "axios": "^1.6.2",
@@ -23,17 +23,15 @@
     "react-hook-form": "^7.50.1",
     "react-icons": "^3.11.0",
     "react-router-dom": "^6.14.2",
-    "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
+    "vite": "^5.4.10",
     "web-vitals": "^2.1.4",
     "zod": "^3.22.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "react-scripts start",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview",
     "format": "prettier --write ."
   },
   "eslintConfig": {
@@ -52,6 +50,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-import": "^2.29.0"
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint-plugin-import": "^2.29.0",
+    "vite-plugin-svgr": "^4.3.0"
   }
 }

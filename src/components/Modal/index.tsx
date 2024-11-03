@@ -15,9 +15,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 
-import InputDate from 'components/Inputs/InputDate/InputDate'
-import InputNumber from 'components/Inputs/InputNumber/InputNumber'
-import InputTextarea from 'components/Inputs/InputTextarea/InputTextarea'
+import InputDate from '@/components/Inputs/InputDate/InputDate'
+import InputNumber from '@/components/Inputs/InputNumber/InputNumber'
+import InputTextarea from '@/components/Inputs/InputTextarea/InputTextarea'
 
 interface IModalDefault extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode

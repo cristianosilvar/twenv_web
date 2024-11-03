@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 
-import services from 'services'
-import formatDate from 'utils/formatDate'
-import CardDashboard from 'components/Card/CardDashboard'
+import services from '@/services'
+import formatDate from '@/utils/formatDate'
+import CardDashboard from '@/components/Card/CardDashboard'
 
-import { InfoInterface } from 'interfaces/info'
-import { ResponseInterface } from 'interfaces/response'
+import { InfoInterface } from '@/interfaces/info'
+import { ResponseInterface } from '@/interfaces/response'
 
 export default function Home() {
   const currentDate = new Date()

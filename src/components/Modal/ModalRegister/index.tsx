@@ -19,14 +19,14 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom'
 
-import services from 'services'
-import { useAuth } from 'context/authContext'
+import services from '@/services'
+import { useAuth } from '@/context/authContext'
 
-import { InputPassword } from 'components/Inputs/InputPassword'
-import { InputText } from 'components/Inputs/InputText/InputText'
+import { InputPassword } from '@/components/Inputs/InputPassword'
+import { InputText } from '@/components/Inputs/InputText/InputText'
 
-import { ResponseInterface } from 'interfaces/response'
-import { defaultValuesUser, schemaUser, userT } from 'schemas/schemaUser'
+import { ResponseInterface } from '@/interfaces/response'
+import { defaultValuesUser, schemaUser, userT } from '@/schemas/schemaUser'
 
 interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
   children: ReactNode
