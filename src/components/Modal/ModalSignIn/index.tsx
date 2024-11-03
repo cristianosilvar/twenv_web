@@ -59,7 +59,7 @@ const ModalSignIn = ({
       const response = await services.post<
         void,
         ResponseInterface<{ token: string }>
-      >('user/signin', data)
+      >('v1/user/signin', data)
 
       if (response) {
         if (response?.message) {

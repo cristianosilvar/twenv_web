@@ -44,7 +44,7 @@ export default function Earnings() {
         const response = await services.post<
           void,
           ResponseInterface<InfoInterface>
-        >('earning', {
+        >('v1/earning', {
           ...data,
           date: new Date(data.date),
         })
@@ -80,7 +80,7 @@ export default function Earnings() {
     const response = await services.get<
       void,
       ResponseInterface<InfoInterface[]>
-    >('earnings')
+    >('v1/earnings')
 
     if (response) {
       if (response.message) {
@@ -106,7 +106,7 @@ export default function Earnings() {
       if (!id) return
 
       const response = await services.delete<void, ResponseInterface>(
-        `earning/${id}`
+        `v1/earning/${id}`
       )
 
       if (response) {
@@ -120,12 +120,15 @@ export default function Earnings() {
 
   const handleUpdate = useCallback(
     async (onClose: () => void, data: any, id: string) => {
-      const response = await services.put<void, ResponseInterface>('earning', {
-        ...data,
-        date: new Date(data.date),
-        value: Number(data.value),
-        id,
-      })
+      const response = await services.put<void, ResponseInterface>(
+        'v1/earning',
+        {
+          ...data,
+          date: new Date(data.date),
+          value: Number(data.value),
+          id,
+        }
+      )
 
       if (response) {
         if (response.sucess) {

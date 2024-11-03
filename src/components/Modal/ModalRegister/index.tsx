@@ -58,7 +58,7 @@ const ModalRegister = ({
     const response = await services.post<
       void,
       ResponseInterface<{ token: string }>
-    >('user/signup', data)
+    >('v1/user/signup', data)
 
     if (response) {
       if (response?.message) {
@@ -81,8 +81,6 @@ const ModalRegister = ({
 
         onClose()
         navigate('/')
-
-        window.location.reload()
       }
     }
   })

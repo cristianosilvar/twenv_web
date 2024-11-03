@@ -44,7 +44,7 @@ export default function Spending() {
         const response = await services.post<
           void,
           ResponseInterface<InfoInterface>
-        >('spending', {
+        >('v1/spending', {
           ...data,
           date: new Date(data.date),
         })
@@ -96,7 +96,7 @@ export default function Spending() {
     const response = await services.get<
       void,
       ResponseInterface<InfoInterface[]>
-    >('spendings')
+    >('v1/spendings')
 
     if (response) {
       if (response.message) {
@@ -125,7 +125,7 @@ export default function Spending() {
       if (!id) return
 
       const response = await services.delete<void, ResponseInterface>(
-        `spending/${id}`
+        `v1/spending/${id}`
       )
 
       if (response) {
@@ -151,11 +151,14 @@ export default function Spending() {
 
   const handleUpdate = useCallback(
     async (onClose: () => void, data: any, id: string) => {
-      const response = await services.put<void, ResponseInterface>('spending', {
-        ...data,
-        date: new Date(data.date),
-        id,
-      })
+      const response = await services.put<void, ResponseInterface>(
+        'v1/spending',
+        {
+          ...data,
+          date: new Date(data.date),
+          id,
+        }
+      )
 
       if (response) {
         if (response.sucess) {

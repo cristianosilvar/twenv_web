@@ -31,7 +31,7 @@ const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
     if (!isAuthenticated) return
 
     const response = await services.delete<void, ResponseInterface>(
-      'user/delete'
+      'v1/user/delete'
     )
 
     if (response) {

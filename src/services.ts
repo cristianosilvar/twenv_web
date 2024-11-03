@@ -46,7 +46,7 @@ services.interceptors.request.use(
     const token = localStorage.getItem('token')
     const config = requestConfig
 
-    config.headers['authenticated-token'] = token
+    config.headers.Authorization = token
 
     return config
   }

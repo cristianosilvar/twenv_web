@@ -33,7 +33,7 @@ export default function Home() {
 
   const getTotalSpendings = useCallback(async () => {
     const response = await services.get<void, ResponseInterface<number>>(
-      'spendings',
+      'v1/spendings',
       configRequest
     )
 
@@ -46,7 +46,7 @@ export default function Home() {
 
   const getTotalEarnings = useCallback(async () => {
     const response = await services.get<void, ResponseInterface<number>>(
-      'earnings',
+      'v1/earnings',
       configRequest
     )
 
