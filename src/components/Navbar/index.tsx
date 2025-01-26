@@ -12,7 +12,7 @@ const Navbar = () => {
       fontWeight="500"
       overflow="hidden"
       backdropFilter="blur(20px)"
-      sx={{
+      css={{
         '& > div': {
           cursor: 'pointer',
         },

@@ -1,14 +1,8 @@
-import {
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputLeftElement,
-  InputProps,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, Input, InputProps, VStack } from '@chakra-ui/react'
 import { Control, Controller } from 'react-hook-form'
 
 import { Label } from '../Label'
+import { InputGroup } from '@/components/ui/input-group'
 
 type LeftElementType = 'R$' | '%'
 
@@ -36,12 +30,14 @@ const InputNumber = ({
         render={({ field }) => (
           <>
             {label && <Label label={label} isRequired={isRequired} />}
-            <InputGroup size={size}>
-              {leftElement && (
-                <InputLeftElement pointerEvents="none" children={leftElement} />
-              )}
+            <InputGroup
+              startElement={
+                leftElement && <Box pointerEvents="none">{leftElement}</Box>
+              }
+            >
               <Input
                 type="number"
+                size={size}
                 bgColor={'#fefefe15'}
                 borderColor="#fefefe25"
                 _hover={{

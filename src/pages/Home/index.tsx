@@ -1,74 +1,73 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Box, Heading, Stack, Text } from '@chakra-ui/react'
+import { useCallback, useEffect, useState } from 'react';
+import { Box, Heading, Stack, Text } from '@chakra-ui/react';
 
-import services from '@/services'
-import formatDate from '@/utils/formatDate'
-import CardDashboard from '@/components/Card/CardDashboard'
+import services from '@/services';
+import formatDate from '@/utils/formatDate';
+import CardDashboard from '@/components/Card/CardDashboard';
 
-import { InfoInterface } from '@/interfaces/info'
-import { ResponseInterface } from '@/interfaces/response'
+import { InfoInterface } from '@/interfaces/info';
+import { ResponseInterface } from '@/interfaces/response';
 
 export default function Home() {
-  const currentDate = new Date()
+  const currentDate = new Date();
 
-  const [totalSpendings, setTotalSpendings] = useState<number>(0)
-  const [totalEarnings, setTotalEarnings] = useState<number>(0)
+  const [totalSpendings, setTotalSpendings] = useState<number>(0);
+  const [totalEarnings, setTotalEarnings] = useState<number>(0);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const configRequest = {
     transformResponse: [
       function (data: string) {
-        const dataJson: ResponseInterface<InfoInterface[]> = JSON.parse(data)
+        const dataJson: ResponseInterface<InfoInterface[]> = JSON.parse(data);
 
-        let totalInfo = 0
+        let totalInfo = 0;
 
-        dataJson.data.forEach(info => {
-          totalInfo += info.value
-        })
+        dataJson.data.forEach((info) => {
+          totalInfo += info.value;
+        });
 
-        return { ...dataJson, data: totalInfo }
+        return { ...dataJson, data: totalInfo };
       },
     ],
-  }
+  };
 
   const getTotalSpendings = useCallback(async () => {
     const response = await services.get<void, ResponseInterface<number>>(
       'v1/spendings',
-      configRequest
-    )
+      configRequest,
+    );
 
     if (response) {
       if (response.sucess && response.data) {
-        setTotalSpendings(response.data)
+        setTotalSpendings(response.data);
       }
     }
-  }, [configRequest])
+  }, [configRequest]);
 
   const getTotalEarnings = useCallback(async () => {
     const response = await services.get<void, ResponseInterface<number>>(
       'v1/earnings',
-      configRequest
-    )
+      configRequest,
+    );
 
     if (response) {
       if (response.sucess && response.data) {
-        setTotalEarnings(response.data)
+        setTotalEarnings(response.data);
       }
     }
-  }, [configRequest])
+  }, [configRequest]);
 
   useEffect(() => {
-    getTotalEarnings()
-  }, [getTotalEarnings])
+    getTotalEarnings();
+  }, [getTotalEarnings]);
 
   useEffect(() => {
-    getTotalSpendings()
-  }, [getTotalSpendings])
+    getTotalSpendings();
+  }, [getTotalSpendings]);
 
   return (
     <Box w="80%" marginInline="auto" mt={'30px'}>
       <Heading as="h2">Dashboard</Heading>
-      <Text fontWeight="600" color="#fefefe50">
+      <Text fontWeight="600" color={'#fefefe50'}>
         {formatDate(currentDate, 'monthName')}
       </Text>
       <Stack
@@ -79,5 +78,5 @@ export default function Home() {
         <CardDashboard mt="30px" type="earnings" value={totalEarnings} />
       </Stack>
     </Box>
-  )
+  );
 }

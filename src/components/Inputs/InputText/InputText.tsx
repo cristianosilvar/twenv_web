@@ -13,8 +13,8 @@ export const InputText = ({
   name,
   placeholder,
   label,
-  isReadOnly,
-  isRequired,
+  readOnly,
+  required,
   ...rest
 }: InputTextInterface) => {
   return (
@@ -23,11 +23,11 @@ export const InputText = ({
         name={name}
         render={({ field }) => (
           <>
-            {label && <Label label={label} isRequired={isRequired} />}
+            {label && <Label label={label} isRequired={required} />}
             <Input
               placeholder={placeholder}
-              isReadOnly={isReadOnly}
-              isRequired={isRequired}
+              readOnly={readOnly}
+              required={required}
               bgColor={'#fefefe15'}
               borderColor="#fefefe25"
               _hover={{

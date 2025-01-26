@@ -3,28 +3,35 @@ import {
   Box,
   Button,
   GridItem,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  ModalProps,
+  DialogRootProps,
   SimpleGrid,
   VStack,
   useDisclosure,
+  Portal,
 } from '@chakra-ui/react'
+
+import {
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
 import InputDate from '@/components/Inputs/InputDate/InputDate'
 import InputNumber from '@/components/Inputs/InputNumber/InputNumber'
 import InputTextarea from '@/components/Inputs/InputTextarea/InputTextarea'
+import { DialogActionTrigger } from '../ui/dialog'
 
-interface IModalDefault extends Omit<ModalProps, 'isOpen' | 'onClose'> {
+interface IModalDefault extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   children: ReactNode
   title?: string
   buttonWidth?: any
   buttonHeight?: any
-  callback?: (onClose: () => void) => void
+  callback?: () => void
   callbackCancel?: (onClose: () => void) => void
 }
 
@@ -37,30 +44,25 @@ const ModalDefault = ({
   callbackCancel,
   ...props
 }: IModalDefault) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
   return (
-    <>
-      <Box w={buttonWidth} h={buttonHeight} onClick={onOpen}>
-        {children}
-      </Box>
-      <Modal
-        {...props}
-        isOpen={isOpen}
-        onClose={() => (callbackCancel ? callbackCancel(onClose) : onClose)}
-        closeOnOverlayClick={false}
-      >
-        <ModalOverlay bgColor="#00040750" backdropFilter="blur(5px)" />
-        <ModalContent bgColor="#000407" border="1px solid #fefefe15">
-          <ModalHeader textAlign="center">{title}</ModalHeader>
-          <ModalBody pb={6}>
-            <SimpleGrid columns={12} spacing={6}>
+    <DialogRoot placement="center" size="lg" closeOnInteractOutside={false}>
+      <DialogTrigger>
+        <Box w={buttonWidth} h={buttonHeight}>
+          {children}
+        </Box>
+      </DialogTrigger>
+      <Portal>
+        <DialogContent bgColor="#000407" border="1px solid #fefefe15">
+          <DialogHeader textAlign="center">
+            <DialogTitle>{title}</DialogTitle>
+          </DialogHeader>
+          <DialogBody pb={6}>
+            <SimpleGrid columns={12} gap={6}>
               <GridItem colSpan={12}>
                 <InputTextarea
                   name="description"
                   placeholder="Qual o nome, descrição e/ou informação 
                 dessa despesa?"
-                  // maxLength={50}
                 />
               </GridItem>
               <GridItem colSpan={6}>
@@ -75,28 +77,24 @@ const ModalDefault = ({
                 <InputDate name="date" label="Data" isRequired />
               </GridItem>
             </SimpleGrid>
-          </ModalBody>
-          <ModalFooter>
+          </DialogBody>
+          <DialogFooter>
             <VStack w="full">
               <Button
-                variant="primary"
-                onClick={() => callback && callback(onClose)}
+                onClick={() => {
+                  // if (callback) callback()
+                }}
               >
                 Adicionar
               </Button>
-              <Button
-                variant="secondary"
-                onClick={() =>
-                  callbackCancel ? callbackCancel(onClose) : onClose
-                }
-              >
-                Cancelar
-              </Button>
+              <DialogActionTrigger asChild>
+                <Button>Cancelar</Button>
+              </DialogActionTrigger>
             </VStack>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+          </DialogFooter>
+        </DialogContent>
+      </Portal>
+    </DialogRoot>
   )
 }
 

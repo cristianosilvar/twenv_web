@@ -39,11 +39,12 @@ const CardDashboard = ({
       />
       <VStack align="start" px="30px">
         <HStack>
-          <Icon
-            as={type === 'spendings' ? IconArrowDownRed : IconArrowUpGreen}
-            boxSize="20px"
-          />
-          <Text fontSize="lg" textColor="#fefefe50">
+          {type === 'spendings' ? (
+            <IconArrowDownRed boxSize="20px" />
+          ) : (
+            <IconArrowUpGreen boxSize="20px" />
+          )}
+          <Text fontSize="lg" color="#fefefe50">
             {type === 'spendings' ? 'despesas' : 'ganhos'}
           </Text>
         </HStack>

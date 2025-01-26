@@ -1,6 +1,6 @@
-import { Box } from "@chakra-ui/layout";
+import { Box } from '@chakra-ui/react'
 interface MainInterface {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export default function Main({ children }: MainInterface) {
@@ -18,5 +18,5 @@ export default function Main({ children }: MainInterface) {
     >
       {children}
     </Box>
-  );
+  )
 }

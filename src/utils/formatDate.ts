@@ -1,4 +1,4 @@
-type typeFormats = 'default' | 'dayAndMonth' | 'monthName' | 'dateInput'
+type typeFormats = 'default' | 'dayAndMonth' | 'monthName' | 'dateInput';
 
 const monthNames: string[] = [
   'janeiro',
@@ -13,40 +13,40 @@ const monthNames: string[] = [
   'outubro',
   'novembro',
   'dezembro',
-]
+];
 
 const formatDate = (date: Date, type: typeFormats = 'default'): string => {
-  const newDate = new Date(date)
+  const newDate = new Date(date);
 
   const [day, month, year] = [
     newDate.getDate(),
     newDate.getMonth(),
     newDate.getFullYear(),
-  ]
+  ];
 
-  let formatDate = ''
+  let formatDate = '';
 
-  const formatedDay = day.toString().padStart(2, '0')
-  const formatedMonth = (month + 1).toString().padStart(2, '0')
+  const formatedDay = day.toString().padStart(2, '0');
+  const formatedMonth = (month + 1).toString().padStart(2, '0');
 
   switch (type) {
     case 'default':
-      formatDate = `${formatedDay} de ${formatedMonth}, ${year}`
-      break
+      formatDate = `${formatedDay} de ${formatedMonth}, ${year}`;
+      break;
     case 'monthName':
-      formatDate = `${formatedDay} de ${monthNames[month]}, ${year}`
-      break
+      formatDate = `${formatedDay} de ${monthNames[month]}, ${year}`;
+      break;
     case 'dayAndMonth':
-      formatDate = `${formatedDay}/${formatedMonth}`
-      break
+      formatDate = `${formatedDay}/${formatedMonth}`;
+      break;
     case 'dateInput':
-      formatDate = `${year}-${formatedMonth}-${formatedDay}`
-      break
+      formatDate = `${year}-${formatedMonth}-${formatedDay}`;
+      break;
     default:
-      break
+      break;
   }
 
-  return formatDate
-}
+  return formatDate;
+};
 
-export default formatDate
+export default formatDate;

@@ -5,149 +5,144 @@ import {
   Text,
   GridItem,
   Button,
-  useToast,
-} from '@chakra-ui/react'
-import { useCallback, useEffect, useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { IconNew } from '@/icons'
+} from '@chakra-ui/react';
+import { useCallback, useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { IconNew } from '@/icons';
 
-import ModalDefault from '@/components/Modal'
-import CardInfo from '@/components/Card/CardInfo'
+import ModalDefault from '@/components/Modal';
+import CardInfo from '@/components/Card/CardInfo';
 
-import services from '@/services'
-import formatDate from '@/utils/formatDate'
+import services from '@/services';
+import formatDate from '@/utils/formatDate';
 
 import {
   schemaSpending,
   defaultValuesSpending,
   spendingT,
-} from '@/schemas/schemaSpending'
-import { ResponseInterface } from '@/interfaces/response'
-import { InfoInterface } from '@/interfaces/info'
+} from '@/schemas/schemaSpending';
+import { ResponseInterface } from '@/interfaces/response';
+import { InfoInterface } from '@/interfaces/info';
+import { toaster } from '@/components/ui/toaster';
 
 export default function Spending() {
-  const currentDate = new Date()
-  const toast = useToast()
+  const currentDate = new Date();
 
   const methods = useForm<spendingT>({
     resolver: zodResolver(schemaSpending),
     defaultValues: defaultValuesSpending,
-  })
+  });
 
-  const { handleSubmit, reset } = methods
-  const [spendings, setSpendings] = useState<InfoInterface[]>()
+  const { handleSubmit, reset } = methods;
+  const [spendings, setSpendings] = useState<InfoInterface[]>();
 
   const onSubmit = async (onClose: () => void) => {
     handleSubmit(
-      async data => {
+      async (data) => {
         const response = await services.post<
           void,
           ResponseInterface<InfoInterface>
         >('v1/spending', {
           ...data,
           date: new Date(data.date),
-        })
+        });
 
         if (response) {
           if (response.message) {
-            const toastId = 'errorMessage'
-            const toastIsActive = toast.isActive(toastId)
+            const toastId = 'errorMessage';
+            const toastIsActive = toaster.isVisible(toastId);
 
             if (!toastIsActive) {
-              toast({
+              toaster.create({
                 id: toastId,
                 description: response.message,
-                status: 'error',
+                type: 'error',
                 duration: 5000,
-                position: 'top-right',
-                isClosable: false,
-              })
+                placement: 'top-end',
+              });
             }
           }
 
           if (response.sucess) {
-            getSpendings()
-            reset()
-            onClose()
+            getSpendings();
+            reset();
+            onClose();
           }
         }
       },
       ({ value }) => {
-        const toastId = 'warningMessage'
-        const errMessage = value?.message
-        const toastIsActive = toast.isActive(toastId)
+        const toastId = 'warningMessage';
+        const errMessage = value?.message;
+        const toastIsActive = toaster.isVisible(toastId);
 
         if (!toastIsActive) {
-          toast({
+          toaster.create({
             id: toastId,
             description: errMessage,
-            status: 'warning',
+            type: 'warning',
             duration: 5000,
-            position: 'top-right',
-            isClosable: false,
-          })
+            placement: 'top-end',
+          });
         }
-      }
-    )()
-  }
+      },
+    )();
+  };
 
   const getSpendings = useCallback(async () => {
     const response = await services.get<
       void,
       ResponseInterface<InfoInterface[]>
-    >('v1/spendings')
+    >('v1/spendings');
 
     if (response) {
       if (response.message) {
-        const toastId = 'errorMessage'
-        const toastIsActive = toast.isActive(toastId)
+        const toastId = 'errorMessage';
+        const toastIsActive = toaster.isVisible(toastId);
 
         if (!toastIsActive) {
-          toast({
+          toaster.create({
             id: toastId,
             description: response.message,
-            status: 'error',
+            type: 'error',
             duration: 5000,
-            position: 'top-right',
-            isClosable: false,
-          })
+            placement: 'top-end',
+          });
         }
       }
       if (response.sucess) {
-        setSpendings(response.data)
+        setSpendings(response.data);
       }
     }
-  }, [toast])
+  }, []);
 
   const deleteSpending = useCallback(
     async (id: string | undefined) => {
-      if (!id) return
+      if (!id) return;
 
       const response = await services.delete<void, ResponseInterface>(
-        `v1/spending/${id}`
-      )
+        `v1/spending/${id}`,
+      );
 
       if (response) {
         if (response.message) {
-          const toastId = 'errMessage'
+          const toastId = 'errMessage';
 
-          toast({
+          toaster.create({
             id: toastId,
             description: response.message,
-            status: 'error',
+            type: 'error',
             duration: 5000,
-            position: 'top-right',
-            isClosable: false,
-          })
+            placement: 'top-end',
+          });
         }
         if (response.sucess) {
-          getSpendings()
+          getSpendings();
         }
       }
     },
-    [getSpendings, toast]
-  )
+    [getSpendings],
+  );
 
   const handleUpdate = useCallback(
     async (onClose: () => void, data: any, id: string) => {
@@ -157,26 +152,26 @@ export default function Spending() {
           ...data,
           date: new Date(data.date),
           id,
-        }
-      )
+        },
+      );
 
       if (response) {
         if (response.sucess) {
-          getSpendings()
-          onClose()
+          getSpendings();
+          onClose();
         }
       }
     },
-    [getSpendings]
-  )
+    [getSpendings],
+  );
 
   const handleCancel = useCallback((onClose: () => void) => {
-    onClose()
-  }, [])
+    onClose();
+  }, []);
 
   useEffect(() => {
-    getSpendings()
-  }, [getSpendings])
+    getSpendings();
+  }, [getSpendings]);
 
   return (
     <Box w="80%" marginInline="auto" mt={'30px'}>
@@ -184,8 +179,8 @@ export default function Spending() {
       <Text fontWeight="600" color="#fefefe50">
         {formatDate(currentDate, 'monthName')}
       </Text>
-      <SimpleGrid columns={12} mt="30px" spacing="4">
-        {spendings?.map(spending => (
+      <SimpleGrid columns={12} mt={'30px'} gap="4">
+        {spendings?.map((spending) => (
           <CardInfo
             key={spending.id}
             data={spending}
@@ -193,14 +188,14 @@ export default function Spending() {
             callbackDelete={deleteSpending}
           />
         ))}
-        <GridItem colSpan={{ base: 12, sm: 1 }}>
+        <GridItem colSpan={{ base: 12 }}>
           <FormProvider {...methods}>
             <ModalDefault
               title="Nova despesa"
               callback={onSubmit}
               callbackCancel={handleCancel}
             >
-              <Button variant="new" boxSize={'full'}>
+              <Button boxSize={'full'} variant={'new'}>
                 <IconNew boxSize={'25px'} />
               </Button>
             </ModalDefault>
@@ -208,5 +203,5 @@ export default function Spending() {
         </GridItem>
       </SimpleGrid>
     </Box>
-  )
+  );
 }

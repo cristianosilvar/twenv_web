@@ -1,11 +1,11 @@
-import { z } from 'zod'
-import formatDate from '@/utils/formatDate'
+import { z } from 'zod';
+import formatDate from '@/utils/formatDate';
 
 export const defaultValuesEarning = {
   description: '',
   value: 0,
   date: formatDate(new Date(), 'dateInput'),
-}
+};
 
 export const schemaEarning = z.object({
   date: z.string(),
@@ -17,6 +17,6 @@ export const schemaEarning = z.object({
     .number()
     .min(0.01, 'O valor deve ser igual ou superior a R$ 0,01')
     .max(100000, 'O valor deve ser igual ou inferior a R$ 100.000'),
-})
+});
 
-export type earningT = z.infer<typeof schemaEarning>
+export type earningT = z.infer<typeof schemaEarning>;

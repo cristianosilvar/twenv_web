@@ -6,14 +6,10 @@ import {
   VStack,
   HStack,
   Icon,
-  Menu,
-  MenuList,
-  MenuItem,
-  MenuButton,
+  MenuRoot,
   GridItem,
   Spacer,
   StackProps,
-  useToast,
 } from '@chakra-ui/react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { IconOptions } from '@/icons'
@@ -24,6 +20,8 @@ import formatReal from '@/utils/fomatReal'
 import formatDate from '@/utils/formatDate'
 
 import { InfoInterface } from '@/interfaces/info'
+import { MenuContent, MenuTrigger, MenuItem } from '@/components/ui/menu'
+import { toaster } from '@/components/ui/toaster'
 
 interface ICardInfo extends StackProps {
   data: InfoInterface
@@ -32,7 +30,6 @@ interface ICardInfo extends StackProps {
 }
 
 const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
-  const toast = useToast()
   const methods = useForm({
     defaultValues: { ...data, date: formatDate(data.date, 'dateInput') },
   })
@@ -50,22 +47,21 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
         ({ value }) => {
           const toastId = 'errMessage'
           const errMessage = value?.message
-          const toastIsActive = toast.isActive(toastId)
+          const toastIsActive = toaster.isVisible(toastId)
 
           if (!toastIsActive) {
-            toast({
+            toaster.create({
               id: toastId,
               description: errMessage,
-              status: 'warning',
+              type: 'warning',
               duration: 5000,
-              position: 'top-right',
-              isClosable: false,
+              placement: 'top-end',
             })
           }
         }
       )()
     },
-    [callback, data, handleSubmit, toast]
+    [callback, data, handleSubmit]
   )
 
   const callbackCancel = (onClose: () => void) => {
@@ -73,8 +69,7 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
   }
 
   return (
-    <HStack
-      as={GridItem}
+    <GridItem
       colSpan={{ base: 12, md: 3 }}
       pb={6}
       pl={6}
@@ -100,7 +95,7 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
                   as="h5"
                   size="md"
                   fontWeight="semibold"
-                  sx={{
+                  css={{
                     '& > span': {
                       opacity: 0.5,
                     },
@@ -116,58 +111,48 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
               </HStack>
             </VStack>
             <Box px={2}>
-              <Menu>
-                {({ isOpen }) => (
-                  <>
-                    <MenuButton
-                      opacity={{ base: 1, sm: isHover || isOpen ? 1 : 0 }}
-                      transition="ease-out .2s"
+              <MenuRoot>
+                <MenuTrigger asChild>
+                  <IconOptions boxSize="25px" opacity={0.5} cursor="pointer" />
+                </MenuTrigger>
+                <MenuContent
+                  bgColor="#000"
+                  borderColor="#fefefe15"
+                  minW="min-content"
+                >
+                  <FormProvider {...methods}>
+                    <ModalDefault
+                      title="Alterar"
+                      callback={callbackUpdate}
+                      callbackCancel={callbackCancel}
                     >
-                      <Icon
-                        as={IconOptions}
-                        boxSize="25px"
-                        opacity={0.5}
-                        cursor="pointer"
-                      />
-                    </MenuButton>
-                    <MenuList
-                      bgColor="#000"
-                      borderColor="#fefefe15"
-                      minW="min-content"
-                    >
-                      <FormProvider {...methods}>
-                        <ModalDefault
-                          title="Alterar"
-                          callback={callbackUpdate}
-                          callbackCancel={callbackCancel}
-                        >
-                          <MenuItem
-                            bgColor="#000"
-                            px={8}
-                            py={2}
-                            _hover={{
-                              bgColor: '#fefefe10',
-                            }}
-                          >
-                            Editar
-                          </MenuItem>
-                        </ModalDefault>
-                      </FormProvider>
                       <MenuItem
+                        value="edit"
                         bgColor="#000"
                         px={8}
                         py={2}
                         _hover={{
                           bgColor: '#fefefe10',
                         }}
-                        onClick={() => callbackDelete(data.id)}
                       >
-                        Excluir
+                        Editar
                       </MenuItem>
-                    </MenuList>
-                  </>
-                )}
-              </Menu>
+                    </ModalDefault>
+                  </FormProvider>
+                  <MenuItem
+                    value="delete"
+                    bgColor="#000"
+                    px={8}
+                    py={2}
+                    _hover={{
+                      bgColor: '#fefefe10',
+                    }}
+                    onClick={() => callbackDelete(data.id)}
+                  >
+                    Excluir
+                  </MenuItem>
+                </MenuContent>
+              </MenuRoot>
             </Box>
           </HStack>
         </VStack>
@@ -175,7 +160,7 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
           {data?.description || 'Sem descrição'}
         </Text>
       </VStack>
-    </HStack>
+    </GridItem>
   )
 }
 

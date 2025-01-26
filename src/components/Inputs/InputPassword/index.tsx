@@ -13,8 +13,8 @@ export const InputPassword = ({
   name,
   placeholder,
   label,
-  isReadOnly,
-  isRequired,
+  readOnly,
+  required,
   ...rest
 }: InputPasswordInterface) => {
   return (
@@ -23,12 +23,12 @@ export const InputPassword = ({
         name={name}
         render={({ field }) => (
           <>
-            {label && <Label label={label} isRequired={isRequired} />}
+            {label && <Label label={label} isRequired={required} />}
             <Input
               type="password"
               placeholder={placeholder}
-              isReadOnly={isReadOnly}
-              isRequired={isRequired}
+              readOnly={readOnly}
+              required={required}
               bgColor={'#fefefe15'}
               borderColor="#fefefe25"
               _hover={{

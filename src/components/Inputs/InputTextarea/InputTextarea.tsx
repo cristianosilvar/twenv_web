@@ -16,8 +16,8 @@ const InputTextarea = ({
   label,
   align,
   maxH = '200px',
-  isReadOnly,
-  isRequired,
+  readOnly,
+  required,
   ...rest
 }: InputTextareaInterface) => {
   return (
@@ -26,11 +26,11 @@ const InputTextarea = ({
         name={name}
         render={({ field }) => (
           <>
-            {label && <Label label={label} isRequired={isRequired} />}
+            {label && <Label label={label} isRequired={required} />}
             <Textarea
               placeholder={placeholder}
-              isReadOnly={isReadOnly}
-              isRequired={isRequired}
+              readOnly={readOnly}
+              required={required}
               bgColor={'#fefefe15'}
               borderColor="#fefefe25"
               _hover={{

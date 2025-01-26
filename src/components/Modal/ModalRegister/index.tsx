@@ -3,17 +3,16 @@ import {
   Box,
   Button,
   GridItem,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  ModalProps,
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRootProps,
   SimpleGrid,
   VStack,
   useDisclosure,
-  useToast,
+  DialogRoot,
 } from '@chakra-ui/react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -27,8 +26,9 @@ import { InputText } from '@/components/Inputs/InputText/InputText'
 
 import { ResponseInterface } from '@/interfaces/response'
 import { defaultValuesUser, schemaUser, userT } from '@/schemas/schemaUser'
+import { toaster } from '@/components/ui/toaster'
 
-interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
+interface IModalRegister extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   children: ReactNode
   title?: string
   buttonWidth?: any
@@ -42,10 +42,9 @@ const ModalRegister = ({
   buttonHeight = 'full',
   ...props
 }: IModalRegister) => {
-  const toast = useToast()
   const navigate = useNavigate()
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { open, onOpen, onClose } = useDisclosure()
   const methods = useForm<userT>({
     resolver: zodResolver(schemaUser),
     defaultValues: defaultValuesUser,
@@ -64,15 +63,11 @@ const ModalRegister = ({
       if (response?.message) {
         const id = 'errToast'
 
-        if (!toast.isActive(id)) {
-          toast({
+        if (!toaster.isVisible(id)) {
+          toaster.create({
             id,
             title: 'Tente novamente',
             description: response.message,
-            status: 'error',
-            duration: 5000,
-            position: 'top-right',
-            isClosable: false,
           })
         }
       }
@@ -90,18 +85,17 @@ const ModalRegister = ({
       <Box w={buttonWidth} h={buttonHeight} onClick={onOpen}>
         {children}
       </Box>
-      <Modal
+      <DialogRoot
+        open={open}
+        closeOnEscape
+        closeOnInteractOutside={false}
         {...props}
-        isOpen={isOpen}
-        onClose={onClose}
-        closeOnOverlayClick={false}
       >
-        <ModalOverlay bgColor="#00040750" backdropFilter="blur(5px)" />
-        <ModalContent bgColor="#000407" border="1px solid #fefefe15">
-          <ModalHeader textAlign="center">{title}</ModalHeader>
-          <ModalBody pb={6}>
+        <DialogContent>
+          <DialogHeader textAlign="center">{title}</DialogHeader>
+          <DialogBody pb={6}>
             <FormProvider {...methods}>
-              <SimpleGrid columns={12} spacing={6}>
+              <SimpleGrid columns={12} gap={6}>
                 <GridItem colSpan={12}>
                   <InputText
                     name={'username'}
@@ -125,19 +119,15 @@ const ModalRegister = ({
                 </GridItem>
               </SimpleGrid>
             </FormProvider>
-          </ModalBody>
-          <ModalFooter>
+          </DialogBody>
+          <DialogFooter>
             <VStack w="full">
-              <Button variant="primary" onClick={() => handleRegister()}>
-                Criar sua conta
-              </Button>
-              <Button variant="secondary" onClick={onClose}>
-                Voltar
-              </Button>
+              <Button onClick={() => handleRegister()}>Criar sua conta</Button>
+              <Button onClick={onClose}>Voltar</Button>
             </VStack>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+          </DialogFooter>
+        </DialogContent>
+      </DialogRoot>
     </>
   )
 }

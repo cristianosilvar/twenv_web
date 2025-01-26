@@ -1,13 +1,8 @@
-import {
-  Input,
-  InputGroup,
-  InputProps,
-  InputRightElement,
-  VStack,
-} from '@chakra-ui/react'
+import { Input, InputProps, VStack } from '@chakra-ui/react'
 import { Label } from '../Label'
 import { Controller } from 'react-hook-form'
 import { IconCalendar } from '@/icons'
+import { InputGroup } from '@/components/ui/input-group'
 
 interface InputDateInterface extends InputProps {
   name: string
@@ -30,12 +25,9 @@ const InputDate = ({
         render={({ field }) => (
           <>
             {label && <Label label={label} isRequired={isRequired} />}
-            <InputGroup>
-              <InputRightElement
-                children={<IconCalendar boxSize="25px" color="#fefefe60" />}
-                zIndex={-1}
-                h="full"
-              />
+            <InputGroup
+              startElement={<IconCalendar boxSize="25px" color="#fefefe60" />}
+            >
               <Input
                 type="date"
                 size={size}
@@ -47,8 +39,8 @@ const InputDate = ({
                 _focusVisible={{
                   borderColor: '#513BD9',
                 }}
-                sx={{
-                  '::-webkit-calendar-picker-indicator': {
+                css={{
+                  '& ::-webkit-calendar-picker-indicator': {
                     h: 'full',
                     w: '20%',
                     right: 0,

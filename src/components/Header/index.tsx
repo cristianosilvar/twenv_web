@@ -1,18 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  Avatar,
-  Box,
-  Center,
-  Circle,
-  Flex,
-  HStack,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text,
-} from '@chakra-ui/react'
-import { IconArrowDownMenu, Logo } from '@/icons/index'
+import { Box, Center, Circle, Flex, HStack, Text } from '@chakra-ui/react'
+import { IconArrowDownMenu, Logo } from '@/icons'
 
 import services from '@/services'
 import getDataUser from '@/utils/getDataUser'
@@ -22,6 +10,8 @@ import Navbar from '../Navbar'
 import ModalRegister from '@/components/Modal/ModalRegister'
 import ModalSignIn from '@/components/Modal/ModalSignIn'
 import { ResponseInterface } from '@/interfaces/response'
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from '../ui/menu'
+import { Avatar } from '../ui/avatar'
 
 const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const navigate = useNavigate()
@@ -51,6 +41,7 @@ const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   return isAuthenticated ? (
     <>
       <MenuItem
+        value="logout"
         bgColor="#000"
         px={4}
         _hover={{
@@ -61,6 +52,7 @@ const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
         Sair da conta
       </MenuItem>
       <MenuItem
+        value="delete-account"
         bgColor="#000"
         px={4}
         _hover={{
@@ -75,6 +67,7 @@ const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
     <>
       <ModalRegister title="Criando sua conta">
         <MenuItem
+          value="register-account"
           bgColor="#000"
           px={4}
           _hover={{
@@ -86,6 +79,7 @@ const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
       </ModalRegister>
       <ModalSignIn title="Entrando na sua conta">
         <MenuItem
+          value="login-account"
           bgColor="#000"
           px={4}
           _hover={{
@@ -123,12 +117,12 @@ const Header = () => {
           >
             <Navbar />
           </Flex>
-          <Menu>
-            <MenuButton>
+          <MenuRoot>
+            <MenuTrigger asChild>
               <HStack>
                 {isAuthenticated && (
                   <Circle size="35px">
-                    <Avatar w={'full'} h={'full'} borderRadius={'full'} />
+                    <Avatar />
                   </Circle>
                 )}
                 <Text color="#fefefe80">
@@ -136,11 +130,15 @@ const Header = () => {
                 </Text>
                 <IconArrowDownMenu boxSize="20px" color="#fefefe50" />
               </HStack>
-            </MenuButton>
-            <MenuList bgColor="#000" borderColor="#fefefe15" minW="min-content">
+            </MenuTrigger>
+            <MenuContent
+              bgColor="#000"
+              borderColor="#fefefe15"
+              minW="min-content"
+            >
               <MenuItems isAuthenticated={isAuthenticated} />
-            </MenuList>
-          </Menu>
+            </MenuContent>
+          </MenuRoot>
         </Flex>
       </Box>
     </>

@@ -3,19 +3,17 @@ import {
   Box,
   Button,
   GridItem,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  ModalProps,
+  DialogRoot,
+  DialogRootProps,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
   SimpleGrid,
   VStack,
   useDisclosure,
-  useToast,
 } from '@chakra-ui/react'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import services from '@/services'
@@ -27,8 +25,9 @@ import { InputText } from '@/components/Inputs/InputText/InputText'
 import { ResponseInterface } from '@/interfaces/response'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schemaSignIn } from '@/schemas/schemaSignIn'
+import { toaster } from '@/components/ui/toaster'
 
-interface IModalRegister extends Omit<ModalProps, 'isOpen' | 'onClose'> {
+interface IModalRegister extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   children: ReactNode
   title?: string
   buttonWidth?: any
@@ -42,9 +41,7 @@ const ModalSignIn = ({
   buttonHeight = 'full',
   ...props
 }: IModalRegister) => {
-  const toast = useToast()
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { open, onOpen, onClose } = useDisclosure()
   const navigate = useNavigate()
   const methods = useForm({
     resolver: zodResolver(schemaSignIn),
@@ -65,15 +62,14 @@ const ModalSignIn = ({
         if (response?.message) {
           const id = 'errToast'
 
-          if (!toast.isActive(id)) {
-            toast({
+          if (!toaster.isVisible(id)) {
+            toaster.create({
               id,
               title: 'Tente novamente',
               description: response.message,
-              status: 'error',
+              type: 'error',
               duration: 5000,
-              position: 'top-right',
-              isClosable: false,
+              placement: 'top-end',
             })
           }
         }
@@ -91,16 +87,15 @@ const ModalSignIn = ({
       console.log(value)
       const toastId = 'errMessage'
       const errMessage = value?.message as string
-      const toastIsActive = toast.isActive(toastId)
+      const toastIsActive = toaster.isVisible(toastId)
 
       if (!toastIsActive) {
-        toast({
+        toaster.create({
           id: toastId,
           description: errMessage,
-          status: 'warning',
+          type: 'warning',
           duration: 5000,
-          position: 'top-right',
-          isClosable: false,
+          placement: 'top-end',
         })
       }
     }
@@ -111,18 +106,17 @@ const ModalSignIn = ({
       <Box w={buttonWidth} h={buttonHeight} onClick={onOpen}>
         {children}
       </Box>
-      <Modal
+      <DialogRoot
+        open={open}
+        closeOnEscape
+        closeOnInteractOutside={false}
         {...props}
-        isOpen={isOpen}
-        onClose={onClose}
-        closeOnOverlayClick={false}
       >
-        <ModalOverlay bgColor="#00040750" backdropFilter="blur(5px)" />
-        <ModalContent bgColor="#000407" border="1px solid #fefefe15">
-          <ModalHeader textAlign="center">{title}</ModalHeader>
-          <ModalBody pb={6}>
+        <DialogContent>
+          <DialogHeader textAlign="center">{title}</DialogHeader>
+          <DialogBody pb={6}>
             <FormProvider {...methods}>
-              <SimpleGrid columns={12} spacing={6}>
+              <SimpleGrid columns={12} gap={6}>
                 <GridItem colSpan={12}>
                   <InputText
                     name={'email'}
@@ -139,19 +133,15 @@ const ModalSignIn = ({
                 </GridItem>
               </SimpleGrid>
             </FormProvider>
-          </ModalBody>
-          <ModalFooter>
+          </DialogBody>
+          <DialogFooter>
             <VStack w="full">
-              <Button variant="primary" onClick={() => handleSignIn()}>
-                Entre na sua conta
-              </Button>
-              <Button variant="secondary" onClick={onClose}>
-                Voltar
-              </Button>
+              <Button onClick={() => handleSignIn()}>Entre na sua conta</Button>
+              <Button onClick={onClose}>Voltar</Button>
             </VStack>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+          </DialogFooter>
+        </DialogContent>
+      </DialogRoot>
     </>
   )
 }

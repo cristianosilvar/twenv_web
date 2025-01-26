@@ -1,55 +1,55 @@
-import axios, { InternalAxiosRequestConfig } from 'axios'
+import axios, { InternalAxiosRequestConfig } from 'axios';
 
 const services = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-})
+});
 
 const responseDataErr = {
   sucess: false,
   data: null,
   message: 'Houve algum erro. Tente novamente mais tarde.',
-}
+};
 
 services.interceptors.response.use(
-  response => {
-    return response.data
+  (response) => {
+    return response.data;
   },
-  error => {
+  (error) => {
     try {
-      const originalRequest = error.config
+      const originalRequest = error.config;
 
       // Erro na validação
       if (error.response?.status === 400 && !originalRequest.retry) {
-        originalRequest.retry = true
+        originalRequest.retry = true;
 
-        return responseDataErr
+        return responseDataErr;
       }
 
       // Erro no lado do servidor
       if (error.response?.status === 500 && !originalRequest.retry) {
-        originalRequest.retry = true
+        originalRequest.retry = true;
 
-        return responseDataErr
+        return responseDataErr;
       }
 
-      return null
+      return null;
     } catch (err) {
-      console.log('err')
+      console.log('err');
 
-      return responseDataErr
+      return responseDataErr;
     }
-  }
-)
+  },
+);
 
 services.interceptors.request.use(
   (requestConfig: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('token')
-    const config = requestConfig
+    const token = localStorage.getItem('token');
+    const config = requestConfig;
 
-    config.headers.Authorization = token
+    config.headers.Authorization = token;
 
-    return config
-  }
-)
+    return config;
+  },
+);
 
-export default services
+export default services;
