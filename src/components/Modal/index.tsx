@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   Box,
   Button,
@@ -6,33 +5,31 @@ import {
   DialogRootProps,
   SimpleGrid,
   VStack,
-  useDisclosure,
   Portal,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { ReactNode } from 'react';
 
+import InputDate from '@/components/Inputs/InputDate/InputDate';
+import InputNumber from '@/components/Inputs/InputNumber/InputNumber';
+import InputTextarea from '@/components/Inputs/InputTextarea/InputTextarea';
 import {
   DialogBody,
-  DialogCloseTrigger,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogRoot,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-
-import InputDate from '@/components/Inputs/InputDate/InputDate'
-import InputNumber from '@/components/Inputs/InputNumber/InputNumber'
-import InputTextarea from '@/components/Inputs/InputTextarea/InputTextarea'
-import { DialogActionTrigger } from '../ui/dialog'
+  DialogActionTrigger,
+} from '@/components/ui/dialog';
 
 interface IModalDefault extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
-  children: ReactNode
-  title?: string
-  buttonWidth?: any
-  buttonHeight?: any
-  callback?: () => void
-  callbackCancel?: (onClose: () => void) => void
+  children: ReactNode;
+  title?: string;
+  buttonWidth?: any;
+  buttonHeight?: any;
+  callback?: () => void;
+  callbackCancel?: (onClose: () => void) => void;
 }
 
 const ModalDefault = ({
@@ -41,8 +38,6 @@ const ModalDefault = ({
   buttonWidth = 'full',
   buttonHeight = 'full',
   callback,
-  callbackCancel,
-  ...props
 }: IModalDefault) => {
   return (
     <DialogRoot placement="center" size="lg" closeOnInteractOutside={false}>
@@ -82,7 +77,9 @@ const ModalDefault = ({
             <VStack w="full">
               <Button
                 onClick={() => {
-                  // if (callback) callback()
+                  if (callback) {
+                    callback();
+                  }
                 }}
               >
                 Adicionar
@@ -95,7 +92,7 @@ const ModalDefault = ({
         </DialogContent>
       </Portal>
     </DialogRoot>
-  )
-}
+  );
+};
 
-export default ModalDefault
+export default ModalDefault;

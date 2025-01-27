@@ -6,15 +6,14 @@ import {
   Icon,
   Text,
   VStack,
-} from '@chakra-ui/react'
-import React from 'react'
-import { IconArrowDownRed, IconArrowUpGreen } from '@/icons'
+} from '@chakra-ui/react';
 
-import formatReal from '@/utils/fomatReal'
+import { IconArrowDownRed, IconArrowUpGreen } from '@/icons';
+import { formatMoney } from '@/utils/format-money';
 
 interface ICardDashboard extends FlexProps {
-  type?: 'spendings' | 'earnings'
-  value: number
+  type?: 'spendings' | 'earnings';
+  value: number;
 }
 
 const CardDashboard = ({
@@ -25,7 +24,7 @@ const CardDashboard = ({
   return (
     <Flex
       p={2}
-      bgColor={'#000000CC'}
+      bgColor="#000000CC"
       w={{ base: 'full', md: '-webkit-fit-content' }}
       align="start"
       minW={{ base: '0', md: '300px' }}
@@ -49,11 +48,12 @@ const CardDashboard = ({
           </Text>
         </HStack>
         <Flex gap={2} fontSize="3xl" fontWeight="extrabold">
-          <Text opacity={0.5}>R$</Text> {formatReal(value)}
+          <Text opacity={0.5}>R$</Text>{' '}
+          {formatMoney({ value }).replace('R$', '').trim()}
         </Flex>
       </VStack>
     </Flex>
-  )
-}
+  );
+};
 
-export default CardDashboard
+export default CardDashboard;

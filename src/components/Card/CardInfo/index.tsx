@@ -1,72 +1,66 @@
-import { useCallback, useState } from 'react'
 import {
   Box,
   Heading,
   Text,
   VStack,
   HStack,
-  Icon,
   MenuRoot,
   GridItem,
   Spacer,
   StackProps,
-} from '@chakra-ui/react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { IconOptions } from '@/icons'
+} from '@chakra-ui/react';
+import { useCallback, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import ModalDefault from '@/components/Modal'
-
-import formatReal from '@/utils/fomatReal'
-import formatDate from '@/utils/formatDate'
-
-import { InfoInterface } from '@/interfaces/info'
-import { MenuContent, MenuTrigger, MenuItem } from '@/components/ui/menu'
-import { toaster } from '@/components/ui/toaster'
+import ModalDefault from '@/components/Modal';
+import { MenuContent, MenuTrigger, MenuItem } from '@/components/ui/menu';
+import { toaster } from '@/components/ui/toaster';
+import { IEarning } from '@/features/earning/types';
+import { IconOptions } from '@/icons';
+import formatDate from '@/utils/format-date';
+import { formatMoney } from '@/utils/format-money';
 
 interface ICardInfo extends StackProps {
-  data: InfoInterface
-  callback: (onClose: () => void, data: any, id: string) => void
-  callbackDelete: (id: string | undefined) => void
+  data: IEarning;
+  callback: (onClose: () => void, data: any, id: string) => void;
+  callbackDelete: (id: string | undefined) => void;
 }
 
 const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
   const methods = useForm({
     defaultValues: { ...data, date: formatDate(data.date, 'dateInput') },
-  })
+  });
 
-  const { handleSubmit } = methods
+  const { handleSubmit } = methods;
 
-  const [isHover, setIsHover] = useState(false)
+  const [isHover, setIsHover] = useState(false);
 
-  const callbackUpdate = useCallback(
-    (onClose: () => void) => {
-      handleSubmit(
-        formData => {
-          callback(onClose, formData, data?.id || '')
-        },
-        ({ value }) => {
-          const toastId = 'errMessage'
-          const errMessage = value?.message
-          const toastIsActive = toaster.isVisible(toastId)
+  const callbackUpdate = useCallback(() => {
+    handleSubmit(
+      (formData) => {
+        callback(() => {}, formData, data?.id || '');
+      },
+      ({ value }) => {
+        const toastId = 'errMessage';
+        const errMessage = value?.message;
+        const toastIsActive = toaster.isVisible(toastId);
 
-          if (!toastIsActive) {
-            toaster.create({
-              id: toastId,
-              description: errMessage,
-              type: 'warning',
-              duration: 5000,
-              placement: 'top-end',
-            })
-          }
+        if (!toastIsActive) {
+          toaster.create({
+            id: toastId,
+            description: errMessage as any,
+            type: 'warning',
+            duration: 5000,
+            placement: 'top-end',
+          });
         }
-      )()
-    },
-    [callback, data, handleSubmit]
-  )
+      },
+    )();
+  }, [callback, data, handleSubmit]);
 
   const callbackCancel = (onClose: () => void) => {
-    onClose()
-  }
+    onClose();
+  };
 
   return (
     <GridItem
@@ -102,7 +96,7 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
                   }}
                 >
                   <span>R$ </span>
-                  {formatReal(data.value)}
+                  {formatMoney({ value: data.value }).replace('R$', '').trim()}
                 </Heading>
                 <Spacer />
                 <Heading as="h6" size="sm" fontWeight="normal" opacity={0.5}>
@@ -161,7 +155,7 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
         </Text>
       </VStack>
     </GridItem>
-  )
-}
+  );
+};
 
-export default CardInfo
+export default CardInfo;

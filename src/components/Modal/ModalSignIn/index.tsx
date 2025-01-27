@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   Box,
   Button,
@@ -12,26 +11,26 @@ import {
   SimpleGrid,
   VStack,
   useDisclosure,
-} from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
-import { FormProvider, useForm } from 'react-hook-form'
+} from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ReactNode } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-import services from '@/services'
-import { useAuth } from '@/context/authContext'
-
-import { InputPassword } from '@/components/Inputs/InputPassword'
-import { InputText } from '@/components/Inputs/InputText/InputText'
-
-import { ResponseInterface } from '@/interfaces/response'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { schemaSignIn } from '@/schemas/schemaSignIn'
-import { toaster } from '@/components/ui/toaster'
+import { InputPassword } from '@/components/Inputs/InputPassword';
+import { InputText } from '@/components/Inputs/InputText/InputText';
+import { toaster } from '@/components/ui/toaster';
+import { routesEnum } from '@/constants/routes';
+import { useAuth } from '@/features/auth/context';
+import { signInSchema } from '@/features/auth/schemas';
+import services from '@/services';
+import { ApiResponse } from '@/types/api';
 
 interface IModalRegister extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
-  children: ReactNode
-  title?: string
-  buttonWidth?: any
-  buttonHeight?: any
+  children: ReactNode;
+  title?: string;
+  buttonWidth?: any;
+  buttonHeight?: any;
 }
 
 const ModalSignIn = ({
@@ -41,26 +40,26 @@ const ModalSignIn = ({
   buttonHeight = 'full',
   ...props
 }: IModalRegister) => {
-  const { open, onOpen, onClose } = useDisclosure()
-  const navigate = useNavigate()
+  const { open, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
   const methods = useForm({
-    resolver: zodResolver(schemaSignIn),
-  })
+    resolver: zodResolver(signInSchema),
+  });
 
-  const { signin } = useAuth()
+  const { signin } = useAuth();
 
-  const { handleSubmit } = methods
+  const { handleSubmit } = methods;
 
   const handleSignIn = handleSubmit(
-    async data => {
+    async (data) => {
       const response = await services.post<
         void,
-        ResponseInterface<{ token: string }>
-      >('v1/user/signin', data)
+        ApiResponse<{ token: string }>
+      >('v1/user/signin', data);
 
       if (response) {
         if (response?.message) {
-          const id = 'errToast'
+          const id = 'errToast';
 
           if (!toaster.isVisible(id)) {
             toaster.create({
@@ -70,24 +69,23 @@ const ModalSignIn = ({
               type: 'error',
               duration: 5000,
               placement: 'top-end',
-            })
+            });
           }
         }
-        if (response?.sucess && response?.data) {
-          signin(response.data?.token)
+        if (response?.success && response?.data) {
+          signin(response.data?.token);
 
-          onClose()
-          navigate('/')
+          onClose();
+          navigate(routesEnum.DASHBOARD);
 
-          window.location.reload()
+          window.location.reload();
         }
       }
     },
     ({ value }) => {
-      console.log(value)
-      const toastId = 'errMessage'
-      const errMessage = value?.message as string
-      const toastIsActive = toaster.isVisible(toastId)
+      const toastId = 'errMessage';
+      const errMessage = value?.message as string;
+      const toastIsActive = toaster.isVisible(toastId);
 
       if (!toastIsActive) {
         toaster.create({
@@ -96,10 +94,10 @@ const ModalSignIn = ({
           type: 'warning',
           duration: 5000,
           placement: 'top-end',
-        })
+        });
       }
-    }
-  )
+    },
+  );
 
   return (
     <>
@@ -119,14 +117,14 @@ const ModalSignIn = ({
               <SimpleGrid columns={12} gap={6}>
                 <GridItem colSpan={12}>
                   <InputText
-                    name={'email'}
+                    name="email"
                     placeholder="email@example.com"
                     label="E-mail"
                   />
                 </GridItem>
                 <GridItem colSpan={12}>
                   <InputPassword
-                    name={'password'}
+                    name="password"
                     label="Senha"
                     placeholder="Mínimo de 6 caracteres"
                   />
@@ -143,7 +141,7 @@ const ModalSignIn = ({
         </DialogContent>
       </DialogRoot>
     </>
-  )
-}
+  );
+};
 
-export default ModalSignIn
+export default ModalSignIn;

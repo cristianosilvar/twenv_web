@@ -1,33 +1,31 @@
 import {
   Box,
-  ChakraComponent,
   HStack,
   Icon,
   IconProps,
   Show,
   Text,
   useMediaQuery,
-} from '@chakra-ui/react'
-import { ReactNode } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+} from '@chakra-ui/react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface INavItem {
-  path: string
-  name: string
+  path: string;
+  name: string;
   icon: React.ForwardRefExoticComponent<
     IconProps & React.RefAttributes<SVGSVGElement>
-  >
+  >;
 }
 
 const NavItem = ({ path, name, icon: CustomIcon }: INavItem) => {
-  const location = useLocation()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [isLargerThan600] = useMediaQuery(['(min-width: 600px )'], {
     fallback: [true],
-  })
+  });
 
-  const isActive = location.pathname === path
+  const isActive = location.pathname === path;
 
   return (
     <Box
@@ -45,7 +43,7 @@ const NavItem = ({ path, name, icon: CustomIcon }: INavItem) => {
         </Show>
       </HStack>
     </Box>
-  )
-}
+  );
+};
 
-export default NavItem
+export default NavItem;

@@ -1,7 +1,10 @@
-import { Flex } from '@chakra-ui/react'
-import { IconArrowDown, IconArrowUp, IconDashboard } from '../../icons'
+import { Flex } from '@chakra-ui/react';
 
-import NavItem from './NavItem'
+import { routesEnum } from '@/constants/routes';
+
+import { IconArrowDown, IconArrowUp, IconDashboard } from '../../icons';
+
+import NavItem from './NavItem';
 
 const Navbar = () => {
   return (
@@ -18,11 +21,15 @@ const Navbar = () => {
         },
       }}
     >
-      <NavItem path="/" name="Inicío" icon={IconDashboard} />
-      <NavItem path="/spendings" name="Despesas" icon={IconArrowDown} />
-      <NavItem path="/earnings" name="Ganhos" icon={IconArrowUp} />
+      <NavItem path={routesEnum.DASHBOARD} name="Inicío" icon={IconDashboard} />
+      <NavItem
+        path={routesEnum.SPENDINGS}
+        name="Despesas"
+        icon={IconArrowDown}
+      />
+      <NavItem path={routesEnum.EARNINGS} name="Ganhos" icon={IconArrowUp} />
     </Flex>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

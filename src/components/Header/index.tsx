@@ -1,42 +1,41 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { Box, Center, Circle, Flex, HStack, Text } from '@chakra-ui/react'
-import { IconArrowDownMenu, Logo } from '@/icons'
+import { Box, Center, Circle, Flex, HStack, Text } from '@chakra-ui/react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import services from '@/services'
-import getDataUser from '@/utils/getDataUser'
-import { useAuth } from '@/context/authContext'
+import ModalRegister from '@/components/Modal/ModalRegister';
+import ModalSignIn from '@/components/Modal/ModalSignIn';
+import { routesEnum } from '@/constants/routes';
+import { useAuth } from '@/features/auth/context';
+import { getDataUser } from '@/features/auth/helpers/get-data-user';
+import { IconArrowDownMenu, Logo } from '@/icons';
+import services from '@/services';
+import { ApiResponse } from '@/types/api';
 
-import Navbar from '../Navbar'
-import ModalRegister from '@/components/Modal/ModalRegister'
-import ModalSignIn from '@/components/Modal/ModalSignIn'
-import { ResponseInterface } from '@/interfaces/response'
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from '../ui/menu'
-import { Avatar } from '../ui/avatar'
+import Navbar from '../Navbar';
+import { Avatar } from '../ui/avatar';
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from '../ui/menu';
 
 const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
-  const navigate = useNavigate()
-  const { signout } = useAuth()
+  const navigate = useNavigate();
+  const { signout } = useAuth();
 
   const deleteAccount = async () => {
-    if (!isAuthenticated) return
+    if (!isAuthenticated) return;
 
-    const response = await services.delete<void, ResponseInterface>(
-      'v1/user/delete'
-    )
+    const response = await services.delete<void, ApiResponse>('v1/user/delete');
 
     if (response) {
-      if (response.sucess) {
-        window.location.reload()
+      if (response.success) {
+        window.location.reload();
       }
     }
-  }
+  };
 
   const logOut = () => {
-    signout()
+    signout();
 
-    navigate('/')
-    window.location.reload()
-  }
+    navigate(routesEnum.DASHBOARD);
+    window.location.reload();
+  };
 
   return isAuthenticated ? (
     <>
@@ -90,21 +89,24 @@ const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
         </MenuItem>
       </ModalSignIn>
     </>
-  )
-}
+  );
+};
 
 const Header = () => {
-  const navigate = useNavigate()
-  const user = getDataUser()
+  const navigate = useNavigate();
+  const user = getDataUser();
 
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
       <Box w="80%" marginInline="auto" zIndex={10}>
         <Center>
           <Link to="/">
-            <Logo boxSize={'120px'} onClick={() => navigate('/')} />
+            <Logo
+              boxSize="120px"
+              onClick={() => navigate(routesEnum.DASHBOARD)}
+            />
           </Link>
         </Center>
         <Flex justify="space-between">
@@ -142,7 +144,7 @@ const Header = () => {
         </Flex>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

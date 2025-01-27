@@ -34,8 +34,6 @@ services.interceptors.response.use(
 
       return null;
     } catch (err) {
-      console.log('err');
-
       return responseDataErr;
     }
   },
