@@ -15,7 +15,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import ModalDefault from '@/components/Modal';
 import { MenuContent, MenuTrigger, MenuItem } from '@/shared/ui/menu';
 import { toaster } from '@/shared/ui/toaster';
-import { IEarning } from '@/features/earning/types';
+import { IEarning } from '@/features/earning-list/types';
 import { IconOptions } from '@/shared/icons';
 import formatDate from '@/shared/utils/format-date';
 import { formatMoney } from '@/shared/utils/format-money';

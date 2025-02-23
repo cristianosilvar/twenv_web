@@ -2,9 +2,11 @@ import { Box, Text, Heading, SimpleGrid, GridItem } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import type { z } from 'zod';
 
 import CardInfo from '@/components/Card/CardInfo';
 import ModalDefault from '@/components/Modal';
+import type { EarningModel } from '@/entities/earning';
 import { IconNew } from '@/shared/icons';
 import type { ApiResponse } from '@/shared/types/api';
 import { Button } from '@/shared/ui/button';
@@ -12,8 +14,7 @@ import { toaster } from '@/shared/ui/toaster';
 // import services from '@/services';
 import formatDate from '@/shared/utils/format-date';
 
-import { earningSchema } from '../schema';
-import { type IEarning, type IEarningForm } from '../types';
+import { earningSchema } from '../model/schema';
 
 const defaultValuesEarning = {
   description: '',
@@ -24,13 +25,13 @@ const defaultValuesEarning = {
 export default function EarningsPage() {
   const currentDate = new Date();
 
-  const methods = useForm<IEarningForm>({
+  const methods = useForm<z.infer<typeof earningSchema>>({
     resolver: zodResolver(earningSchema),
     defaultValues: defaultValuesEarning,
   });
 
   const { handleSubmit, reset } = methods;
-  const [earnings, setEarnings] = useState<IEarning[]>();
+  const [earnings, setEarnings] = useState<EarningModel[]>();
 
   const onSubmit = async () => {
     handleSubmit(
@@ -69,60 +70,55 @@ export default function EarningsPage() {
   };
 
   const getEarnings = useCallback(async () => {
-    const response = await services.get<void, ApiResponse<IEarning[]>>(
-      'v1/earnings',
-    );
-
-    if (response) {
-      if (response.message) {
-        const toastId = 'errToast';
-
-        toaster.create({
-          id: toastId,
-          description: response.message,
-          type: 'error',
-          duration: 5000,
-          placement: 'top-end',
-        });
-      }
-      if (response.success) {
-        setEarnings(response.data);
-      }
-    }
+    // const response = await services.get<void, ApiResponse<IEarning[]>>(
+    //   'v1/earnings',
+    // );
+    // if (response) {
+    //   if (response.message) {
+    //     const toastId = 'errToast';
+    //     toaster.create({
+    //       id: toastId,
+    //       description: response.message,
+    //       type: 'error',
+    //       duration: 5000,
+    //       placement: 'top-end',
+    //     });
+    //   }
+    //   if (response.success) {
+    //     setEarnings(response.data);
+    //   }
+    // }
   }, []);
 
   const deleteSpending = useCallback(
     async (id: string | undefined) => {
-      if (!id) return;
-
-      const response = await services.delete<void, ApiResponse>(
-        `v1/earning/${id}`,
-      );
-
-      if (response) {
-        if (response.success) {
-          getEarnings();
-        }
-      }
+      // if (!id) return;
+      // const response = await services.delete<void, ApiResponse>(
+      //   `v1/earning/${id}`,
+      // );
+      // if (response) {
+      //   if (response.success) {
+      //     getEarnings();
+      //   }
+      // }
     },
     [getEarnings],
   );
 
   const handleUpdate = useCallback(
     async (onClose: () => void, data: any, id: string) => {
-      const response = await services.put<void, ApiResponse>('v1/earning', {
-        ...data,
-        date: new Date(data.date),
-        value: Number(data.value),
-        id,
-      });
-
-      if (response) {
-        if (response.success) {
-          getEarnings();
-          onClose();
-        }
-      }
+      // const response = await services.put<void, ApiResponse>('v1/earning', {
+      //   ...data,
+      //   date: new Date(data.date),
+      //   value: Number(data.value),
+      //   id,
+      // });
+      // if (response) {
+      //   if (response.success) {
+      //     getEarnings();
+      //     onClose();
+      //   }
+      // }
     },
     [getEarnings],
   );
