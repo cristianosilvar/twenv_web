@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import services from '@/services';
-import { ApiResponse } from '@/types/api';
+import { ApiResponse } from '@/shared/types/api';
 
 export const useDashboard = () => {
   const currentDate = new Date();

@@ -1,14 +1,14 @@
-import { Input, InputProps, VStack } from '@chakra-ui/react'
-import { Label } from '../Label'
-import { Controller } from 'react-hook-form'
-import { IconCalendar } from '@/icons'
-import { InputGroup } from '@/components/ui/input-group'
+import { Input, InputProps, VStack } from '@chakra-ui/react';
+import { Label } from '../Label';
+import { Controller } from 'react-hook-form';
+import { IconCalendar } from '@/shared/icons';
+import { InputGroup } from '@/shared/ui/input-group';
 
 interface InputDateInterface extends InputProps {
-  name: string
-  label?: string
-  isRequired?: boolean
-  align?: string
+  name: string;
+  label?: string;
+  isRequired?: boolean;
+  align?: string;
 }
 
 const InputDate = ({
@@ -59,7 +59,7 @@ const InputDate = ({
         name={name}
       />
     </VStack>
-  )
-}
+  );
+};
 
-export default InputDate
+export default InputDate;

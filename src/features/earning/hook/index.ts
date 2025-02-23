@@ -2,10 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { toaster } from '@/components/ui/toaster';
+import { toaster } from '@/shared/ui/toaster';
 import services from '@/services';
-import { ApiResponse } from '@/types/api';
-import formatDate from '@/utils/format-date';
+import { ApiResponse } from '@/shared/types/api';
+import formatDate from '@/shared/utils/format-date';
 
 import { earningSchema } from '../schema';
 import { IEarning, IEarningForm } from '../types';

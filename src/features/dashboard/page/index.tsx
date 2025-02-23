@@ -2,9 +2,9 @@ import { Box, Heading, Stack, Text } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
 
 import CardDashboard from '@/components/Card/CardDashboard';
-import services from '@/services';
-import { ApiResponse } from '@/types/api';
-import formatDate from '@/utils/format-date';
+// import services from '@/services';
+import type { ApiResponse } from '@/shared/types/api';
+import formatDate from '@/shared/utils/format-date';
 
 export default function DashboardPage() {
   const currentDate = new Date();
@@ -25,16 +25,15 @@ export default function DashboardPage() {
   };
 
   const getTotalSpendings = useCallback(async () => {
-    const response = await services.get<void, ApiResponse<number>>(
-      'v1/spendings',
-      { transformResponse: calculateTotalFromData },
-    );
-
-    if (response) {
-      if (response.success && response.data) {
-        setTotalSpendings(response.data);
-      }
-    }
+    // const response = await services.get<void, ApiResponse<number>>(
+    //   'v1/spendings',
+    //   { transformResponse: calculateTotalFromData },
+    // );
+    // if (response) {
+    //   if (response.success && response.data) {
+    //     setTotalSpendings(response.data);
+    //   }
+    // }
   }, []);
 
   const getTotalEarnings = useCallback(async () => {

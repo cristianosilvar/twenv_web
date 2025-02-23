@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 
-import { Provider } from '@/components/ui/provider';
+import { Provider } from '@/shared/ui/provider';
 
 import { App } from './app';
-import { system } from './theme';
+import { system } from './shared/config/theme';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

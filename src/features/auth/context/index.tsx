@@ -1,12 +1,7 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useEffect,
-} from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
-import { UserInterface } from '@/types/user';
+import type { UserInterface } from '@/shared/types/user';
 
 import { getDataUser } from '../helpers/get-data-user';
 

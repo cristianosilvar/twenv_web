@@ -1,3 +1,4 @@
+import type { DialogRootProps } from '@chakra-ui/react';
 import {
   Box,
   Button,
@@ -6,26 +7,25 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogRootProps,
   SimpleGrid,
   VStack,
   useDisclosure,
   DialogRoot,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { InputPassword } from '@/components/Inputs/InputPassword';
 import { InputText } from '@/components/Inputs/InputText/InputText';
-import { toaster } from '@/components/ui/toaster';
-import { routesEnum } from '@/constants/routes';
 import { useAuth } from '@/features/auth/context';
 import { userSchema } from '@/features/auth/schemas';
-import { IUserForm } from '@/features/auth/types/user';
-import services from '@/services';
-import { ApiResponse } from '@/types/api';
+import type { IUserForm } from '@/features/auth/types/user';
+import { routesEnum } from '@/shared/constants/routes';
+// import services from '@/services';
+import { ApiResponse } from '@/shared/types/api';
+import { toaster } from '@/shared/ui/toaster';
 
 interface IModalRegister extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   children: ReactNode;
@@ -59,30 +59,27 @@ const ModalRegister = ({
   const { handleSubmit } = methods;
 
   const handleRegister = handleSubmit(async (data) => {
-    const response = await services.post<void, ApiResponse<{ token: string }>>(
-      'v1/user/signup',
-      data,
-    );
-
-    if (response) {
-      if (response?.message) {
-        const id = 'errToast';
-
-        if (!toaster.isVisible(id)) {
-          toaster.create({
-            id,
-            title: 'Tente novamente',
-            description: response.message,
-          });
-        }
-      }
-      if (response?.success && response?.data) {
-        signin(response.data?.token);
-
-        onClose();
-        navigate(routesEnum.DASHBOARD);
-      }
-    }
+    // const response = await services.post<void, ApiResponse<{ token: string }>>(
+    //   'v1/user/signup',
+    //   data,
+    // );
+    // if (response) {
+    //   if (response?.message) {
+    //     const id = 'errToast';
+    //     if (!toaster.isVisible(id)) {
+    //       toaster.create({
+    //         id,
+    //         title: 'Tente novamente',
+    //         description: response.message,
+    //       });
+    //     }
+    //   }
+    //   if (response?.success && response?.data) {
+    //     signin(response.data?.token);
+    //     onClose();
+    //     navigate(routesEnum.DASHBOARD);
+    //   }
+    // }
   });
 
   return (

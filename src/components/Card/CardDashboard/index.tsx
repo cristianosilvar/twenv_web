@@ -8,8 +8,8 @@ import {
   VStack,
 } from '@chakra-ui/react';
 
-import { IconArrowDownRed, IconArrowUpGreen } from '@/icons';
-import { formatMoney } from '@/utils/format-money';
+import { IconArrowDownRed, IconArrowUpGreen } from '@/shared/icons';
+import { formatMoney } from '@/shared/utils/format-money';
 
 interface ICardDashboard extends FlexProps {
   type?: 'spendings' | 'earnings';

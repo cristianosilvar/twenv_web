@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 
-import { UserInterface } from '@/types/user';
+import type { UserInterface } from '@/shared/types/user';
 
 export const getDataUser = () => {
   const token = localStorage.getItem('token') || '';

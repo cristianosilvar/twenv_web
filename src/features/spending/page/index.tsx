@@ -12,14 +12,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import CardInfo from '@/components/Card/CardInfo';
 import ModalDefault from '@/components/Modal';
-import { toaster } from '@/components/ui/toaster';
-import { IconNew } from '@/icons';
-import services from '@/services';
-import { ApiResponse } from '@/types/api';
-import formatDate from '@/utils/format-date';
+import { IconNew } from '@/shared/icons';
+// import services from '@/services';
+import type { ApiResponse } from '@/shared/types/api';
+import { toaster } from '@/shared/ui/toaster';
+import formatDate from '@/shared/utils/format-date';
 
 import { spendingSchema } from '../schema';
-import { ISpending, ISpendingForm } from '../types';
+import type { ISpending, ISpendingForm } from '../types';
 
 const defaultValuesSpending = {
   description: '',
@@ -41,36 +41,33 @@ export default function SpendingsPage() {
   const onSubmit = async () => {
     handleSubmit(
       async (data) => {
-        const response = await services.post<void, ApiResponse<ISpending>>(
-          'v1/spending',
-          {
-            ...data,
-            date: new Date(data.date),
-          },
-        );
-
-        if (response) {
-          if (response.message) {
-            const toastId = 'errorMessage';
-            const toastIsActive = toaster.isVisible(toastId);
-
-            if (!toastIsActive) {
-              toaster.create({
-                id: toastId,
-                description: response.message,
-                type: 'error',
-                duration: 5000,
-                placement: 'top-end',
-              });
-            }
-          }
-
-          if (response.success) {
-            getSpendings();
-            reset();
-            // onClose();
-          }
-        }
+        // const response = await services.post<void, ApiResponse<ISpending>>(
+        //   'v1/spending',
+        //   {
+        //     ...data,
+        //     date: new Date(data.date),
+        //   },
+        // );
+        // if (response) {
+        //   if (response.message) {
+        //     const toastId = 'errorMessage';
+        //     const toastIsActive = toaster.isVisible(toastId);
+        //     if (!toastIsActive) {
+        //       toaster.create({
+        //         id: toastId,
+        //         description: response.message,
+        //         type: 'error',
+        //         duration: 5000,
+        //         placement: 'top-end',
+        //       });
+        //     }
+        //   }
+        //   if (response.success) {
+        //     getSpendings();
+        //     reset();
+        //     // onClose();
+        //   }
+        // }
       },
       ({ value }) => {
         const toastId = 'warningMessage';

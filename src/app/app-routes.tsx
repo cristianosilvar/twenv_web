@@ -2,10 +2,10 @@ import { Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
 import Header from '@/components/Header';
-import { routesEnum } from '@/constants/routes';
 import DashboardPage from '@/features/dashboard/page';
-import EarningsPage from '@/features/earning/page';
+import EarningsPage from '@/features/earning/ui';
 import SpendingsPage from '@/features/spending/page';
+import { routesEnum } from '@/shared/constants/routes';
 
 export const AppRoutes = () => {
   return (

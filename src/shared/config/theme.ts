@@ -16,7 +16,7 @@ const customGlobalCss = defineConfig({
 
 const inputRecipe = defineRecipe({
   base: {
-    bgColor: '#fefefe15',
+    bgColor: '#fefefe',
   },
 });
 

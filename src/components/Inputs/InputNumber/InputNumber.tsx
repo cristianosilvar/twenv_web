@@ -1,17 +1,17 @@
-import { Box, Input, InputProps, VStack } from '@chakra-ui/react'
-import { Control, Controller } from 'react-hook-form'
+import { Box, Input, InputProps, VStack } from '@chakra-ui/react';
+import { Control, Controller } from 'react-hook-form';
 
-import { Label } from '../Label'
-import { InputGroup } from '@/components/ui/input-group'
+import { Label } from '../Label';
+import { InputGroup } from '@/shared/ui/input-group';
 
-type LeftElementType = 'R$' | '%'
+type LeftElementType = 'R$' | '%';
 
 interface InputNumberInterface extends InputProps {
-  name: string
-  leftElement?: LeftElementType
-  isRequired?: boolean
-  label?: string
-  align?: string
+  name: string;
+  leftElement?: LeftElementType;
+  isRequired?: boolean;
+  label?: string;
+  align?: string;
 }
 
 const InputNumber = ({
@@ -54,7 +54,7 @@ const InputNumber = ({
         )}
       />
     </VStack>
-  )
-}
+  );
+};
 
-export default InputNumber
+export default InputNumber;

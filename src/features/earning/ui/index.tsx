@@ -5,15 +5,15 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import CardInfo from '@/components/Card/CardInfo';
 import ModalDefault from '@/components/Modal';
-import { Button } from '@/components/ui/button';
-import { toaster } from '@/components/ui/toaster';
-import { IconNew } from '@/icons';
-import services from '@/services';
-import { ApiResponse } from '@/types/api';
-import formatDate from '@/utils/format-date';
+import { IconNew } from '@/shared/icons';
+import type { ApiResponse } from '@/shared/types/api';
+import { Button } from '@/shared/ui/button';
+import { toaster } from '@/shared/ui/toaster';
+// import services from '@/services';
+import formatDate from '@/shared/utils/format-date';
 
 import { earningSchema } from '../schema';
-import { IEarning, IEarningForm } from '../types';
+import { type IEarning, type IEarningForm } from '../types';
 
 const defaultValuesEarning = {
   description: '',
@@ -35,21 +35,20 @@ export default function EarningsPage() {
   const onSubmit = async () => {
     handleSubmit(
       async (data) => {
-        const response = await services.post<void, ApiResponse<IEarning>>(
-          'v1/earning',
-          {
-            ...data,
-            date: new Date(data.date),
-          },
-        );
-
-        if (response) {
-          if (response.success) {
-            getEarnings();
-            reset();
-            // onClose()
-          }
-        }
+        // const response = await services.post<void, ApiResponse<IEarning>>(
+        //   'v1/earning',
+        //   {
+        //     ...data,
+        //     date: new Date(data.date),
+        //   },
+        // );
+        // if (response) {
+        //   if (response.success) {
+        //     getEarnings();
+        //     reset();
+        //     // onClose()
+        //   }
+        // }
       },
       ({ value }) => {
         const toastId = 'errMessage';

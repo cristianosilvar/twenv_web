@@ -1,8 +1,9 @@
-import { endpointsEnum } from '@/constants/endpoints';
-import { HttpMethod, IHttpClient } from '@/services/http-client/http-client';
-import { ApiResponse } from '@/types/api';
+import type { IHttpClient } from '@/shared/api/http-client/http-client';
+import { HttpMethod } from '@/shared/api/http-client/http-client';
+import { endpointsEnum } from '@/shared/constants/endpoints';
+import type { ApiResponse } from '@/shared/types/api';
 
-import { ISpending } from '../types';
+import type { ISpending } from '../types';
 
 export interface IGetListSpendingService {
   exec: () => Promise<ApiResponse>;

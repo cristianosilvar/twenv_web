@@ -21,7 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogActionTrigger,
-} from '@/components/ui/dialog';
+} from '@/shared/ui/dialog';
 
 interface IModalDefault extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   children: ReactNode;

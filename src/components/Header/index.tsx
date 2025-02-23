@@ -3,16 +3,21 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import ModalRegister from '@/components/Modal/ModalRegister';
 import ModalSignIn from '@/components/Modal/ModalSignIn';
-import { routesEnum } from '@/constants/routes';
 import { useAuth } from '@/features/auth/context';
 import { getDataUser } from '@/features/auth/helpers/get-data-user';
-import { IconArrowDownMenu, Logo } from '@/icons';
-import services from '@/services';
-import { ApiResponse } from '@/types/api';
+import { routesEnum } from '@/shared/constants/routes';
+import { IconArrowDownMenu, Logo } from '@/shared/icons';
+// import api from '@/shared/api';
+import type { ApiResponse } from '@/shared/types/api';
 
+import { Avatar } from '../../shared/ui/avatar';
+import {
+  MenuContent,
+  MenuItem,
+  MenuRoot,
+  MenuTrigger,
+} from '../../shared/ui/menu';
 import Navbar from '../Navbar';
-import { Avatar } from '../ui/avatar';
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from '../ui/menu';
 
 const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const navigate = useNavigate();
@@ -21,13 +26,13 @@ const MenuItems = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const deleteAccount = async () => {
     if (!isAuthenticated) return;
 
-    const response = await services.delete<void, ApiResponse>('v1/user/delete');
+    // const response = await services.delete<void, ApiResponse>('v1/user/delete');
 
-    if (response) {
-      if (response.success) {
-        window.location.reload();
-      }
-    }
+    // if (response) {
+    //   if (response.success) {
+    //     window.location.reload();
+    //   }
+    // }
   };
 
   const logOut = () => {

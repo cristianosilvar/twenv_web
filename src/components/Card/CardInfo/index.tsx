@@ -13,12 +13,12 @@ import { useCallback, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import ModalDefault from '@/components/Modal';
-import { MenuContent, MenuTrigger, MenuItem } from '@/components/ui/menu';
-import { toaster } from '@/components/ui/toaster';
+import { MenuContent, MenuTrigger, MenuItem } from '@/shared/ui/menu';
+import { toaster } from '@/shared/ui/toaster';
 import { IEarning } from '@/features/earning/types';
-import { IconOptions } from '@/icons';
-import formatDate from '@/utils/format-date';
-import { formatMoney } from '@/utils/format-money';
+import { IconOptions } from '@/shared/icons';
+import formatDate from '@/shared/utils/format-date';
+import { formatMoney } from '@/shared/utils/format-money';
 
 interface ICardInfo extends StackProps {
   data: IEarning;

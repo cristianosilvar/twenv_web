@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { type AxiosInstance, type AxiosError } from 'axios';
 
-import { HttpRequest, IHttpClient } from './http-client';
+import type { HttpRequest, IHttpClient } from './http-client';
 
 export class HttpClient implements IHttpClient {
   constructor(
