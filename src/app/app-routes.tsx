@@ -15,6 +15,7 @@ export const AppRoutes = () => {
         <Route path={routesEnum.DASHBOARD} element={<DashboardPage />} />
         <Route path={routesEnum.EARNINGS} element={<EarningsPage />} />
         <Route path={routesEnum.SPENDINGS} element={<SpendingsPage />} />
+        <Route path="*" element={<DashboardPage />} />
       </Routes>
     </BrowserRouter>
   );

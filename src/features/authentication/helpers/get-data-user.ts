@@ -1,5 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 
+import { logger } from '@/shared/lib/logger';
 import type { UserInterface } from '@/shared/types/user';
 
 export const getDataUser = () => {
@@ -9,6 +10,6 @@ export const getDataUser = () => {
     const user: UserInterface = jwtDecode(token);
     return user;
   } catch (err: any) {
-    console.error('Erro ao decodificar o token:', err.message);
+    logger.error('Erro ao decodificar o token:', err.message);
   }
 };

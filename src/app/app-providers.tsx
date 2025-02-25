@@ -1,7 +1,7 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
+import { AuthProvider } from '@/features/authentication/context';
 import { Toaster } from '@/shared/ui/toaster';
-import { AuthProvider } from '@/features/auth/context';
 
 export const AppProviders = ({ children }: PropsWithChildren) => {
   return (

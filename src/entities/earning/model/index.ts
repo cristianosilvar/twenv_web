@@ -1,6 +1,6 @@
-export type EarningModel = {
+export interface EarningModel {
   id?: string;
   date: Date;
   value: number;
-  description?: string;
-};
+  description: string | null;
+}

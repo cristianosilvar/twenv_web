@@ -19,8 +19,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { InputPassword } from '@/components/Inputs/InputPassword';
 import { InputText } from '@/components/Inputs/InputText/InputText';
-import { useAuth } from '@/features/auth/context';
-import { signInSchema } from '@/features/auth/schemas';
+import { useAuth } from '@/features/authentication/context';
+import { signInSchema } from '@/features/authentication/schemas';
 import { routesEnum } from '@/shared/constants/routes';
 // import services from '@/services';
 import { ApiResponse } from '@/shared/types/api';

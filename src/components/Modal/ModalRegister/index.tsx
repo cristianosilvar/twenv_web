@@ -19,9 +19,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { InputPassword } from '@/components/Inputs/InputPassword';
 import { InputText } from '@/components/Inputs/InputText/InputText';
-import { useAuth } from '@/features/auth/context';
-import { userSchema } from '@/features/auth/schemas';
-import type { IUserForm } from '@/features/auth/types/user';
+import { useAuth } from '@/features/authentication/context';
+import { userSchema } from '@/features/authentication/schemas';
+import type { IUserForm } from '@/features/authentication/types/user';
 import { routesEnum } from '@/shared/constants/routes';
 // import services from '@/services';
 import { ApiResponse } from '@/shared/types/api';
