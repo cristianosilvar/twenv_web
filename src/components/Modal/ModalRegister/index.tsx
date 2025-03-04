@@ -22,7 +22,6 @@ import { InputText } from '@/components/Inputs/InputText/InputText';
 import { useAuth } from '@/features/authentication/context';
 import { userSchema } from '@/features/authentication/schemas';
 import type { IUserForm } from '@/features/authentication/types/user';
-import { routesEnum } from '@/shared/constants/routes';
 // import services from '@/services';
 import { ApiResponse } from '@/shared/types/api';
 import { toaster } from '@/shared/ui/toaster';

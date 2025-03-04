@@ -1,19 +1,21 @@
-import type { IHttpClient } from '@/shared/api/http-client/http-client';
-import { HttpMethod } from '@/shared/api/http-client/http-client';
-import { endpointsEnum } from '@/shared/constants/endpoints';
-import type { ApiResponse } from '@/shared/types/api';
+import { HttpMethod, type IHttpClient } from '@/shared/api';
+import { endpointsEnum } from '@/shared/config';
+import type { ApiResponseModel } from '@/shared/model';
 
 import type { ISpending } from '../types';
 
 export interface IDeleteSpendingService {
-  exec: (id: string) => Promise<ApiResponse>;
+  exec: (id: string) => Promise<ApiResponseModel>;
 }
 
 export class DeleteSpendingService implements IDeleteSpendingService {
   constructor(private readonly httpClient: IHttpClient) {}
 
   async exec(id: string) {
-    const response = await this.httpClient.sendRequest<ApiResponse, ISpending>({
+    const response = await this.httpClient.sendRequest<
+      ApiResponseModel,
+      ISpending
+    >({
       endpoint: endpointsEnum.SPENDING.DELETE.replace('{id}', id),
       method: HttpMethod.DELETE,
     });

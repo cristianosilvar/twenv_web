@@ -1,8 +1,10 @@
-import { Box, Input, InputProps, VStack } from '@chakra-ui/react';
-import { Control, Controller } from 'react-hook-form';
+import type { InputProps } from '@chakra-ui/react';
+import { Box, Input, VStack, Text } from '@chakra-ui/react';
+import { Controller } from 'react-hook-form';
 
-import { Label } from '../Label';
 import { InputGroup } from '@/shared/ui/input-group';
+
+import { Label } from '../../label';
 
 type LeftElementType = 'R$' | '%';
 
@@ -14,20 +16,21 @@ interface InputNumberInterface extends InputProps {
   align?: string;
 }
 
-const InputNumber = ({
+export const InputNumber = ({
   name,
   leftElement,
   label,
   align,
   isRequired,
   size = 'lg',
+  onChange,
   ...rest
 }: InputNumberInterface) => {
   return (
-    <VStack align={align} w={'full'}>
+    <VStack align={align} w="full">
       <Controller
         name={name}
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <>
             {label && <Label label={label} isRequired={isRequired} />}
             <InputGroup
@@ -36,25 +39,40 @@ const InputNumber = ({
               }
             >
               <Input
-                type="number"
                 size={size}
-                bgColor={'#fefefe15'}
+                bgColor="#fefefe15"
                 borderColor="#fefefe25"
+                outline="none"
                 _hover={{
                   borderColor: '#fefefe35',
                 }}
                 _focusVisible={{
                   borderColor: '#513BD9',
                 }}
+                pattern="[0-9]*"
+                maxLength={16}
                 {...field}
                 {...rest}
+                onChange={(event) => {
+                  const value = event.currentTarget.value.replace(
+                    /[^0-9]/g,
+                    '',
+                  );
+
+                  field.onChange(value ? Number(value) : undefined);
+
+                  if (onChange) onChange(event);
+                }}
               />
             </InputGroup>
+            {fieldState.error && (
+              <Text fontSize="12px" color="red.500" fontWeight="semibold">
+                {fieldState.error.message?.toString()}
+              </Text>
+            )}
           </>
         )}
       />
     </VStack>
   );
 };
-
-export default InputNumber;

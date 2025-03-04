@@ -10,13 +10,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import CardInfo from '@/components/Card/CardInfo';
 import ModalDefault from '@/components/Modal';
-import { IconNew } from '@/shared/icons';
-// import services from '@/services';
-import type { ApiResponse } from '@/shared/types/api';
-import { toaster } from '@/shared/ui/toaster';
-import formatDate from '@/shared/utils/format-date';
+import { formatDate } from '@/shared/lib';
+import { CardInfo, toaster } from '@/shared/ui';
+import { IconNew } from '@/shared/ui/icons';
 
 import { spendingSchema } from '../schema';
 import type { ISpending, ISpendingForm } from '../types';
@@ -88,7 +85,7 @@ export default function SpendingsPage() {
   };
 
   const getSpendings = useCallback(async () => {
-    const response = await services.get<void, ApiResponse<ISpending[]>>(
+    /* const response = await services.get<void, ApiResponseModel<ISpending[]>>(
       'v1/spendings',
     );
 
@@ -109,15 +106,15 @@ export default function SpendingsPage() {
       }
       if (response.success) {
         setSpendings(response.data);
-      }
-    }
+      } 
+    }*/
   }, []);
 
   const deleteSpending = useCallback(
     async (id: string | undefined) => {
       if (!id) return;
 
-      const response = await services.delete<void, ApiResponse>(
+      /* const response = await services.delete<void, ApiResponse>(
         `v1/spending/${id}`,
       );
 
@@ -136,14 +133,14 @@ export default function SpendingsPage() {
         if (response.success) {
           getSpendings();
         }
-      }
+      } */
     },
     [getSpendings],
   );
 
   const handleUpdate = useCallback(
     async (onClose: () => void, data: any, id: string) => {
-      const response = await services.put<void, ApiResponse>('v1/spending', {
+      /* const response = await services.put<void, ApiResponse>('v1/spending', {
         ...data,
         date: new Date(data.date),
         id,
@@ -154,7 +151,7 @@ export default function SpendingsPage() {
           getSpendings();
           onClose();
         }
-      }
+      } */
     },
     [getSpendings],
   );

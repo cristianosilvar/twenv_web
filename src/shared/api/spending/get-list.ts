@@ -1,11 +1,10 @@
 import type { SpendingModel } from '@/entities/spending';
-import type { IHttpClient } from '@/shared/api/http-client/http-client';
-import { HttpMethod } from '@/shared/api/http-client/http-client';
-import { endpointsEnum } from '@/shared/constants/endpoints';
-import type { ApiResponse } from '@/shared/types/api';
+import { HttpMethod, type IHttpClient } from '@/shared/api';
+import { endpointsEnum } from '@/shared/config';
+import type { ApiResponseModel } from '@/shared/model';
 
 export interface IGetListSpendingService {
-  exec: () => Promise<ApiResponse>;
+  exec: () => Promise<ApiResponseModel>;
 }
 
 export class GetListSpendingService implements IGetListSpendingService {
@@ -13,7 +12,7 @@ export class GetListSpendingService implements IGetListSpendingService {
 
   async exec() {
     const response = await this.httpClient.sendRequest<
-      ApiResponse,
+      ApiResponseModel,
       SpendingModel
     >({
       endpoint: endpointsEnum.SPENDING.GET_LIST,

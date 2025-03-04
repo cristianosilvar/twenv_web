@@ -2,9 +2,8 @@ import { Box, Heading, Stack, Text } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
 
 import CardDashboard from '@/components/Card/CardDashboard';
-// import services from '@/services';
-import type { ApiResponse } from '@/shared/types/api';
-import formatDate from '@/shared/utils/format-date';
+import { formatDate } from '@/shared/lib';
+import type { ApiResponseModel } from '@/shared/model';
 
 export default function DashboardPage() {
   const currentDate = new Date();
@@ -13,7 +12,7 @@ export default function DashboardPage() {
   const [totalEarnings, setTotalEarnings] = useState<number>(0);
 
   const calculateTotalFromData = (data: string) => {
-    const dataJson = JSON.parse(data) as ApiResponse<{ value: number }[]>;
+    const dataJson = JSON.parse(data) as ApiResponseModel<{ value: number }[]>;
 
     let totalInfo = 0;
 

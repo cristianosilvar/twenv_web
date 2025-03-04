@@ -1,8 +1,11 @@
-import { Input, InputProps, VStack } from '@chakra-ui/react';
-import { Label } from '../Label';
+import { type InputProps, Text } from '@chakra-ui/react';
+import { Input, VStack } from '@chakra-ui/react';
 import { Controller } from 'react-hook-form';
-import { IconCalendar } from '@/shared/icons';
+
+import { IconCalendar } from '@/shared/ui/icons';
 import { InputGroup } from '@/shared/ui/input-group';
+
+import { Label } from '../../label';
 
 interface InputDateInterface extends InputProps {
   name: string;
@@ -11,7 +14,7 @@ interface InputDateInterface extends InputProps {
   align?: string;
 }
 
-const InputDate = ({
+export const InputDate = ({
   label,
   name,
   isRequired,
@@ -20,9 +23,9 @@ const InputDate = ({
   ...rest
 }: InputDateInterface) => {
   return (
-    <VStack align={align} w={'full'}>
+    <VStack align={align} w="full">
       <Controller
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <>
             {label && <Label label={label} isRequired={isRequired} />}
             <InputGroup
@@ -31,8 +34,9 @@ const InputDate = ({
               <Input
                 type="date"
                 size={size}
-                bgColor={'#fefefe15'}
+                bgColor="#fefefe15"
                 borderColor="#fefefe25"
+                outline="none"
                 _hover={{
                   borderColor: '#fefefe35',
                 }}
@@ -54,6 +58,11 @@ const InputDate = ({
                 {...rest}
               />
             </InputGroup>
+            {fieldState.error && (
+              <Text fontSize="12px" color="red.500" fontWeight="semibold">
+                {fieldState.error.message?.toString()}
+              </Text>
+            )}
           </>
         )}
         name={name}
@@ -61,5 +70,3 @@ const InputDate = ({
     </VStack>
   );
 };
-
-export default InputDate;

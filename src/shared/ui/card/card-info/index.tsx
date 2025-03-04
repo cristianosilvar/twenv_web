@@ -1,3 +1,4 @@
+import type { StackProps } from '@chakra-ui/react';
 import {
   Box,
   Heading,
@@ -7,33 +8,34 @@ import {
   MenuRoot,
   GridItem,
   Spacer,
-  StackProps,
 } from '@chakra-ui/react';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import ModalDefault from '@/components/Modal';
+import { formatDate, formatMoney } from '@/shared/lib';
+import type { BaseModel } from '@/shared/model';
+import { IconOptions } from '@/shared/ui/icons';
 import { MenuContent, MenuTrigger, MenuItem } from '@/shared/ui/menu';
 import { toaster } from '@/shared/ui/toaster';
-import { IEarning } from '@/features/earning-list/types';
-import { IconOptions } from '@/shared/icons';
-import formatDate from '@/shared/utils/format-date';
-import { formatMoney } from '@/shared/utils/format-money';
 
-interface ICardInfo extends StackProps {
-  data: IEarning;
+interface CardInfoProps extends StackProps {
+  data: BaseModel;
   callback: (onClose: () => void, data: any, id: string) => void;
   callbackDelete: (id: string | undefined) => void;
 }
 
-const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
+export const CardInfo = ({
+  data,
+  callback,
+  callbackDelete,
+  ...props
+}: CardInfoProps) => {
   const methods = useForm({
     defaultValues: { ...data, date: formatDate(data.date, 'dateInput') },
   });
 
   const { handleSubmit } = methods;
-
-  const [isHover, setIsHover] = useState(false);
 
   const callbackUpdate = useCallback(() => {
     handleSubmit(
@@ -71,8 +73,6 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
       bgColor="#000000CC"
       border="1px solid #fefefe10"
       cursor="pointer"
-      onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
       {...props}
     >
       <VStack justify="space-between" w="full" align="start" minH="100px">
@@ -157,5 +157,3 @@ const CardInfo = ({ data, callback, callbackDelete, ...props }: ICardInfo) => {
     </GridItem>
   );
 };
-
-export default CardInfo;

@@ -1,12 +1,5 @@
-import {
-  Box,
-  HStack,
-  Icon,
-  IconProps,
-  Show,
-  Text,
-  useMediaQuery,
-} from '@chakra-ui/react';
+import type { IconProps } from '@chakra-ui/react';
+import { Box, HStack, Icon, Show, Text, useMediaQuery } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface INavItem {

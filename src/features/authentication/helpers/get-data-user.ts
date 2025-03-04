@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 
-import { logger } from '@/shared/lib/logger';
+import { logger } from '@/shared/lib';
 import type { UserInterface } from '@/shared/types/user';
 
 export const getDataUser = () => {

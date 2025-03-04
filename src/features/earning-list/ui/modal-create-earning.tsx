@@ -1,15 +1,8 @@
 import type { DialogRootProps } from '@chakra-ui/react';
-import {
-  Box,
-  Button,
-  GridItem,
-  SimpleGrid,
-  VStack,
-  Portal,
-} from '@chakra-ui/react';
+import { Box, GridItem, SimpleGrid, VStack, Portal } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 
-import { InputNumber, InputTextarea, InputDate } from '@/shared/ui';
+import { InputNumber, InputTextarea, InputDate, Button } from '@/shared/ui';
 import {
   DialogBody,
   DialogContent,
@@ -21,7 +14,8 @@ import {
   DialogActionTrigger,
 } from '@/shared/ui/dialog';
 
-interface IModalDefault extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
+interface ModalCreateEarningProps
+  extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   children: ReactNode;
   title?: string;
   buttonWidth?: any;
@@ -30,32 +24,43 @@ interface IModalDefault extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   callbackCancel?: (onClose: () => void) => void;
 }
 
-const ModalDefault = ({
+export const ModalCreateEarning = ({
   children,
   title,
   buttonWidth = 'full',
   buttonHeight = 'full',
   callback,
-}: IModalDefault) => {
+}: ModalCreateEarningProps) => {
   return (
-    <DialogRoot placement="center" size="lg" closeOnInteractOutside={false}>
+    <DialogRoot
+      placement="center"
+      size="md"
+      closeOnInteractOutside={false}
+      unmountOnExit
+    >
       <DialogTrigger>
         <Box w={buttonWidth} h={buttonHeight}>
           {children}
         </Box>
       </DialogTrigger>
       <Portal>
-        <DialogContent bgColor="#000407" border="1px solid #fefefe15">
+        <DialogContent
+          bgColor="#000407"
+          border="1px solid #fefefe15"
+          borderRadius="lg"
+        >
           <DialogHeader textAlign="center">
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle color="#ffffff75" fontSize="24px">
+              {title}
+            </DialogTitle>
           </DialogHeader>
-          <DialogBody pb={6}>
+          <DialogBody py={6}>
             <SimpleGrid columns={12} gap={6}>
               <GridItem colSpan={12}>
                 <InputTextarea
                   name="description"
-                  placeholder="Qual o nome, descrição e/ou informação 
-                dessa despesa?"
+                  placeholder="Qual o nome, descrição e/ou informação desse ganho?"
+                  minHeight="124px"
                 />
               </GridItem>
               <GridItem colSpan={6}>
@@ -75,15 +80,18 @@ const ModalDefault = ({
             <VStack w="full">
               <Button
                 onClick={() => {
-                  if (callback) {
-                    callback();
+                  if (!callback) {
+                    return;
                   }
+
+                  callback();
                 }}
+                variant="primary"
               >
                 Adicionar
               </Button>
               <DialogActionTrigger asChild>
-                <Button>Cancelar</Button>
+                <Button variant="secondary">Cancelar</Button>
               </DialogActionTrigger>
             </VStack>
           </DialogFooter>
@@ -92,5 +100,3 @@ const ModalDefault = ({
     </DialogRoot>
   );
 };
-
-export default ModalDefault;

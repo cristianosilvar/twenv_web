@@ -1,5 +1,2 @@
-import { LOG_LEVEL } from '../../config/env';
-
-import { ConsoleLogger } from './logger';
-
-export const logger = new ConsoleLogger({ level: LOG_LEVEL });
+export { logger } from './logger';
+export type { LogLevel } from './types';

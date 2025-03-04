@@ -1,15 +1,19 @@
 import axios, { type AxiosInstance, type AxiosError } from 'axios';
 
+import { addApiInterceptors } from '../add-api-interceptors';
+
 import type { HttpRequest, IHttpClient } from './http-client';
 
 export class HttpClient implements IHttpClient {
   constructor(
-    private baseUrl: string = import.meta.env.VITE_API_URL_SUBSCRIPTION,
+    private baseUrl: string = import.meta.env.VITE_API_URL,
     private api: AxiosInstance = axios,
   ) {}
 
   async sendRequest<TResponse, TBody>(params: HttpRequest<TBody>) {
     const { endpoint, method, body, headers } = params;
+
+    addApiInterceptors(this.api);
 
     try {
       const { data } = await this.api.request<TResponse>({

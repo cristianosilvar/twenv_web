@@ -5,10 +5,10 @@ import ModalRegister from '@/components/Modal/ModalRegister';
 import ModalSignIn from '@/components/Modal/ModalSignIn';
 import { useAuth } from '@/features/authentication/context';
 import { getDataUser } from '@/features/authentication/helpers/get-data-user';
-import { routesEnum } from '@/shared/constants/routes';
-import { IconArrowDownMenu, Logo } from '@/shared/icons';
+import { routesEnum } from '@/shared/config';
+import { IconArrowDownMenu, Logo } from '@/shared/ui/icons';
+
 // import api from '@/shared/api';
-import type { ApiResponse } from '@/shared/types/api';
 
 import { Avatar } from '../../shared/ui/avatar';
 import {

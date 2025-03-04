@@ -1,11 +1,10 @@
 import type { EarningModel } from '@/entities/earning';
-import type { IHttpClient } from '@/shared/api/http-client/http-client';
-import { HttpMethod } from '@/shared/api/http-client/http-client';
-import { endpointsEnum } from '@/shared/constants/endpoints';
-import type { ApiResponse } from '@/shared/types/api';
+import { HttpMethod, type IHttpClient } from '@/shared/api';
+import { endpointsEnum } from '@/shared/config';
+import type { ApiResponseModel } from '@/shared/model';
 
 export interface ICreateEarningService {
-  exec: (body: EarningModel) => Promise<ApiResponse>;
+  exec: (body: EarningModel) => Promise<ApiResponseModel>;
 }
 
 export class CreateEarningService implements ICreateEarningService {
@@ -13,7 +12,7 @@ export class CreateEarningService implements ICreateEarningService {
 
   async exec(body: EarningModel) {
     const response = await this.httpClient.sendRequest<
-      ApiResponse,
+      ApiResponseModel,
       EarningModel
     >({
       endpoint: endpointsEnum.EARNING.CREATE,

@@ -1,15 +1,8 @@
-import {
-  Box,
-  Flex,
-  FlexProps,
-  HStack,
-  Icon,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import type { FlexProps } from '@chakra-ui/react';
+import { Box, Flex, HStack, Text, VStack } from '@chakra-ui/react';
 
-import { IconArrowDownRed, IconArrowUpGreen } from '@/shared/icons';
-import { formatMoney } from '@/shared/utils/format-money';
+import { formatMoney } from '@/shared/lib';
+import { IconArrowDownRed, IconArrowUpGreen } from '@/shared/ui/icons';
 
 interface ICardDashboard extends FlexProps {
   type?: 'spendings' | 'earnings';

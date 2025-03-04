@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+import { LOG_LEVEL } from '@/shared/config';
+
 import type { LogFn, Logger, LogLevel } from './types';
 
 const NO_OP: LogFn = () => {};
@@ -28,3 +31,5 @@ export class ConsoleLogger implements Logger {
     this.log = console.log.bind(console);
   }
 }
+
+export const logger = new ConsoleLogger({ level: LOG_LEVEL });

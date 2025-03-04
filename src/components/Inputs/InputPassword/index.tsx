@@ -1,12 +1,12 @@
-import { Input, InputProps, VStack } from '@chakra-ui/react'
-import { Label } from '../Label'
-import { Controller } from 'react-hook-form'
+import { Input, InputProps, VStack } from '@chakra-ui/react';
+import { Label } from '../../../shared/ui/label';
+import { Controller } from 'react-hook-form';
 
 interface InputPasswordInterface extends InputProps {
-  name: string
-  placeholder?: string
-  label?: string
-  isRequired?: boolean
+  name: string;
+  placeholder?: string;
+  label?: string;
+  isRequired?: boolean;
 }
 
 export const InputPassword = ({
@@ -44,5 +44,5 @@ export const InputPassword = ({
         )}
       />
     </VStack>
-  )
-}
+  );
+};

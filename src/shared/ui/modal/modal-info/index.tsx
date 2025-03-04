@@ -21,7 +21,7 @@ import {
   DialogActionTrigger,
 } from '@/shared/ui/dialog';
 
-interface IModalDefault extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
+interface ModalInfoProps extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   children: ReactNode;
   title?: string;
   buttonWidth?: any;
@@ -30,15 +30,15 @@ interface IModalDefault extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   callbackCancel?: (onClose: () => void) => void;
 }
 
-const ModalDefault = ({
+export const ModalInfo = ({
   children,
   title,
   buttonWidth = 'full',
   buttonHeight = 'full',
   callback,
-}: IModalDefault) => {
+}: ModalInfoProps) => {
   return (
-    <DialogRoot placement="center" size="lg" closeOnInteractOutside={false}>
+    <DialogRoot placement="center" size="md" closeOnInteractOutside={false}>
       <DialogTrigger>
         <Box w={buttonWidth} h={buttonHeight}>
           {children}
@@ -92,5 +92,3 @@ const ModalDefault = ({
     </DialogRoot>
   );
 };
-
-export default ModalDefault;

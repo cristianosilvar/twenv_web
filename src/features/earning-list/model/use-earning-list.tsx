@@ -3,10 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import type { EarningModel } from '@/entities/earning';
-import { earningSchema } from '@/entities/earning';
+import { type EarningModel, earningSchema } from '@/entities/earning';
 import type { IGetListEarningService } from '@/shared/api';
-import { toaster } from '@/shared/ui/toaster';
+import { toaster } from '@/shared/ui';
 
 import type {
   IDeleteEarningService,
@@ -37,7 +36,7 @@ export const useEarningListModel = (params: UseEarningListModelParams) => {
   });
 
   const { handleSubmit, reset } = form;
-  const [earnings, setEarnings] = useState<EarningModel[]>();
+  const [earningsList, setEarningsList] = useState<EarningModel[]>();
 
   const handleCreateEarning = async () => {
     handleSubmit(
@@ -89,14 +88,16 @@ export const useEarningListModel = (params: UseEarningListModelParams) => {
       }
 
       if (response.success) {
-        setEarnings(response.data);
+        setEarningsList(response.data);
       }
     }
   }, [getListEarningService]);
 
   const handleDeleteEarning = useCallback(
     async (id: string | undefined) => {
-      if (!id) return;
+      if (!id) {
+        return;
+      }
 
       const response = await deleteEarningService.exec(id);
 
@@ -129,9 +130,11 @@ export const useEarningListModel = (params: UseEarningListModelParams) => {
   );
 
   const handleCancelEarning = useCallback((onClose?: () => void) => {
-    if (onClose) {
-      onClose();
+    if (!onClose) {
+      return;
     }
+
+    onClose();
   }, []);
 
   useEffect(() => {
@@ -139,7 +142,7 @@ export const useEarningListModel = (params: UseEarningListModelParams) => {
   }, [getEarningsList]);
 
   return {
-    earnings,
+    earningsList,
     form,
     currentDate,
     handleCancelEarning,
