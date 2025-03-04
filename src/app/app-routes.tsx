@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from '@/components/Header';
 import DashboardPage from '@/features/dashboard/page';
 import { EarningListPage } from '@/features/earning-list';
-import SpendingsPage from '@/features/spending-list/page';
+import { SpendingListPage } from '@/features/spending-list';
 import { routesEnum } from '@/shared/config';
 
 export const AppRoutes = () => {
@@ -14,7 +14,7 @@ export const AppRoutes = () => {
       <Routes>
         <Route path={routesEnum.DASHBOARD} element={<DashboardPage />} />
         <Route path={routesEnum.EARNINGS} element={<EarningListPage />} />
-        <Route path={routesEnum.SPENDINGS} element={<SpendingsPage />} />
+        <Route path={routesEnum.SPENDINGS} element={<SpendingListPage />} />
         <Route path="*" element={<DashboardPage />} />
       </Routes>
     </BrowserRouter>

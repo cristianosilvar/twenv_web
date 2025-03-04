@@ -1,6 +1,3 @@
-export interface EarningModel {
-  id?: string;
-  date: Date;
-  value: number;
-  description: string | null;
-}
+import type { BaseModel } from '@/shared/model';
+
+export type EarningModel = BaseModel;

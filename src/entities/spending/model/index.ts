@@ -1,6 +1,3 @@
-export interface SpendingModel {
-  id?: string;
-  date: Date;
-  value: number;
-  description?: string;
-}
+import type { BaseModel } from '@/shared/model';
+
+export type SpendingModel = BaseModel;

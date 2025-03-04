@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
 
-import { HttpClient } from '@/shared/api';
+import { GetListEarningService, HttpClient } from '@/shared/api';
 
 import {
   CreateEarningService,
   UpdateEarningService,
   DeleteEarningService,
-  GetListEarningService,
 } from '../api';
 import { useEarningListModel } from '../model';
 
