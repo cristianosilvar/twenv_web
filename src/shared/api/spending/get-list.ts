@@ -4,7 +4,7 @@ import { endpointsEnum } from '@/shared/config';
 import type { ApiResponseModel } from '@/shared/model';
 
 export interface IGetListSpendingService {
-  exec: () => Promise<ApiResponseModel>;
+  exec: () => Promise<ApiResponseModel<SpendingModel[]>>;
 }
 
 export class GetListSpendingService implements IGetListSpendingService {
@@ -12,8 +12,7 @@ export class GetListSpendingService implements IGetListSpendingService {
 
   async exec() {
     const response = await this.httpClient.sendRequest<
-      ApiResponseModel,
-      SpendingModel
+      ApiResponseModel<SpendingModel[]>
     >({
       endpoint: endpointsEnum.SPENDING.GET_LIST,
       method: HttpMethod.GET,

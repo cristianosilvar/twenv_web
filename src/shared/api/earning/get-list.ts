@@ -4,7 +4,7 @@ import { endpointsEnum } from '@/shared/config';
 import type { ApiResponseModel } from '@/shared/model';
 
 export interface IGetListEarningService {
-  exec: () => Promise<ApiResponseModel>;
+  exec: () => Promise<ApiResponseModel<EarningModel[]>>;
 }
 
 export class GetListEarningService implements IGetListEarningService {
@@ -12,8 +12,7 @@ export class GetListEarningService implements IGetListEarningService {
 
   async exec() {
     const response = await this.httpClient.sendRequest<
-      ApiResponseModel,
-      EarningModel
+      ApiResponseModel<EarningModel[]>
     >({
       endpoint: endpointsEnum.EARNING.GET_LIST,
       method: HttpMethod.GET,

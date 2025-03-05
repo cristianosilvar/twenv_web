@@ -1,9 +1,9 @@
-import { Box, SimpleGrid, Heading, Text, Button, Flex } from '@chakra-ui/react';
+import { Box, SimpleGrid, Heading, Text, Flex } from '@chakra-ui/react';
 import { Plus } from 'lucide-react';
 import { FormProvider } from 'react-hook-form';
 
 import { formatDate } from '@/shared/lib';
-import { CardInfo } from '@/shared/ui';
+import { Button, CardInfo } from '@/shared/ui';
 
 import type { useSpendingListModel } from '../model';
 
@@ -13,7 +13,7 @@ type SpendingListProps = ReturnType<typeof useSpendingListModel>;
 
 export default function SpendingsList(props: SpendingListProps) {
   const {
-    spendingsList,
+    spendingsList = [],
     form,
     currentDate,
     handleCancelSpending,
@@ -43,16 +43,22 @@ export default function SpendingsList(props: SpendingListProps) {
           </ModalCreateSpending>
         </FormProvider>
       </Flex>
-      <SimpleGrid columns={12} mt="30px" gap="4">
-        {spendingsList?.map((spending) => (
-          <CardInfo
-            key={spending.id}
-            data={spending}
-            callback={handleUpdateSpending}
-            callbackDelete={handleDeleteSpending}
-          />
-        ))}
-      </SimpleGrid>
+      {spendingsList?.length > 0 ? (
+        <SimpleGrid columns={12} mt="30px" gap="4">
+          {spendingsList?.map((spending) => (
+            <CardInfo
+              key={spending.id}
+              data={spending}
+              callback={handleUpdateSpending}
+              callbackDelete={handleDeleteSpending}
+            />
+          ))}
+        </SimpleGrid>
+      ) : (
+        <Box mt="40px" color="gray.500">
+          Ainda não há despesas adicionadas
+        </Box>
+      )}
     </Box>
   );
 }

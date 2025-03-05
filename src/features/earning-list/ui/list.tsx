@@ -14,7 +14,7 @@ type EarningListProps = ReturnType<typeof useEarningListModel>;
 export const EarningsList = (props: EarningListProps) => {
   const {
     form,
-    earningsList,
+    earningsList = [],
     currentDate,
     handleCancelEarning,
     handleCreateEarning,
@@ -43,16 +43,22 @@ export const EarningsList = (props: EarningListProps) => {
           </ModalCreateEarning>
         </FormProvider>
       </Flex>
-      <SimpleGrid columns={12} mt="30px" gap="4">
-        {earningsList?.map((earning) => (
-          <CardInfo
-            key={earning.id}
-            data={earning}
-            callback={handleUpdateEarning}
-            callbackDelete={handleDeleteEarning}
-          />
-        ))}
-      </SimpleGrid>
+      {earningsList?.length > 0 ? (
+        <SimpleGrid columns={12} mt="30px" gap="4">
+          {earningsList?.map((earning) => (
+            <CardInfo
+              key={earning.id}
+              data={earning}
+              callback={handleUpdateEarning}
+              callbackDelete={handleDeleteEarning}
+            />
+          ))}
+        </SimpleGrid>
+      ) : (
+        <Box mt="40px" color="gray.500">
+          Ainda não há ganhos adicionados
+        </Box>
+      )}
     </Box>
   );
 };

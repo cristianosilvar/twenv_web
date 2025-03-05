@@ -4,7 +4,7 @@ import { endpointsEnum } from '@/shared/config';
 import type { ApiResponseModel } from '@/shared/model';
 
 export interface IGetSpendingByIdService {
-  exec: (id: string) => Promise<ApiResponseModel>;
+  exec: (id: string) => Promise<ApiResponseModel<SpendingModel>>;
 }
 
 export class GetSpendingByIdService implements IGetSpendingByIdService {
@@ -12,8 +12,7 @@ export class GetSpendingByIdService implements IGetSpendingByIdService {
 
   async exec(id: string) {
     const response = await this.httpClient.sendRequest<
-      ApiResponseModel,
-      SpendingModel
+      ApiResponseModel<SpendingModel>
     >({
       endpoint: endpointsEnum.SPENDING.GET_BY_ID.replace('{id}', id),
       method: HttpMethod.GET,

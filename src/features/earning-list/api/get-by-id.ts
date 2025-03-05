@@ -4,7 +4,7 @@ import { endpointsEnum } from '@/shared/config';
 import type { ApiResponseModel } from '@/shared/model';
 
 export interface IGetEarningByIdService {
-  exec: (id: string) => Promise<ApiResponseModel>;
+  exec: (id: string) => Promise<ApiResponseModel<EarningModel>>;
 }
 
 export class GetEarningByIdService implements IGetEarningByIdService {
@@ -12,8 +12,7 @@ export class GetEarningByIdService implements IGetEarningByIdService {
 
   async exec(id: string) {
     const response = await this.httpClient.sendRequest<
-      ApiResponseModel,
-      EarningModel
+      ApiResponseModel<EarningModel>
     >({
       endpoint: endpointsEnum.EARNING.GET_BY_ID.replace('{id}', id),
       method: HttpMethod.GET,
