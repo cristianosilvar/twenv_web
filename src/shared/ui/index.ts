@@ -5,3 +5,5 @@ export { Button } from './button';
 export { InputNumber } from './input/number';
 export { InputTextarea } from './input/textarea';
 export { InputDate } from './input/date';
+export { InputText } from './input/text';
+export { InputPassword } from './input/password';

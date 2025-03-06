@@ -1,6 +1,8 @@
-import { Input, InputProps, VStack } from '@chakra-ui/react';
-import { Label } from '../../../shared/ui/label';
+import type { InputProps } from '@chakra-ui/react';
+import { Input, VStack } from '@chakra-ui/react';
 import { Controller } from 'react-hook-form';
+
+import { Label } from '../../label';
 
 interface InputPasswordInterface extends InputProps {
   name: string;
@@ -18,7 +20,7 @@ export const InputPassword = ({
   ...rest
 }: InputPasswordInterface) => {
   return (
-    <VStack align={'start'} w="full">
+    <VStack align="start" w="full">
       <Controller
         name={name}
         render={({ field }) => (
@@ -29,7 +31,7 @@ export const InputPassword = ({
               placeholder={placeholder}
               readOnly={readOnly}
               required={required}
-              bgColor={'#fefefe15'}
+              bgColor="#fefefe15"
               borderColor="#fefefe25"
               _hover={{
                 borderColor: '#fefefe35',

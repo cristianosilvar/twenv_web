@@ -18,7 +18,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { InputPassword } from '@/components/Inputs/InputPassword';
-import { InputText } from '@/components/Inputs/InputText/InputText';
+import { InputText } from '@/shared/ui/input/text';
 import { useAuth } from '@/features/authentication/context';
 import { userSchema } from '@/features/authentication/schemas';
 import type { IUserForm } from '@/features/authentication/types/user';

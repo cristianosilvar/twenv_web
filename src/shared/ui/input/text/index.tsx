@@ -1,7 +1,8 @@
-import { Input, InputProps, VStack } from '@chakra-ui/react';
-import { Control, Controller } from 'react-hook-form';
+import type { InputProps } from '@chakra-ui/react';
+import { Input, VStack } from '@chakra-ui/react';
+import { Controller } from 'react-hook-form';
 
-import { Label } from '../../../shared/ui/label';
+import { Label } from '../../label';
 
 interface InputTextInterface extends InputProps {
   name: string;

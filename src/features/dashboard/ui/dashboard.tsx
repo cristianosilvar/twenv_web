@@ -1,9 +1,10 @@
 import { Box, Heading, Stack, Text } from '@chakra-ui/react';
 
-import CardDashboard from '@/components/Card/CardDashboard';
 import { formatDate } from '@/shared/lib';
 
 import type { useDashboardModel } from '../model';
+
+import { CardDashboard } from './card';
 
 type DashboardProps = ReturnType<typeof useDashboardModel>;
 

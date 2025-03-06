@@ -4,16 +4,16 @@ import { Box, Flex, HStack, Text, VStack } from '@chakra-ui/react';
 import { formatMoney } from '@/shared/lib';
 import { IconArrowDownRed, IconArrowUpGreen } from '@/shared/ui/icons';
 
-interface ICardDashboard extends FlexProps {
+interface CardDashboardProps extends FlexProps {
   type?: 'spendings' | 'earnings';
   value: number;
 }
 
-const CardDashboard = ({
+export const CardDashboard = ({
   type = 'spendings',
   value = 0,
   ...props
-}: ICardDashboard) => {
+}: CardDashboardProps) => {
   return (
     <Flex
       p={2}
@@ -48,5 +48,3 @@ const CardDashboard = ({
     </Flex>
   );
 };
-
-export default CardDashboard;
