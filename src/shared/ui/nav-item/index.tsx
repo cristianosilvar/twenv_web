@@ -10,7 +10,7 @@ interface INavItem {
   >;
 }
 
-const NavItem = ({ path, name, icon: CustomIcon }: INavItem) => {
+export const NavItem = ({ path, name, icon: CustomIcon }: INavItem) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,5 +38,3 @@ const NavItem = ({ path, name, icon: CustomIcon }: INavItem) => {
     </Box>
   );
 };
-
-export default NavItem;

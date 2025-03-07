@@ -1,4 +1,4 @@
-import type { InputProps } from '@chakra-ui/react';
+import { type InputProps, Text } from '@chakra-ui/react';
 import { Input, VStack } from '@chakra-ui/react';
 import { Controller } from 'react-hook-form';
 
@@ -23,13 +23,14 @@ export const InputText = ({
     <VStack align="start" w="full">
       <Controller
         name={name}
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <>
             {label && <Label label={label} isRequired={required} />}
             <Input
               placeholder={placeholder}
               readOnly={readOnly}
               required={required}
+              outline="none"
               borderColor="#fefefe25"
               _hover={{
                 borderColor: '#fefefe35',
@@ -40,6 +41,11 @@ export const InputText = ({
               {...field}
               {...rest}
             />
+            {fieldState.error && (
+              <Text fontSize="12px" color="red.500" fontWeight="semibold">
+                {fieldState.error.message?.toString()}
+              </Text>
+            )}
           </>
         )}
       />

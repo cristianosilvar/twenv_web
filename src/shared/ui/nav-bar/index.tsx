@@ -2,13 +2,8 @@ import { Flex } from '@chakra-ui/react';
 
 import { routesEnum } from '@/shared/config';
 
-import {
-  IconArrowDown,
-  IconArrowUp,
-  IconDashboard,
-} from '../../shared/ui/icons';
-
-import NavItem from './NavItem';
+import { IconArrowDown, IconArrowUp, IconDashboard } from '../icons';
+import { NavItem } from '../nav-item';
 
 const Navbar = () => {
   return (

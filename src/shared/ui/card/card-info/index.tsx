@@ -12,57 +12,28 @@ import {
 import { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import ModalDefault from '@/components/Modal';
 import { formatDate, formatMoney } from '@/shared/lib';
 import type { BaseModel } from '@/shared/model';
 import { IconOptions } from '@/shared/ui/icons';
 import { MenuContent, MenuTrigger, MenuItem } from '@/shared/ui/menu';
-import { toaster } from '@/shared/ui/toaster';
 
 interface CardInfoProps extends StackProps {
   data: BaseModel;
-  callback: (onClose: () => void, data: any, id: string) => void;
-  callbackDelete: (id: string | undefined) => void;
+  handleUpdate: (params: BaseModel) => void;
+  handleDelete: (id: string) => void;
 }
 
 export const CardInfo = ({
   data,
-  callback,
-  callbackDelete,
+  handleUpdate,
+  handleDelete,
   ...props
 }: CardInfoProps) => {
-  const methods = useForm({
+  const methods = useForm<BaseModel>({
     defaultValues: { ...data, date: formatDate(data.date, 'dateInput') },
   });
 
   const { handleSubmit } = methods;
-
-  const callbackUpdate = useCallback(() => {
-    handleSubmit(
-      (formData) => {
-        callback(() => {}, formData, data?.id || '');
-      },
-      ({ value }) => {
-        const toastId = 'errMessage';
-        const errMessage = value?.message;
-        const toastIsActive = toaster.isVisible(toastId);
-
-        if (!toastIsActive) {
-          toaster.create({
-            id: toastId,
-            description: errMessage as any,
-            type: 'warning',
-            duration: 5000,
-            placement: 'top-end',
-          });
-        }
-      },
-    )();
-  }, [callback, data, handleSubmit]);
-
-  const callbackCancel = (onClose: () => void) => {
-    onClose();
-  };
 
   return (
     <GridItem
@@ -115,23 +86,18 @@ export const CardInfo = ({
                   minW="min-content"
                 >
                   <FormProvider {...methods}>
-                    <ModalDefault
-                      title="Alterar"
-                      callback={callbackUpdate}
-                      callbackCancel={callbackCancel}
+                    <MenuItem
+                      value="edit"
+                      bgColor="#000"
+                      px={8}
+                      py={2}
+                      _hover={{
+                        bgColor: '#fefefe10',
+                      }}
+                      onClick={handleSubmit(handleUpdate)}
                     >
-                      <MenuItem
-                        value="edit"
-                        bgColor="#000"
-                        px={8}
-                        py={2}
-                        _hover={{
-                          bgColor: '#fefefe10',
-                        }}
-                      >
-                        Editar
-                      </MenuItem>
-                    </ModalDefault>
+                      Editar
+                    </MenuItem>
                   </FormProvider>
                   <MenuItem
                     value="delete"
@@ -141,7 +107,7 @@ export const CardInfo = ({
                     _hover={{
                       bgColor: '#fefefe10',
                     }}
-                    onClick={() => callbackDelete(data.id)}
+                    onClick={() => handleDelete(data?.id || '')}
                   >
                     Excluir
                   </MenuItem>

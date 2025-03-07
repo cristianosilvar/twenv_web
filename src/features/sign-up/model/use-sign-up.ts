@@ -7,27 +7,27 @@ import { routesEnum } from '@/shared/config';
 import { useAuth } from '@/shared/lib';
 import { toaster } from '@/shared/ui';
 
-import type { ISignInService } from '../api/sign-in';
+import type { ISignUpService } from '../api';
 
-import { signInSchema } from './schema';
+import { signUpSchema } from './schema';
 
-type UseSignInModelParams = { signInService: ISignInService };
+type UseSignUpModelParams = { signUpService: ISignUpService };
 
-export const useSignInModel = (params: UseSignInModelParams) => {
-  const { signInService } = params;
+export const useSignUpModel = (params: UseSignUpModelParams) => {
+  const { signUpService } = params;
 
   const navigate = useNavigate();
 
-  const form = useForm<z.infer<typeof signInSchema>>({
-    resolver: zodResolver(signInSchema),
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
   });
 
   const { signin } = useAuth();
 
   const { handleSubmit } = form;
 
-  const handleSignIn = handleSubmit(async (data) => {
-    const response = await signInService.exec(data);
+  const handleSignUp = handleSubmit(async (data) => {
+    const response = await signUpService.exec(data);
 
     if (response) {
       if (response?.message) {
@@ -52,9 +52,9 @@ export const useSignInModel = (params: UseSignInModelParams) => {
     }
   });
 
-  const handleRedirectToSignUp = () => {
-    navigate(routesEnum.SIGN_UP);
+  const handleRedirectToSignIn = () => {
+    navigate(routesEnum.SIGN_IN);
   };
 
-  return { form, handleSignIn, handleRedirectToSignUp };
+  return { form, handleSignUp, handleRedirectToSignIn };
 };

@@ -39,37 +39,20 @@ export const useSpendingListModel = (params: UseSpendingListModelParams) => {
   const [spendingsList, setSpendingsList] = useState<SpendingModel[]>();
 
   const handleCreateSpending = async () => {
-    handleSubmit(
-      async (data) => {
-        const response = await createSpendingService.exec({
-          ...data,
-          date: new Date(data.date),
-        });
+    handleSubmit(async (data) => {
+      const response = await createSpendingService.exec({
+        ...data,
+        date: new Date(data.date),
+      });
 
-        if (response) {
-          if (response.success) {
-            getSpendingList();
-            reset();
-            // onClose()
-          }
+      if (response) {
+        if (response.success) {
+          getSpendingList();
+          reset();
+          // onClose()
         }
-      },
-      ({ value }) => {
-        const toastId = 'errMessage';
-        const errMessage = value?.message;
-        const toastIsActive = toaster.isVisible(toastId);
-
-        if (!toastIsActive) {
-          toaster.create({
-            id: toastId,
-            description: errMessage,
-            type: 'warning',
-            duration: 5000,
-            placement: 'top-end',
-          });
-        }
-      },
-    )();
+      }
+    })();
   };
 
   const getSpendingList = useCallback(async () => {

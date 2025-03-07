@@ -4,12 +4,12 @@ import { FormProvider } from 'react-hook-form';
 import { Button, InputPassword, InputText } from '@/shared/ui';
 import { Logo } from '@/shared/ui/icons';
 
-import type { useSignInModel } from '../model/use-sign-in';
+import type { useSignUpModel } from '../model';
 
-type SignInProps = ReturnType<typeof useSignInModel>;
+type SignUpProps = ReturnType<typeof useSignUpModel>;
 
-export const SignIn = (props: SignInProps) => {
-  const { form, handleSignIn, handleRedirectToSignUp } = props;
+export const SignUp = (props: SignUpProps) => {
+  const { form, handleSignUp, handleRedirectToSignIn } = props;
 
   return (
     <Box width="full" maxW="400px" mx="auto" pt={10}>
@@ -17,6 +17,13 @@ export const SignIn = (props: SignInProps) => {
         <Logo boxSize="120px" />
         <FormProvider {...form}>
           <SimpleGrid width="full" columns={12} gap={6}>
+            <GridItem colSpan={12}>
+              <InputText
+                name="username"
+                placeholder="Informe um nome de usuário"
+                label="Usuário"
+              />
+            </GridItem>
             <GridItem colSpan={12}>
               <InputText
                 name="email"
@@ -34,20 +41,20 @@ export const SignIn = (props: SignInProps) => {
           </SimpleGrid>
         </FormProvider>
         <VStack w="full" gap={4}>
-          <Button width="full" variant="primary" onClick={() => handleSignIn()}>
-            Entre na sua conta
+          <Button width="full" variant="primary" onClick={() => handleSignUp()}>
+            Criar sua conta
           </Button>
           <Text fontSize="sm" display="inline" textAlign="center">
-            Não tem conta?
+            Já tem conta?
             <Text
               color="blue.500"
               textDecoration="underline"
               display="inline"
               ml={2}
               cursor="pointer"
-              onClick={() => handleRedirectToSignUp()}
+              onClick={() => handleRedirectToSignIn()}
             >
-              Fazer nova conta
+              Fazer login
             </Text>
           </Text>
         </VStack>

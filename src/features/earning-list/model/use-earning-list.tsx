@@ -39,37 +39,20 @@ export const useEarningListModel = (params: UseEarningListModelParams) => {
   const [earningsList, setEarningsList] = useState<EarningModel[]>();
 
   const handleCreateEarning = async () => {
-    handleSubmit(
-      async (data) => {
-        const response = await createEarningService.exec({
-          ...data,
-          date: new Date(data.date),
-        });
+    handleSubmit(async (data) => {
+      const response = await createEarningService.exec({
+        ...data,
+        date: new Date(data.date),
+      });
 
-        if (response) {
-          if (response.success) {
-            getEarningsList();
-            reset();
-            // onClose()
-          }
+      if (response) {
+        if (response.success) {
+          getEarningsList();
+          reset();
+          // onClose()
         }
-      },
-      ({ value }) => {
-        const toastId = 'errMessage';
-        const errMessage = value?.message;
-        const toastIsActive = toaster.isVisible(toastId);
-
-        if (!toastIsActive) {
-          toaster.create({
-            id: toastId,
-            description: errMessage,
-            type: 'warning',
-            duration: 5000,
-            placement: 'top-end',
-          });
-        }
-      },
-    )();
+      }
+    })();
   };
 
   const getEarningsList = useCallback(async () => {

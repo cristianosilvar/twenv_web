@@ -13,4 +13,6 @@ export const endpointsEnum = {
     GET_BY_ID: '/v1/spending/{id}',
     GET_LIST: '/v1/spendings',
   },
+  SIGN_IN: '/v1/user/signin',
+  SIGN_UP: '/v1/user/signup',
 } as const;

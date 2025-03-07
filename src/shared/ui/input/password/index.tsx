@@ -1,4 +1,4 @@
-import type { InputProps } from '@chakra-ui/react';
+import { type InputProps, Text } from '@chakra-ui/react';
 import { Input, VStack } from '@chakra-ui/react';
 import { Controller } from 'react-hook-form';
 
@@ -23,7 +23,7 @@ export const InputPassword = ({
     <VStack align="start" w="full">
       <Controller
         name={name}
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <>
             {label && <Label label={label} isRequired={required} />}
             <Input
@@ -31,8 +31,8 @@ export const InputPassword = ({
               placeholder={placeholder}
               readOnly={readOnly}
               required={required}
-              bgColor="#fefefe15"
               borderColor="#fefefe25"
+              outline="none"
               _hover={{
                 borderColor: '#fefefe35',
               }}
@@ -42,6 +42,11 @@ export const InputPassword = ({
               {...field}
               {...rest}
             />
+            {fieldState.error && (
+              <Text fontSize="12px" color="red.500" fontWeight="semibold">
+                {fieldState.error.message?.toString()}
+              </Text>
+            )}
           </>
         )}
       />
