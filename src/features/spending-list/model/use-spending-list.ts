@@ -49,7 +49,6 @@ export const useSpendingListModel = (params: UseSpendingListModelParams) => {
         if (response.success) {
           getSpendingList();
           reset();
-          // onClose()
         }
       }
     })();
@@ -92,7 +91,7 @@ export const useSpendingListModel = (params: UseSpendingListModelParams) => {
   );
 
   const handleUpdateSpending = useCallback(
-    async (onClose: () => void, data: any, id: string) => {
+    async (data: z.infer<typeof spendingSchema>, id: string) => {
       const response = await updateSpendingService.exec({
         ...data,
         date: new Date(data.date),
@@ -103,7 +102,6 @@ export const useSpendingListModel = (params: UseSpendingListModelParams) => {
       if (response) {
         if (response.success) {
           getSpendingList();
-          onClose();
         }
       }
     },

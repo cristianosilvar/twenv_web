@@ -49,7 +49,6 @@ export const useEarningListModel = (params: UseEarningListModelParams) => {
         if (response.success) {
           getEarningsList();
           reset();
-          // onClose()
         }
       }
     })();
@@ -94,7 +93,7 @@ export const useEarningListModel = (params: UseEarningListModelParams) => {
   );
 
   const handleUpdateEarning = useCallback(
-    async (onClose: () => void, data: any, id: string) => {
+    async (data: z.infer<typeof earningSchema>, id: string) => {
       const response = await updateEarningService.exec({
         ...data,
         date: new Date(data.date),
@@ -105,7 +104,6 @@ export const useEarningListModel = (params: UseEarningListModelParams) => {
       if (response) {
         if (response.success) {
           getEarningsList();
-          onClose();
         }
       }
     },

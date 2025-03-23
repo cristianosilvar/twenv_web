@@ -1,4 +1,12 @@
-import { Box, SimpleGrid, Heading, Text, Flex } from '@chakra-ui/react';
+import {
+  Box,
+  SimpleGrid,
+  Heading,
+  Text,
+  Flex,
+  GridItem,
+  HStack,
+} from '@chakra-ui/react';
 import { Plus } from 'lucide-react';
 import { FormProvider } from 'react-hook-form';
 
@@ -8,6 +16,7 @@ import { Button, CardInfo } from '@/shared/ui';
 import type { useSpendingListModel } from '../model';
 
 import { ModalCreateSpending } from './modal-create-spending';
+import { ModalUpdateSpending } from './modal-update-spending';
 
 type SpendingListProps = ReturnType<typeof useSpendingListModel>;
 
@@ -38,7 +47,7 @@ export default function SpendingsList(props: SpendingListProps) {
             callbackCancel={handleCancelSpending}
           >
             <Button variant="secondary">
-              Novo ganho <Plus />
+              Nova despesa <Plus />
             </Button>
           </ModalCreateSpending>
         </FormProvider>
@@ -46,12 +55,42 @@ export default function SpendingsList(props: SpendingListProps) {
       {spendingsList?.length > 0 ? (
         <SimpleGrid columns={12} mt="30px" gap="4">
           {spendingsList?.map((spending) => (
-            <CardInfo
-              key={spending.id}
-              data={spending}
-              callback={handleUpdateSpending}
-              callbackDelete={handleDeleteSpending}
-            />
+            <GridItem colSpan={{ base: 12, md: 6, lg: 3 }} key={spending.id}>
+              <CardInfo.Root>
+                <HStack justify="space-between" fontWeight="semibold" w="full">
+                  <CardInfo.Value value={spending.value} />
+                  <HStack>
+                    <CardInfo.Date date={spending.date} />
+                    <CardInfo.MenuOptions>
+                      <FormProvider {...form}>
+                        <ModalUpdateSpending
+                          spending={spending}
+                          callback={(data) =>
+                            handleUpdateSpending(data, spending.id ?? '')
+                          }
+                          callbackCancel={() =>
+                            handleDeleteSpending(spending.id)
+                          }
+                        >
+                          <CardInfo.Option value="update">
+                            Editar
+                          </CardInfo.Option>
+                        </ModalUpdateSpending>
+                      </FormProvider>
+                      <CardInfo.Option
+                        value="delete"
+                        onClick={() => handleDeleteSpending(spending.id)}
+                      >
+                        Excluir
+                      </CardInfo.Option>
+                    </CardInfo.MenuOptions>
+                  </HStack>
+                </HStack>
+                <CardInfo.Description
+                  description={spending.description ?? ''}
+                />
+              </CardInfo.Root>
+            </GridItem>
           ))}
         </SimpleGrid>
       ) : (

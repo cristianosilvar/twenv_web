@@ -78,18 +78,20 @@ export const ModalCreateSpending = ({
           </DialogBody>
           <DialogFooter>
             <VStack w="full">
-              <Button
-                onClick={() => {
-                  if (!callback) {
-                    return;
-                  }
+              <DialogActionTrigger asChild>
+                <Button
+                  onClick={() => {
+                    if (!callback) {
+                      return;
+                    }
 
-                  callback();
-                }}
-                variant="primary"
-              >
-                Adicionar
-              </Button>
+                    callback();
+                  }}
+                  variant="primary"
+                >
+                  Adicionar
+                </Button>
+              </DialogActionTrigger>
               <DialogActionTrigger asChild>
                 <Button variant="secondary">Cancelar</Button>
               </DialogActionTrigger>

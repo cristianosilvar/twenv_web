@@ -1,7 +1,12 @@
 import type { DialogRootProps } from '@chakra-ui/react';
 import { Box, GridItem, SimpleGrid, VStack, Portal } from '@chakra-ui/react';
-import type { ReactNode } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, type ReactNode } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import type { z } from 'zod';
 
+import { type SpendingModel, spendingSchema } from '@/entities/spending';
+import { formatDate } from '@/shared/lib';
 import { InputNumber, InputTextarea, InputDate, Button } from '@/shared/ui';
 import {
   DialogBody,
@@ -14,23 +19,36 @@ import {
   DialogActionTrigger,
 } from '@/shared/ui/dialog';
 
-interface ModalCreateEarningProps
+interface ModalUpdateSpendingProps
   extends Omit<DialogRootProps, 'isOpen' | 'onClose'> {
   children: ReactNode;
+  spending: SpendingModel;
   title?: string;
   buttonWidth?: any;
   buttonHeight?: any;
-  callback?: () => void;
+  callback?: (data: z.infer<typeof spendingSchema>) => void;
   callbackCancel?: (onClose: () => void) => void;
 }
 
-export const ModalCreateEarning = ({
+export const ModalUpdateSpending = ({
   children,
-  title,
+  title = 'Alterar despesa',
+  spending,
   buttonWidth = 'full',
   buttonHeight = 'full',
   callback,
-}: ModalCreateEarningProps) => {
+}: ModalUpdateSpendingProps) => {
+  const form = useForm<z.infer<typeof spendingSchema>>({
+    resolver: zodResolver(spendingSchema),
+  });
+
+  useEffect(() => {
+    form.reset({
+      ...spending,
+      date: formatDate(spending.date, 'dateInput'),
+    });
+  }, [spending, form]);
+
   return (
     <DialogRoot
       placement="center"
@@ -55,26 +73,28 @@ export const ModalCreateEarning = ({
             </DialogTitle>
           </DialogHeader>
           <DialogBody py={6}>
-            <SimpleGrid columns={12} gap={6}>
-              <GridItem colSpan={12}>
-                <InputTextarea
-                  name="description"
-                  placeholder="Qual o nome, descrição e/ou informação desse ganho?"
-                  minHeight="124px"
-                />
-              </GridItem>
-              <GridItem colSpan={6}>
-                <InputNumber
-                  name="value"
-                  label="Valor"
-                  leftElement="R$"
-                  isRequired
-                />
-              </GridItem>
-              <GridItem colSpan={6}>
-                <InputDate name="date" label="Data" isRequired />
-              </GridItem>
-            </SimpleGrid>
+            <FormProvider {...form}>
+              <SimpleGrid columns={12} gap={6}>
+                <GridItem colSpan={12}>
+                  <InputTextarea
+                    name="description"
+                    placeholder="Qual o nome, descrição e/ou informação desse ganho?"
+                    minHeight="124px"
+                  />
+                </GridItem>
+                <GridItem colSpan={6}>
+                  <InputNumber
+                    name="value"
+                    label="Valor"
+                    leftElement="R$"
+                    isRequired
+                  />
+                </GridItem>
+                <GridItem colSpan={6}>
+                  <InputDate name="date" label="Data" isRequired />
+                </GridItem>
+              </SimpleGrid>
+            </FormProvider>
           </DialogBody>
           <DialogFooter>
             <VStack w="full">
@@ -85,11 +105,11 @@ export const ModalCreateEarning = ({
                       return;
                     }
 
-                    callback();
+                    form.handleSubmit(callback)();
                   }}
                   variant="primary"
                 >
-                  Adicionar
+                  Alterar
                 </Button>
               </DialogActionTrigger>
               <DialogActionTrigger asChild>

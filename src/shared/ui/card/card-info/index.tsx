@@ -1,125 +1,159 @@
-import type { StackProps } from '@chakra-ui/react';
-import {
-  Box,
-  Heading,
-  Text,
-  VStack,
-  HStack,
-  MenuRoot,
-  GridItem,
-  Spacer,
+import type {
+  BoxProps,
+  HeadingProps,
+  MenuContentProps,
+  MenuItemProps,
+  TextProps,
 } from '@chakra-ui/react';
-import { useCallback } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Box, Heading, Text, MenuRoot } from '@chakra-ui/react';
 
 import { formatDate, formatMoney } from '@/shared/lib';
-import type { BaseModel } from '@/shared/model';
 import { IconOptions } from '@/shared/ui/icons';
 import { MenuContent, MenuTrigger, MenuItem } from '@/shared/ui/menu';
 
-interface CardInfoProps extends StackProps {
-  data: BaseModel;
-  handleUpdate: (params: BaseModel) => void;
-  handleDelete: (id: string) => void;
-}
+type CardInfoRootProps = BoxProps;
 
-export const CardInfo = ({
-  data,
-  handleUpdate,
-  handleDelete,
+export const CardInfoRoot = ({
+  p = 8,
+  alignItems = 'left',
+  bgColor = '#000000CC',
+  border = '1px solid #fefefe10',
+  borderRadius = 'lg',
+  cursor = 'pointer',
+  children,
   ...props
-}: CardInfoProps) => {
-  const methods = useForm<BaseModel>({
-    defaultValues: { ...data, date: formatDate(data.date, 'dateInput') },
-  });
-
-  const { handleSubmit } = methods;
-
+}: CardInfoRootProps) => {
   return (
-    <GridItem
-      colSpan={{ base: 12, md: 3 }}
-      pb={6}
-      pl={6}
-      align="left"
-      bgColor="#000000CC"
-      border="1px solid #fefefe10"
-      cursor="pointer"
+    <Box
+      p={p}
+      alignItems={alignItems}
+      bgColor={bgColor}
+      border={border}
+      borderRadius={borderRadius}
+      cursor={cursor}
       {...props}
     >
-      <VStack justify="space-between" w="full" align="start" minH="100px">
-        <VStack w="full">
-          <HStack justify="space-between" w="full">
-            <VStack align="start" w="full">
-              <HStack
-                pt={6}
-                justify="space-between"
-                fontWeight="semibold"
-                w="full"
-              >
-                <Heading
-                  as="h5"
-                  size="md"
-                  fontWeight="semibold"
-                  css={{
-                    '& > span': {
-                      opacity: 0.5,
-                    },
-                  }}
-                >
-                  <span>R$ </span>
-                  {formatMoney({ value: data.value }).replace('R$', '').trim()}
-                </Heading>
-                <Spacer />
-                <Heading as="h6" size="sm" fontWeight="normal" opacity={0.5}>
-                  {formatDate(data.date, 'dayAndMonth')}
-                </Heading>
-              </HStack>
-            </VStack>
-            <Box px={2}>
-              <MenuRoot>
-                <MenuTrigger asChild>
-                  <IconOptions boxSize="25px" opacity={0.5} cursor="pointer" />
-                </MenuTrigger>
-                <MenuContent
-                  bgColor="#000"
-                  borderColor="#fefefe15"
-                  minW="min-content"
-                >
-                  <FormProvider {...methods}>
-                    <MenuItem
-                      value="edit"
-                      bgColor="#000"
-                      px={8}
-                      py={2}
-                      _hover={{
-                        bgColor: '#fefefe10',
-                      }}
-                      onClick={handleSubmit(handleUpdate)}
-                    >
-                      Editar
-                    </MenuItem>
-                  </FormProvider>
-                  <MenuItem
-                    value="delete"
-                    bgColor="#000"
-                    px={8}
-                    py={2}
-                    _hover={{
-                      bgColor: '#fefefe10',
-                    }}
-                    onClick={() => handleDelete(data?.id || '')}
-                  >
-                    Excluir
-                  </MenuItem>
-                </MenuContent>
-              </MenuRoot>
-            </Box>
-          </HStack>
-        </VStack>
-        <Text fontSize="md" opacity={0.5} fontWeight="normal" textAlign="left">
-          {data?.description || 'Sem descrição'}
-        </Text>
-      </VStack>
-    </GridItem>
+      {children}
+    </Box>
   );
+};
+
+type CardInfoValueProps = HeadingProps & {
+  value: number;
+};
+
+export const CardInfoValue = ({
+  value = 0,
+  as = 'h5',
+  size = 'md',
+  fontWeight = 'semibold',
+  css = {
+    '& > span': {
+      opacity: 0.5,
+    },
+  },
+  ...props
+}: CardInfoValueProps) => {
+  return (
+    <Heading as={as} size={size} fontWeight={fontWeight} css={css} {...props}>
+      <span>R$ </span>
+      {formatMoney({ value }).replace('R$', '').trim()}
+    </Heading>
+  );
+};
+
+type CardInfoDateProps = HeadingProps & {
+  date: Date;
+};
+
+export const CardInfoDate = ({
+  date = new Date(),
+  as = 'h6',
+  size = 'sm',
+  fontWeight = 'normal',
+  ...props
+}: CardInfoDateProps) => {
+  return (
+    <Heading as={as} size={size} fontWeight={fontWeight} {...props}>
+      {formatDate(date, 'dayAndMonth')}
+    </Heading>
+  );
+};
+
+type CardInfoDescriptionProps = TextProps & {
+  description: string;
+};
+
+export const CardInfoDescription = ({
+  description,
+  textAlign = 'left',
+  fontSize = 'md',
+  fontWeight = 'normal',
+  opacity = 0.5,
+  ...props
+}: CardInfoDescriptionProps) => {
+  return (
+    <Text
+      opacity={opacity}
+      fontSize={fontSize}
+      fontWeight={fontWeight}
+      textAlign={textAlign}
+      {...props}
+    >
+      {description || 'Sem descrição'}
+    </Text>
+  );
+};
+
+type CardInfoMenuOptionsProps = MenuContentProps;
+
+export const CardInfoMenuOptions = ({
+  children,
+  bgColor = '#000',
+  borderColor = '#fefefe15',
+  minW = 'min-content',
+  ...props
+}: CardInfoMenuOptionsProps) => {
+  return (
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <IconOptions boxSize="25px" opacity={0.5} cursor="pointer" />
+      </MenuTrigger>
+      <MenuContent
+        bgColor={bgColor}
+        borderColor={borderColor}
+        minW={minW}
+        {...props}
+      >
+        {children}
+      </MenuContent>
+    </MenuRoot>
+  );
+};
+type CardInfoOptionProps = MenuItemProps;
+
+export const CardInfoOption = ({
+  children,
+  px = 8,
+  py = 2,
+  bgColor = '#000',
+  _hover = {
+    bgColor: '#fefefe10',
+  },
+  ...props
+}: CardInfoOptionProps) => {
+  return (
+    <MenuItem px={px} py={py} bgColor={bgColor} _hover={_hover} {...props}>
+      {children}
+    </MenuItem>
+  );
+};
+
+export const CardInfo = {
+  Root: CardInfoRoot,
+  Value: CardInfoValue,
+  Date: CardInfoDate,
+  Description: CardInfoDescription,
+  MenuOptions: CardInfoMenuOptions,
+  Option: CardInfoOption,
 };
